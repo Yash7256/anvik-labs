@@ -525,7 +525,7 @@ html.lenis-active::-webkit-scrollbar {
 
 .hero-main {
   grid-area: 2 / 1;
-  align-self: center;
+  align-self: end;
 }
 
 .hero-footer {
@@ -887,7 +887,6 @@ html.lenis-active::-webkit-scrollbar {
   position: relative;
   width: 100%;
   max-width: min(100%, 70rem);
-  translate: 0 clamp(-7rem, -12vh, -4rem);
 }
 
 .hero-title {
@@ -5975,89 +5974,4 @@ html[data-intro='pending'] body::before {
   z-index: 80;
   background: var(--bg-page);
   pointer-events: none;
-}
-
-
-.hero-process {
-  position: absolute;
-  top: 50%;
-  right: var(--hero-pad);
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  transform: translateY(-50%);
-  z-index: 2;
-}
-
-.hero-process__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.7rem 1.2rem;
-  border-radius: 999px;
-  background: var(--pill-color);
-  color: var(--pill-ink);
-  font-size: 0.95rem;
-  font-weight: 500;
-  box-shadow: 0 30px 60px -40px rgba(0, 0, 0, 0.9);
-}
-
-.hero-process__dot {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.4;
-}
-
-.hero-process__label {
-  flex: 1;
-}
-
-.hero-process__index {
-  opacity: 0.5;
-  font-size: 0.8rem;
-}
-
-.hero-process__arrow {
-  opacity: 0.5;
-}
-
-@media (max-width: 1023px) {
-  .hero-process {
-    position: static;
-    transform: none;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-  }
-
-  .hero-process__item {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-
-.hero-text-links {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  color: color-mix(in srgb, var(--pill-cream) 70%, transparent);
-}
-
-.hero-text-links a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.hero-text-links a:hover {
-  color: var(--pill-cream);
-}
-
-.hero-text-links__sep {
-  opacity: 0.5;
 }
