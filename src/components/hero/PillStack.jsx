@@ -362,6 +362,9 @@ export const PillStack = forwardRef(function PillStack(
               >
                 <span className="hero-pill__dot" />
                 <span className="hero-pill__label">{pill.label}</span>
+                <span className="hero-pill__index">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 <span className="hero-pill__arrow">↗</span>
               </div>
             </div>

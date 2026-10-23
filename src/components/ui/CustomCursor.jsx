@@ -5,7 +5,10 @@ import { gsap } from '@/lib/gsap'
 
 function canUseCustomCursor() {
   if (typeof window === 'undefined') return false
-  return window.matchMedia('(pointer: fine)').matches
+  return (
+    window.matchMedia('(pointer: fine)').matches &&
+    window.matchMedia('(min-width: 768px)').matches
+  )
 }
 
 export function CustomCursor() {

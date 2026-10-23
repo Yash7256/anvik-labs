@@ -6,6 +6,7 @@ import { gsap, loadSplitText, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { BokehBackground } from './BokehBackground'
 import { Navbar } from './Navbar'
 import { PillStack } from './PillStack'
+import { StudioMeta } from './StudioMeta'
 
 const HEADLINE = 'We start with the question.'
 
@@ -232,10 +233,13 @@ export function Hero({
       <BokehBackground reducedMotion={reducedMotion} />
       <Navbar />
 
-      <p className="hero-label" data-reveal>
-        <span className="hero-label__dot" aria-hidden="true" />
-        Technology Studio
-      </p>
+      <div className="hero-topline" data-reveal>
+        <p className="hero-label">
+          <span className="hero-label__dot" aria-hidden="true" />
+          Technology Studio
+        </p>
+        <StudioMeta />
+      </div>
 
       <PillStack
         ref={stackRef}
@@ -247,7 +251,7 @@ export function Hero({
         <div className="hero-copy">
           <h1 ref={titleRef} className="hero-title">
             We start with <br className="hero-title__break" />
-            the question.
+            the question<span className="hero-title__period">.</span>
           </h1>
 
           <div className="hero-meta" data-reveal>
@@ -257,7 +261,7 @@ export function Hero({
 
             <div className="hero-links" aria-label="Ways to work with us">
               <a
-                href="#work"
+                href="#featured"
                 className="hero-link"
                 data-cursor="View"
                 onPointerEnter={handleMode('products')}
@@ -285,7 +289,7 @@ export function Hero({
 
       <div className="hero-footer" data-reveal>
         <Marquee className="hero-marquee" />
-        <a href="#work" className="scroll-cue" data-cursor="View">
+        <a href="#featured" className="scroll-cue" data-cursor="View">
           <span>↓ scroll</span>
           <span className="scroll-cue__line" aria-hidden="true" />
         </a>

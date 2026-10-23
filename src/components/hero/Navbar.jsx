@@ -4,9 +4,9 @@ import { MagneticButton } from '@/components/ui/MagneticButton'
 import { gsap, useGSAP } from '@/lib/gsap'
 
 const LINKS = [
-  { label: 'Products', href: '#products' },
+  { label: 'Products', href: '#featured' },
   { label: 'Services', href: '#services' },
-  { label: 'About', href: '#about' },
+  { label: 'What we do', href: '#what-we-do' },
 ]
 
 export function Navbar() {

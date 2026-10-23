@@ -23,6 +23,7 @@ export function useLenis() {
     })
 
     lenisRef.current = lenis
+    document.documentElement.classList.add('lenis-active')
 
     const onScroll = (event) => {
       velocityRef.current = event.velocity
@@ -56,6 +57,7 @@ export function useLenis() {
       gsap.ticker.remove(raf)
       gsap.ticker.lagSmoothing(500, 33)
       lenis.destroy()
+      document.documentElement.classList.remove('lenis-active')
 
       if (lenisRef.current === lenis) lenisRef.current = null
       velocityRef.current = 0
