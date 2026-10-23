@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 
 import { Marquee } from '@/components/ui/Marquee'
-import { gsap, loadSplitText, ScrollTrigger, useGSAP } from '@/lib/gsap'
+import { gsap, loadSplitText, useGSAP } from '@/lib/gsap'
 
 import { BokehBackground } from './BokehBackground'
 import { Navbar } from './Navbar'
@@ -19,7 +19,6 @@ export function Hero({
 }) {
   const rootRef = useRef(null)
   const titleRef = useRef(null)
-  const stackRef = useRef(null)
 
   useGSAP(
     () => {
@@ -125,64 +124,6 @@ export function Hero({
       })
     },
     { scope: rootRef, dependencies: [instant] },
-  )
-
-  useGSAP(
-    () => {
-      if (reducedMotion) return
-
-      const root = rootRef.current
-      if (!root) return
-
-      const stack = root.querySelector('.pill-stack__body')
-      const copy = root.querySelector('.hero-copy')
-
-      const media = gsap.matchMedia()
-
-      media.add('(min-width: 768px)', () => {
-        const trigger = ScrollTrigger.create({
-          trigger: root,
-          start: 'top top',
-          end: '+=110%',
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const progress = self.progress
-            const next =
-              progress <= 0.001
-                ? -1
-                : Math.min(3, Math.floor(progress * 4 + 0.0001))
-
-            if (next !== activeIndexRef.current) {
-              activeIndexRef.current = next
-              stackRef.current?.setActive(next)
-            }
-
-            const exit = gsap.utils.clamp(0, 1, (progress - 0.82) / 0.18)
-
-            gsap.set(stack, {
-              yPercent: exit * -6,
-              scale: 1 - exit * 0.04,
-              opacity: 1 - exit * 0.18,
-            })
-
-            gsap.set(copy, { yPercent: exit * -4 })
-          },
-        })
-
-        return () => {
-          trigger.kill()
-          stackRef.current?.setActive(-1)
-          activeIndexRef.current = -1
-          gsap.set([stack, copy], { clearProps: 'transform,opacity' })
-        }
-      })
-
-      return () => media.revert()
-    },
-    { scope: rootRef, dependencies: [reducedMotion] },
   )
 
   useGSAP(
