@@ -11,8 +11,8 @@ export function buildServiceJsonLd(content) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: content.schema?.serviceName || content.h1,
-    description: content.metaDescription,
+    name: content.schema?.name || content.schema?.serviceName || content.h1,
+    description: content.schema?.description || content.metaDescription,
     provider,
     serviceType: content.schema?.serviceType,
   }

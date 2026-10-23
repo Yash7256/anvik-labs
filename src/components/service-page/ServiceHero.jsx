@@ -26,7 +26,7 @@ function Breadcrumb({ items }) {
   )
 }
 
-function HeroArtwork() {
+function DesignArtwork() {
   return (
     <div className="svc-art" aria-hidden="true" data-sp-hero-reveal>
       <span className="svc-art__glow" />
@@ -68,6 +68,34 @@ function HeroArtwork() {
       </div>
     </div>
   )
+}
+
+const BUILD_BARS = ['cream', 'grey', 'burnt', 'vivid']
+
+function BuildArtwork() {
+  return (
+    <div className="svc-art svc-art--build" aria-hidden="true" data-sp-hero-reveal>
+      <span className="svc-art__glow" />
+      <div className="svc-art__stage svc-art__stage--build">
+        <span className="svc-art__baseline" />
+        <div className="svc-art__bars">
+          {BUILD_BARS.map((tone) => (
+            <span key={tone} className={`svc-art__bar svc-art__bar--${tone}`}>
+              <span className="svc-art__pill-inner">
+                <span className="svc-art__highlight" />
+                <span className="svc-art__grain" />
+              </span>
+            </span>
+          ))}
+        </div>
+        <span className="svc-art__ping" />
+      </div>
+    </div>
+  )
+}
+
+function HeroArtwork({ variant = 'design' }) {
+  return variant === 'build' ? <BuildArtwork /> : <DesignArtwork />
 }
 
 export function ServiceHero({ content, velocityRef }) {
@@ -197,6 +225,50 @@ export function ServiceHero({ content, velocityRef }) {
 
   useGSAP(
     () => {
+      if (reducedMotion || content.heroVariant !== 'build') return
+      const stage = artRef.current?.querySelector('.svc-art__stage')
+      const ping = stage?.querySelector('.svc-art__ping')
+      const baseline = stage?.querySelector('.svc-art__baseline')
+      if (!stage || !ping || !baseline) return
+
+      const timeline = gsap.timeline({
+        repeat: -1,
+        repeatDelay: 4.35,
+        paused: true,
+      })
+
+      timeline
+        .fromTo(
+          ping,
+          { x: 0, autoAlpha: 1 },
+          {
+            x: () => Math.max(0, baseline.offsetWidth - ping.offsetWidth),
+            duration: 1.6,
+            ease: 'power2.inOut',
+          },
+        )
+        .to(ping, { autoAlpha: 0, duration: 0.25 }, '>-0.2')
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) timeline.play()
+          else timeline.pause()
+        },
+        { threshold: 0.15 },
+      )
+
+      observer.observe(stage)
+
+      return () => {
+        observer.disconnect()
+        timeline.kill()
+      }
+    },
+    { scope: rootRef, dependencies: [reducedMotion, content.heroVariant] },
+  )
+
+  useGSAP(
+    () => {
       if (reducedMotion || !velocityRef) return
       const title = titleRef.current
       if (!title) return
@@ -252,7 +324,7 @@ export function ServiceHero({ content, velocityRef }) {
           </div>
 
           <div ref={artRef} className="svc-hero__art">
-            <HeroArtwork />
+            <HeroArtwork variant={content.heroVariant} />
           </div>
         </div>
       </div>

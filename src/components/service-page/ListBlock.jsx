@@ -5,7 +5,7 @@ import { gsap, useGSAP } from '@/lib/gsap'
 
 import { SectionHeading } from './SectionHeading'
 
-export function CoversBlock({ content }) {
+export function CoversBlock({ content, flipped = false }) {
   const rootRef = useRef(null)
   const reducedMotion = usePrefersReducedMotion()
 
@@ -39,7 +39,9 @@ export function CoversBlock({ content }) {
 
   return (
     <section ref={rootRef} className="svc-block" aria-labelledby="svc-covers-title">
-      <div className="svc-page__inner svc-block__grid svc-block__grid--split">
+      <div
+        className={`svc-page__inner svc-block__grid svc-block__grid--split${flipped ? ' svc-block__grid--flip' : ''}`}
+      >
         <div className="svc-block__heading">
           <SectionHeading id="svc-covers-title">{content.covers.h2}</SectionHeading>
         </div>
@@ -63,7 +65,7 @@ export function CoversBlock({ content }) {
   )
 }
 
-export function DeliverablesBlock({ content }) {
+export function DeliverablesBlock({ content, flipped = true }) {
   const rootRef = useRef(null)
   const reducedMotion = usePrefersReducedMotion()
 
@@ -97,7 +99,9 @@ export function DeliverablesBlock({ content }) {
 
   return (
     <section ref={rootRef} className="svc-block" aria-labelledby="svc-deliv-title">
-      <div className="svc-page__inner svc-block__grid svc-block__grid--split svc-block__grid--flip">
+      <div
+        className={`svc-page__inner svc-block__grid svc-block__grid--split${flipped ? ' svc-block__grid--flip' : ''}`}
+      >
         <div className="svc-block__heading">
           <SectionHeading id="svc-deliv-title">{content.deliverables.h2}</SectionHeading>
         </div>

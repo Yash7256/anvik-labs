@@ -5,7 +5,7 @@ import { gsap, useGSAP } from '@/lib/gsap'
 
 import { SectionHeading } from './SectionHeading'
 
-export function Faq({ content }) {
+export function Faq({ content, flipped = false }) {
   const rootRef = useRef(null)
   const reducedMotion = usePrefersReducedMotion()
   const [openItems, setOpenItems] = useState(() => {
@@ -50,7 +50,9 @@ export function Faq({ content }) {
 
   return (
     <section ref={rootRef} className="svc-block" aria-labelledby="svc-faq-title">
-      <div className="svc-page__inner svc-block__grid svc-block__grid--split">
+      <div
+        className={`svc-page__inner svc-block__grid svc-block__grid--split${flipped ? ' svc-block__grid--flip' : ''}`}
+      >
         <div className="svc-block__heading">
           <SectionHeading id="svc-faq-title">{content.faq.h2}</SectionHeading>
         </div>

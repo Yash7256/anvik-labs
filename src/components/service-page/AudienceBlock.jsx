@@ -6,7 +6,7 @@ import { gsap, useGSAP } from '@/lib/gsap'
 
 import { SectionHeading } from './SectionHeading'
 
-export function AudienceBlock({ content }) {
+export function AudienceBlock({ content, flipped = false }) {
   const rootRef = useRef(null)
   const reducedMotion = usePrefersReducedMotion()
 
@@ -38,7 +38,9 @@ export function AudienceBlock({ content }) {
 
   return (
     <section ref={rootRef} className="svc-block" aria-labelledby="svc-audience-title">
-      <div className="svc-page__inner svc-block__grid svc-block__grid--split">
+      <div
+        className={`svc-page__inner svc-block__grid svc-block__grid--split${flipped ? ' svc-block__grid--flip' : ''}`}
+      >
         <div className="svc-block__heading">
           <SectionHeading id="svc-audience-title">{content.audience.h2}</SectionHeading>
         </div>
@@ -60,10 +62,11 @@ export function AudienceBlock({ content }) {
   )
 }
 
-export function WhyBlock({ content }) {
+export function WhyBlock({ content, flipped = false }) {
   const rootRef = useRef(null)
   const reducedMotion = usePrefersReducedMotion()
   const [before, after] = content.why.text.split('Designers Room')
+  const hasInlineLink = Boolean(content.why.link) && after !== undefined
 
   useGSAP(
     () => {
@@ -93,16 +96,20 @@ export function WhyBlock({ content }) {
 
   return (
     <section ref={rootRef} className="svc-block" aria-labelledby="svc-why-title">
-      <div className="svc-page__inner svc-block__grid svc-block__grid--split">
+      <div
+        className={`svc-page__inner svc-block__grid svc-block__grid--split${flipped ? ' svc-block__grid--flip' : ''}`}
+      >
         <div className="svc-block__heading">
           <SectionHeading id="svc-why-title">{content.why.h2}</SectionHeading>
         </div>
         <div className="svc-block__content">
           <p className="svc-quote">
             {before}
-            <Link className="svc-inline-link" to={content.why.link.href} data-cursor="View">
-              Designers Room <span aria-hidden="true">↗</span>
-            </Link>
+            {hasInlineLink ? (
+              <Link className="svc-inline-link" to={content.why.link.href} data-cursor="View">
+                Designers Room <span aria-hidden="true">↗</span>
+              </Link>
+            ) : null}
             {after}
           </p>
         </div>

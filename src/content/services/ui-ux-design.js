@@ -15,6 +15,12 @@ export const uiUxDesign = {
     { label: 'Services', href: '/#services' },
     { label: 'UI/UX design' },
   ],
+  sections: ['covers', 'deliverables', 'process', 'audience', 'why', 'faq'],
+  sectionAlign: {
+    audience: 'left',
+    why: 'left',
+    faq: 'left',
+  },
   h1: 'UI/UX Design Services',
   directAnswer:
     'Anvik Labs provides UI/UX design for websites, web applications and digital products. We start with research to understand users and the problem, then deliver wireframes, interactive prototypes, visual design and a design system your team can build from.',
@@ -131,11 +137,8 @@ export const uiUxDesign = {
   schema: {
     serviceName: 'UI/UX Design Services',
     serviceType: 'UI/UX design',
+    description:
+      'Research-led UI/UX design for websites, web apps and digital products. User research, wireframes, prototypes and design systems from Anvik Labs.',
   },
-}
-
-if (import.meta.env?.DEV) {
-  TODO_CONFIRM.forEach((item) => {
-    console.warn(`[TODO_CONFIRM] ${item}`)
-  })
+  todoConfirm: TODO_CONFIRM,
 }
