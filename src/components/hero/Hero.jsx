@@ -5,8 +5,8 @@ import { gsap, loadSplitText, ScrollTrigger, useGSAP } from '@/lib/gsap'
 
 import { BokehBackground } from './BokehBackground'
 import { Navbar } from './Navbar'
-import { PillStack } from './PillStack'
 import { StudioMeta } from './StudioMeta'
+import { PILLS } from './pills'
 
 const HEADLINE = 'We start with the question.'
 
@@ -241,11 +241,16 @@ export function Hero({
         <StudioMeta />
       </div>
 
-      <PillStack
-        ref={stackRef}
-        mode={stackMode}
-        reducedMotion={reducedMotion}
-      />
+      <div className="hero-process" aria-label="Our process">
+        {PILLS.map((pill, index) => (
+          <div key={pill.label} className="hero-process__item" style={{ '--pill-color': pill.color, '--pill-ink': pill.ink }}>
+            <span className="hero-process__dot" aria-hidden="true" />
+            <span className="hero-process__label">{pill.label}</span>
+            <span className="hero-process__index">{String(index + 1).padStart(2, '0')}</span>
+            <span className="hero-process__arrow" aria-hidden="true">↗</span>
+          </div>
+        ))}
+      </div>
 
       <div className="hero-main">
         <div className="hero-copy">
