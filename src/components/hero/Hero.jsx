@@ -1,12 +1,12 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import { Marquee } from '@/components/ui/Marquee'
-import { gsap, loadSplitText, ScrollTrigger, useGSAP } from '@/lib/gsap'
+import { gsap, loadSplitText, useGSAP } from '@/lib/gsap'
 
 import { BokehBackground } from './BokehBackground'
 import { Navbar } from './Navbar'
-import { PillStack } from './PillStack'
 import { StudioMeta } from './StudioMeta'
+import { PILLS } from './pills'
 
 const HEADLINE = 'We start with the question.'
 
@@ -19,9 +19,6 @@ export function Hero({
 }) {
   const rootRef = useRef(null)
   const titleRef = useRef(null)
-  const stackRef = useRef(null)
-  const activeIndexRef = useRef(-1)
-  const [stackMode, setStackMode] = useState('idle')
 
   useGSAP(
     () => {
@@ -131,64 +128,6 @@ export function Hero({
 
   useGSAP(
     () => {
-      if (reducedMotion) return
-
-      const root = rootRef.current
-      if (!root) return
-
-      const stack = root.querySelector('.pill-stack__body')
-      const copy = root.querySelector('.hero-copy')
-
-      const media = gsap.matchMedia()
-
-      media.add('(min-width: 768px)', () => {
-        const trigger = ScrollTrigger.create({
-          trigger: root,
-          start: 'top top',
-          end: '+=110%',
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const progress = self.progress
-            const next =
-              progress <= 0.001
-                ? -1
-                : Math.min(3, Math.floor(progress * 4 + 0.0001))
-
-            if (next !== activeIndexRef.current) {
-              activeIndexRef.current = next
-              stackRef.current?.setActive(next)
-            }
-
-            const exit = gsap.utils.clamp(0, 1, (progress - 0.82) / 0.18)
-
-            gsap.set(stack, {
-              yPercent: exit * -6,
-              scale: 1 - exit * 0.04,
-              opacity: 1 - exit * 0.18,
-            })
-
-            gsap.set(copy, { yPercent: exit * -4 })
-          },
-        })
-
-        return () => {
-          trigger.kill()
-          stackRef.current?.setActive(-1)
-          activeIndexRef.current = -1
-          gsap.set([stack, copy], { clearProps: 'transform,opacity' })
-        }
-      })
-
-      return () => media.revert()
-    },
-    { scope: rootRef, dependencies: [reducedMotion] },
-  )
-
-  useGSAP(
-    () => {
       if (reducedMotion || !velocityRef) return
 
       const title = titleRef.current
@@ -217,17 +156,6 @@ export function Hero({
     { scope: rootRef, dependencies: [reducedMotion, velocityRef] },
   )
 
-  const handleMode = (mode) => (event) => {
-    if (reducedMotion) return
-
-    if (event.type === 'pointerleave' || event.type === 'blur') {
-      setStackMode('idle')
-      return
-    }
-
-    setStackMode(mode)
-  }
-
   return (
     <section ref={rootRef} id="top" className="hero-section">
       <BokehBackground reducedMotion={reducedMotion} />
@@ -241,11 +169,16 @@ export function Hero({
         <StudioMeta />
       </div>
 
-      <PillStack
-        ref={stackRef}
-        mode={stackMode}
-        reducedMotion={reducedMotion}
-      />
+      <div className="hero-process" aria-label="Our process">
+        {PILLS.map((pill, index) => (
+          <div key={pill.label} className="hero-process__item" style={{ '--pill-color': pill.color, '--pill-ink': pill.ink }}>
+            <span className="hero-process__dot" aria-hidden="true" />
+            <span className="hero-process__label">{pill.label}</span>
+            <span className="hero-process__index">{String(index + 1).padStart(2, '0')}</span>
+            <span className="hero-process__arrow" aria-hidden="true">↗</span>
+          </div>
+        ))}
+      </div>
 
       <div className="hero-main">
         <div className="hero-copy">
@@ -259,27 +192,10 @@ export function Hero({
               Curious by Design. Precise by Engineering.
             </p>
 
-            <div className="hero-links" aria-label="Ways to work with us">
-              <a
-                href="#featured"
-                className="hero-link"
-                onPointerEnter={handleMode('products')}
-                onPointerLeave={handleMode('products')}
-                onFocus={handleMode('products')}
-                onBlur={handleMode('products')}
-              >
-                Own Products <span aria-hidden="true">↗</span>
-              </a>
-              <a
-                href="mailto:hello@anviklabs.com?subject=Freelance%20project"
-                className="hero-link"
-                onPointerEnter={handleMode('freelance')}
-                onPointerLeave={handleMode('freelance')}
-                onFocus={handleMode('freelance')}
-                onBlur={handleMode('freelance')}
-              >
-                Freelance <span aria-hidden="true">↗</span>
-              </a>
+            <div className="hero-text-links">
+              <a href="#featured">Own Products</a>
+              <span className="hero-text-links__sep">/</span>
+              <a href="mailto:hello@anviklabs.com?subject=Freelance%20project">Freelance</a>
             </div>
           </div>
         </div>
