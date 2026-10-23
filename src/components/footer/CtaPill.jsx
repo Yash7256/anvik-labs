@@ -6,10 +6,16 @@ import { MagneticButton } from '@/components/ui/MagneticButton'
 
 import { SITE } from '@/config/site'
 
-export function CtaPill({ reducedMotion = false }) {
+export function CtaPill({ reducedMotion = false, cta }) {
   const rootRef = useRef(null)
   const headlineRef = useRef(null)
   const strength = useMagneticStrength(10)
+  const resolvedCta = {
+    ...SITE.cta,
+    ...cta,
+    label: cta?.label ?? SITE.cta.label,
+    actionLabel: cta?.buttonLabel ?? cta?.actionLabel ?? SITE.cta.actionLabel,
+  }
 
   useGSAP(
     () => {
@@ -25,7 +31,7 @@ export function CtaPill({ reducedMotion = false }) {
         const SplitText = await loadSplitText()
         if (cancelled) return
 
-        headline.setAttribute('aria-label', SITE.cta.headline)
+        headline.setAttribute('aria-label', resolvedCta.headline)
         split = new SplitText(headline, { type: 'lines', mask: 'lines', aria: 'none' })
         split.lines.forEach((line) => line.setAttribute('aria-hidden', 'true'))
         const masks = split.lines.map((line) => line.parentElement)
@@ -106,19 +112,19 @@ export function CtaPill({ reducedMotion = false }) {
           <div className="footer__cta-left">
             <p className="footer__cta-label">
               <span className="footer__cta-dot" aria-hidden="true" />
-              {SITE.cta.label.replace('● ', '')}
+              {resolvedCta.label.replace('● ', '')}
             </p>
             <h2 ref={headlineRef} id="footer-cta-title" className="footer__cta-headline">
-              {SITE.cta.headline}
+              {resolvedCta.headline}
             </h2>
           </div>
           <div className="footer__cta-right">
             <MagneticButton
-              href={SITE.cta.href}
+              href={resolvedCta.href}
               className="footer__cta-button"
               strength={reducedMotion ? 0 : strength}
             >
-              {SITE.cta.actionLabel}
+              {resolvedCta.actionLabel}
             </MagneticButton>
           </div>
         </div>

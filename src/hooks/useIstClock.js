@@ -8,7 +8,7 @@ const formatter = new Intl.DateTimeFormat('en-GB', {
 })
 
 export function useIstClock(updateIntervalMs = 30000) {
-  const [time, setTime] = useState(() => formatter.format(new Date()))
+  const [time, setTime] = useState('')
 
   useEffect(() => {
     const update = () => setTime(formatter.format(new Date()))
@@ -17,5 +17,5 @@ export function useIstClock(updateIntervalMs = 30000) {
     return () => clearInterval(id)
   }, [updateIntervalMs])
 
-  return time
+  return time || '--:--'
 }

@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap'
-import { useLenis } from '@/hooks/useLenis'
+import { useLenis } from '@/hooks/lenisContext'
 
-import { SITE } from '@/config/site'
 import { useIstClock } from '@/hooks/useIstClock'
 
 import { CtaPill } from './CtaPill'
 import { FooterColumns } from './FooterColumns'
 
-export function Footer({ reducedMotion = false }) {
+export function Footer({ reducedMotion = false, cta, related = [] }) {
   const rootRef = useRef(null)
   const time = useIstClock()
   const { lenisRef } = useLenis()
@@ -68,7 +68,22 @@ export function Footer({ reducedMotion = false }) {
       <span className="footer__grain" aria-hidden="true" />
 
       <div className="footer__inner">
-        <CtaPill reducedMotion={reducedMotion} />
+        {related.length ? (
+          <nav className="footer__related" aria-label="Related pages">
+            {related.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="footer__related-link"
+                data-cursor="View"
+              >
+                {link.label} <span aria-hidden="true">↗</span>
+              </Link>
+            ))}
+          </nav>
+        ) : null}
+
+        <CtaPill reducedMotion={reducedMotion} cta={cta} />
 
         <div className="footer__divider" aria-hidden="true" />
         <FooterColumns />
@@ -77,7 +92,7 @@ export function Footer({ reducedMotion = false }) {
         <div className="footer__bottom">
           <div className="footer__bottom-group">
             <span className="footer__bottom-item" aria-label="Indian Standard Time">
-              IST {time}
+              {time} IST
             </span>
             <button type="button" className="footer__backtop" onClick={scrollTop}>
               Back to top ↑

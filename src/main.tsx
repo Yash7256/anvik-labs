@@ -1,25 +1,29 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { createRoot, hydrateRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 
-import { App } from '@/App'
-import { ServiceUiUxDesign } from '@/pages/ServiceUiUxDesign'
-import { ServiceWebDevelopment } from '@/pages/ServiceWebDevelopment'
-import { Approach } from '@/pages/Approach'
-import { About } from '@/pages/About'
+import { AppRoutes } from '@/AppRoutes'
+import { LenisProvider } from '@/hooks/useLenis'
 
 import './index.css'
 
-createRoot(document.getElementById('root')!).render(
+const container = document.getElementById('root')!
+
+const app = (
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/services/ui-ux-design" element={<ServiceUiUxDesign />} />
-        <Route path="/services/web-development" element={<ServiceWebDevelopment />} />
-        <Route path="/approach" element={<Approach />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </BrowserRouter>
-  </StrictMode>,
+    <HelmetProvider>
+      <BrowserRouter>
+        <LenisProvider>
+          <AppRoutes />
+        </LenisProvider>
+      </BrowserRouter>
+    </HelmetProvider>
+  </StrictMode>
 )
+
+if (container.childElementCount > 0) {
+  hydrateRoot(container, app)
+} else {
+  createRoot(container).render(app)
+}

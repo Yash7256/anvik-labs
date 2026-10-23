@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { gsap } from '@/lib/gsap'
@@ -14,11 +14,10 @@ function canUseCustomCursor() {
 export function CustomCursor() {
   const cursorRef = useRef(null)
   const labelRef = useRef(null)
-  const [enabled] = useState(canUseCustomCursor)
   const reducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
-    if (!enabled) return
+    if (!canUseCustomCursor()) return
 
     const cursor = cursorRef.current
     const label = labelRef.current
@@ -90,9 +89,7 @@ export function CustomCursor() {
       window.removeEventListener('pointerup', onPointerUp)
       document.removeEventListener('mouseleave', onLeaveWindow)
     }
-  }, [enabled, reducedMotion])
-
-  if (!enabled) return null
+  }, [reducedMotion])
 
   return (
     <div ref={cursorRef} className="custom-cursor" data-active="false" aria-hidden="true">

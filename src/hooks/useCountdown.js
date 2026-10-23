@@ -53,15 +53,25 @@ function isSameValue(current, next) {
   )
 }
 
+const EMPTY_REMAINING = {
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  isLive: false,
+}
+
 export function useCountdown() {
   const target = useMemo(() => resolveLaunchDate(), [])
-  const [value, setValue] = useState(() => getRemaining(target))
+  const [value, setValue] = useState(EMPTY_REMAINING)
 
   useEffect(() => {
     const tick = () => {
       const next = getRemaining(target)
       setValue((current) => (isSameValue(current, next) ? current : next))
     }
+
+    tick()
 
     let interval
 

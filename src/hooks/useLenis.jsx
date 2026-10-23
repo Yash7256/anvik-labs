@@ -1,14 +1,17 @@
 import Lenis from 'lenis'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 
+import { LenisContext } from './lenisContext'
 import { usePrefersReducedMotion } from './usePrefersReducedMotion'
 
-export function useLenis() {
+export function LenisProvider({ children }) {
   const lenisRef = useRef(null)
   const velocityRef = useRef(0)
   const reducedMotion = usePrefersReducedMotion()
+  const location = useLocation()
 
   useEffect(() => {
     if (reducedMotion) return
@@ -64,5 +67,46 @@ export function useLenis() {
     }
   }, [reducedMotion])
 
-  return { lenisRef, velocityRef }
+  useEffect(() => {
+    const hash = location.hash ? decodeURIComponent(location.hash.slice(1)) : ''
+
+    const scroll = () => {
+      if (hash) {
+        const target = document.getElementById(hash)
+        if (target) {
+          const lenis = lenisRef.current
+          if (lenis) {
+            lenis.scrollTo(target, { duration: reducedMotion ? 0 : 0.9 })
+          } else {
+            target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' })
+          }
+          return
+        }
+      }
+
+      const lenis = lenisRef.current
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true })
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      }
+    }
+
+    const frame = requestAnimationFrame(() => {
+      window.setTimeout(scroll, 60)
+    })
+    const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 360)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      window.clearTimeout(refresh)
+    }
+  }, [location.pathname, location.hash, reducedMotion])
+
+  const value = useMemo(() => ({ lenisRef, velocityRef }), [])
+
+  return (
+    <LenisContext.Provider value={value}>{children}</LenisContext.Provider>
+  )
 }
+

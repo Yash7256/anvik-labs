@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { gsap, useGSAP } from '@/lib/gsap'
 
 const LINKS = [
-  { label: 'Products', href: '#featured' },
-  { label: 'Services', href: '#services' },
-  { label: 'What we do', href: '#what-we-do' },
+  { label: 'Products', to: '/#featured' },
+  { label: 'Services', to: '/#services' },
+  { label: 'What we do', to: '/#what-we-do' },
 ]
 
 export function Navbar() {
@@ -70,9 +71,9 @@ export function Navbar() {
   }
 
   return (
-    <>
+    <header className="site-header">
       <nav ref={navRef} className="hero-nav" data-reveal aria-label="Primary">
-        <a href="#top" className="brand" data-cursor="View" aria-label="Anvik Labs home">
+        <Link to="/" className="brand" data-cursor="View" aria-label="Anvik Labs home">
           <span className="brand__mark" aria-hidden="true">
             <span />
             <span />
@@ -80,13 +81,13 @@ export function Navbar() {
             <span />
           </span>
           <span className="brand__word">Anvik Labs</span>
-        </a>
+        </Link>
 
         <div className="hero-nav__links">
           {LINKS.map((link) => (
-            <a key={link.href} href={link.href} data-cursor="View">
+            <Link key={link.to} to={link.to} data-cursor="View">
               {link.label}
-            </a>
+            </Link>
           ))}
           <MagneticButton
             href="#contact"
@@ -120,14 +121,14 @@ export function Navbar() {
       >
         <div className="mobile-menu__links">
           {LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
+            <Link
+              key={link.to}
+              to={link.to}
               tabIndex={open ? 0 : -1}
               onClick={closeMenu}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <a href="#contact" tabIndex={open ? 0 : -1} onClick={closeMenu}>
             Contact
@@ -135,6 +136,6 @@ export function Navbar() {
         </div>
         <p className="mobile-menu__foot">Curious by Design. Precise by Engineering.</p>
       </div>
-    </>
+    </header>
   )
 }

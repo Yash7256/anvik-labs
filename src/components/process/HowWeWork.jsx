@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { gsap, loadSplitText, ScrollTrigger, useGSAP } from '@/lib/gsap'
 import { useMagneticStrength } from '@/hooks/useMagneticStrength'
@@ -114,7 +113,6 @@ export function HowWeWork({ reducedMotion = false, velocityRef }) {
         const fill = fills[index]
         const glow = glows[index]
         const start = index * 0.16
-        const end = start + 0.22
 
         tl.to(pill, { xPercent: 0, autoAlpha: 1, duration: 0.18, ease: 'power2.out' }, start)
         tl.to(fill, { scaleX: 1, duration: 0.24, ease: 'power2.out' }, start + 0.08)
