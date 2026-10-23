@@ -5,7 +5,6 @@ export function TrackRow({ index, variant, title, copy, link, tag }) {
     <article
       className={`what__row what__row--${variant}`}
       data-what-row={variant}
-      data-cursor={isProducts ? 'View' : 'Talk'}
     >
       <span className="what__row-glow" aria-hidden="true" />
 

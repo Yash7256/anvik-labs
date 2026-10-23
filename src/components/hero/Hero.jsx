@@ -263,7 +263,6 @@ export function Hero({
               <a
                 href="#featured"
                 className="hero-link"
-                data-cursor="View"
                 onPointerEnter={handleMode('products')}
                 onPointerLeave={handleMode('products')}
                 onFocus={handleMode('products')}
@@ -274,7 +273,6 @@ export function Hero({
               <a
                 href="mailto:hello@anviklabs.com?subject=Freelance%20project"
                 className="hero-link"
-                data-cursor="Talk"
                 onPointerEnter={handleMode('freelance')}
                 onPointerLeave={handleMode('freelance')}
                 onFocus={handleMode('freelance')}
@@ -289,7 +287,7 @@ export function Hero({
 
       <div className="hero-footer" data-reveal>
         <Marquee className="hero-marquee" />
-        <a href="#featured" className="scroll-cue" data-cursor="View">
+        <a href="#featured" className="scroll-cue">
           <span>↓ scroll</span>
           <span className="scroll-cue__line" aria-hidden="true" />
         </a>

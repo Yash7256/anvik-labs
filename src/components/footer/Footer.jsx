@@ -75,7 +75,6 @@ export function Footer({ reducedMotion = false, cta, related = [] }) {
                 key={link.href}
                 to={link.href}
                 className="footer__related-link"
-                data-cursor="View"
               >
                 {link.label} <span aria-hidden="true">↗</span>
               </Link>

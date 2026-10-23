@@ -105,7 +105,7 @@ export function CtaPill({ reducedMotion = false, cta }) {
 
   return (
     <section ref={rootRef} id="contact" className="footer__cta" aria-labelledby="footer-cta-title">
-      <div className="footer__cta-pill" data-cursor="Talk">
+      <div className="footer__cta-pill">
         <span className="footer__cta-shimmer" aria-hidden="true" />
         <span className="footer__cta-highlight" aria-hidden="true" />
         <div className="footer__cta-content">

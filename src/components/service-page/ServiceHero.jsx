@@ -312,12 +312,11 @@ export function ServiceHero({ content, velocityRef }) {
                 href="#contact"
                 className="svc-hero__cta"
                 strength={reducedMotion ? 0 : 10}
-                data-cursor="Talk"
               >
                 {content.cta?.buttonLabel || 'Start a project'}{' '}
                 <span className="hero-link__arrow" aria-hidden="true">↗</span>
               </MagneticButton>
-              <Link className="svc-quiet-link" to="/approach" data-cursor="View">
+              <Link className="svc-quiet-link" to="/approach">
                 See our approach <span className="svc-quiet-link__arrow" aria-hidden="true">↗</span>
               </Link>
             </div>

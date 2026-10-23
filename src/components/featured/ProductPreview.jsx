@@ -93,7 +93,6 @@ export const ProductPreview = memo(function ProductPreview({
     <div
       ref={rootRef}
       className="product-preview"
-      data-cursor="Preview"
       role="img"
       aria-label="Preview of the Designers Room interface, showing Learn, Practise, Share and Launch stages, a checkout flow challenge, and a community case study post."
     >

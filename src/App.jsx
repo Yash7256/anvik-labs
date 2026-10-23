@@ -7,7 +7,6 @@ import { HowWeWork } from '@/components/process/HowWeWork'
 import { Services } from '@/components/services/Services'
 import { WhatWeDo } from '@/components/whatwedo/WhatWeDo'
 import { Preloader } from '@/components/hero/Preloader'
-import { CustomCursor } from '@/components/ui/CustomCursor'
 import { useLenis } from '@/hooks/lenisContext'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { ScrollTrigger } from '@/lib/gsap'
@@ -115,7 +114,6 @@ export function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <CustomCursor />
       {showPreloader && (
         <Preloader onReveal={handleReveal} onDone={handleDone} />
       )}

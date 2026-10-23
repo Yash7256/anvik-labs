@@ -241,7 +241,6 @@ export function HowWeWork({ reducedMotion = false, velocityRef }) {
           <MagneticButton
             href="/approach"
             className="hero-link process__link"
-            data-cursor="View"
             strength={reducedMotion ? 0 : strength}
           >
             Read our full approach ↗

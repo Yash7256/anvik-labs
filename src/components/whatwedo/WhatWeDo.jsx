@@ -334,7 +334,6 @@ export function WhatWeDo({ reducedMotion = false, velocityRef }) {
                 <MagneticButton
                   href="#featured"
                   className="hero-link what__inline-link"
-                  data-cursor="View"
                   strength={reducedMotion ? 0 : magneticStrength}
                 >
                   Designers Room
@@ -354,7 +353,6 @@ export function WhatWeDo({ reducedMotion = false, velocityRef }) {
               <MagneticButton
                 href="#contact"
                 className="hero-link what__row-link"
-                data-cursor="Talk"
                 strength={reducedMotion ? 0 : magneticStrength}
               >
                 Work with us

@@ -106,7 +106,7 @@ export function WhyBlock({ content, flipped = false }) {
           <p className="svc-quote">
             {before}
             {hasInlineLink ? (
-              <Link className="svc-inline-link" to={content.why.link.href} data-cursor="View">
+              <Link className="svc-inline-link" to={content.why.link.href}>
                 Designers Room <span aria-hidden="true">↗</span>
               </Link>
             ) : null}

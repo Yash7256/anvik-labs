@@ -1269,59 +1269,6 @@ html.lenis-active::-webkit-scrollbar {
   }
 }
 
-/* ── Custom cursor ───────────────────────────────────────────────────────── */
-@media (pointer: fine) {
-  html.has-custom-cursor,
-  html.has-custom-cursor * {
-    cursor: none !important;
-  }
-}
-
-.custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 120;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 10px;
-  height: 10px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: var(--pill-vivid);
-  pointer-events: none;
-  transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo),
-    background-color 0.25s ease;
-}
-
-@media (pointer: fine) and (min-width: 768px) {
-  .custom-cursor {
-    display: flex;
-  }
-}
-
-.custom-cursor[data-active='true'] {
-  width: 72px;
-  height: 30px;
-  background: var(--pill-cream);
-}
-
-.custom-cursor__label {
-  color: var(--pill-ink);
-  font-size: 0.7rem;
-  font-weight: 600;
-  white-space: nowrap;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.custom-cursor[data-active='true'] .custom-cursor__label {
-  opacity: 1;
-  transform: scale(1);
-}
-
 /* ── Preloader ───────────────────────────────────────────────────────────── */
 .preloader {
   position: fixed;
@@ -4829,8 +4776,6 @@ html.lenis-active::-webkit-scrollbar {
   .featured__link-arrow,
   .featured__live-dot,
   .product-preview__specular,
-  .custom-cursor,
-  .custom-cursor__label,
   .skip-link {
     transition: none !important;
   }

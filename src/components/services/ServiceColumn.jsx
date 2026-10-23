@@ -68,7 +68,6 @@ export function ServiceColumn({
       <MagneticButton
         href={href}
         className="hero-link svc__column-link"
-        data-cursor="View"
         strength={reducedMotion ? 0 : strength}
       >
         <span>{label} </span>

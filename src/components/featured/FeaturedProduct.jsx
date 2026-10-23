@@ -17,7 +17,6 @@ function FeaturedLink({ strength, reducedMotion }) {
     <MagneticButton
       href={PRODUCT_URL}
       className="hero-link featured__link"
-      data-cursor="Explore"
       data-featured-reveal
       strength={reducedMotion ? 0 : strength}
     >

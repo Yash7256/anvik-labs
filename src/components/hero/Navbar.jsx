@@ -73,7 +73,7 @@ export function Navbar() {
   return (
     <header className="site-header">
       <nav ref={navRef} className="hero-nav" data-reveal aria-label="Primary">
-        <Link to="/" className="brand" data-cursor="View" aria-label="Anvik Labs home">
+        <Link to="/" className="brand" aria-label="Anvik Labs home">
           <span className="brand__mark" aria-hidden="true">
             <span />
             <span />
@@ -85,14 +85,13 @@ export function Navbar() {
 
         <div className="hero-nav__links">
           {LINKS.map((link) => (
-            <Link key={link.to} to={link.to} data-cursor="View">
+            <Link key={link.to} to={link.to}>
               {link.label}
             </Link>
           ))}
           <MagneticButton
             href="#contact"
             className="contact-pill"
-            data-cursor="Talk"
             strength={10}
           >
             Contact
