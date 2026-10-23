@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import { Marquee } from '@/components/ui/Marquee'
 import { gsap, loadSplitText, ScrollTrigger, useGSAP } from '@/lib/gsap'
@@ -20,8 +20,6 @@ export function Hero({
   const rootRef = useRef(null)
   const titleRef = useRef(null)
   const stackRef = useRef(null)
-  const activeIndexRef = useRef(-1)
-  const [stackMode, setStackMode] = useState('idle')
 
   useGSAP(
     () => {
@@ -217,17 +215,6 @@ export function Hero({
     { scope: rootRef, dependencies: [reducedMotion, velocityRef] },
   )
 
-  const handleMode = (mode) => (event) => {
-    if (reducedMotion) return
-
-    if (event.type === 'pointerleave' || event.type === 'blur') {
-      setStackMode('idle')
-      return
-    }
-
-    setStackMode(mode)
-  }
-
   return (
     <section ref={rootRef} id="top" className="hero-section">
       <BokehBackground reducedMotion={reducedMotion} />
@@ -264,27 +251,10 @@ export function Hero({
               Curious by Design. Precise by Engineering.
             </p>
 
-            <div className="hero-links" aria-label="Ways to work with us">
-              <a
-                href="#featured"
-                className="hero-link"
-                onPointerEnter={handleMode('products')}
-                onPointerLeave={handleMode('products')}
-                onFocus={handleMode('products')}
-                onBlur={handleMode('products')}
-              >
-                Own Products <span aria-hidden="true">↗</span>
-              </a>
-              <a
-                href="mailto:hello@anviklabs.com?subject=Freelance%20project"
-                className="hero-link"
-                onPointerEnter={handleMode('freelance')}
-                onPointerLeave={handleMode('freelance')}
-                onFocus={handleMode('freelance')}
-                onBlur={handleMode('freelance')}
-              >
-                Freelance <span aria-hidden="true">↗</span>
-              </a>
+            <div className="hero-text-links">
+              <a href="#featured">Own Products</a>
+              <span className="hero-text-links__sep">/</span>
+              <a href="mailto:hello@anviklabs.com?subject=Freelance%20project">Freelance</a>
             </div>
           </div>
         </div>

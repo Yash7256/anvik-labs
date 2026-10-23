@@ -887,6 +887,7 @@ html.lenis-active::-webkit-scrollbar {
   position: relative;
   width: 100%;
   max-width: min(100%, 70rem);
+  translate: 0 clamp(-7rem, -12vh, -4rem);
 }
 
 .hero-title {
@@ -6036,4 +6037,27 @@ html[data-intro='pending'] body::before {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
   }
+}
+
+
+.hero-text-links {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: color-mix(in srgb, var(--pill-cream) 70%, transparent);
+}
+
+.hero-text-links a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero-text-links a:hover {
+  color: var(--pill-cream);
+}
+
+.hero-text-links__sep {
+  opacity: 0.5;
 }
