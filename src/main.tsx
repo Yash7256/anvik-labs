@@ -7,6 +7,7 @@ import { AppRoutes } from '@/AppRoutes'
 import { LenisProvider } from '@/hooks/useLenis'
 
 import './index.css'
+import './nd.css'
 
 const container = document.getElementById('root')!
 

@@ -1,72 +1,29 @@
-import {
-  buildBreadcrumbJsonLd,
-  buildFaqJsonLd,
-  buildServiceJsonLd,
-} from '@/seo/jsonLd'
-import { SITE, absoluteUrl } from '@/config/site'
-import { uiUxDesign } from '@/content/services/ui-ux-design'
-import { webDevelopment } from '@/content/services/web-development'
-
-function serviceMeta(content) {
-  return {
-    title: content.title,
-    description: content.metaDescription,
-    path: content.path,
-    image: SITE.seo.image,
-    imageAlt: SITE.seo.imageAlt,
-    jsonLd: [
-      buildServiceJsonLd(content),
-      buildFaqJsonLd(content),
-      buildBreadcrumbJsonLd(content),
-    ],
-  }
-}
+import { absoluteUrl } from '@/config/site'
 
 function organizationJsonLd() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: SITE.name,
+    name: 'Anvik Labs',
   }
   const url = absoluteUrl('/')
   if (url) data.url = url
   return data
 }
 
-const HOME_META = {
-  title: SITE.seo.title,
-  description: SITE.seo.description,
+const DEFAULT_META = {
+  title: 'Anvik Labs — Product Design & Development Studio',
+  description:
+    'A product studio that ships its own software and partners with startups and teams on UI/UX design and web development.',
   path: '/',
-  image: SITE.seo.image,
-  imageAlt: SITE.seo.imageAlt,
+  image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+  imageAlt: 'Anvik Labs — Product Design & Development Studio',
   jsonLd: [organizationJsonLd()],
 }
 
-const ROUTE_META = {
-  '/': HOME_META,
-  '/services/ui-ux-design': serviceMeta(uiUxDesign),
-  '/services/web-development': serviceMeta(webDevelopment),
-  '/approach': {
-    title: 'Our Approach | Anvik Labs',
-    description:
-      'How Anvik Labs works: an inquiry-first process that starts with the question, explores the constraints and builds with care.',
-    path: '/approach',
-    image: SITE.seo.image,
-    imageAlt: SITE.seo.imageAlt,
-    jsonLd: [],
-  },
-  '/about': {
-    title: 'About Anvik Labs | Technology Studio',
-    description:
-      'Anvik Labs is a technology studio building secure products and precise interfaces. Curious by design, precise by engineering.',
-    path: '/about',
-    image: SITE.seo.image,
-    imageAlt: SITE.seo.imageAlt,
-    jsonLd: [organizationJsonLd()],
-  },
-}
-
 export function getRouteMeta(pathname = '/') {
-  const normalized = pathname.replace(/\/+$/, '') || '/'
-  return ROUTE_META[normalized] || HOME_META
+  return {
+    ...DEFAULT_META,
+    path: pathname,
+  }
 }

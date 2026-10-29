@@ -80,14 +80,14 @@
 
 /* ── Theme tokens ────────────────────────────────────────────────────────── */
 :root {
-  --bg-page:        #080808;
+  --bg-page:        #000000;
   --bg-card:        rgba(18, 18, 18, 0.55);
   --bg-card-hover:  rgba(18, 18, 18, 0.65);
   --border-card:    rgba(255, 255, 255, 0.10);
   --border-card-hover: rgba(255, 255, 255, 0.18);
   --text-primary:   #ffffff;
-  --text-muted:     #ffffff;
-  --text-faint:     #ffffff;
+  --text-muted:     rgba(255, 255, 255, 0.7);
+  --text-faint:     rgba(255, 255, 255, 0.4);
   color-scheme: dark;
 }
 
@@ -1390,7 +1390,7 @@ html.lenis-active::-webkit-scrollbar {
   flex-direction: column;
   width: 100%;
   min-height: 0;
-  max-width: var(--hero-max);
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -2326,7 +2326,7 @@ html.lenis-active::-webkit-scrollbar {
   flex-direction: column;
   width: 100%;
   min-height: 0;
-  max-width: var(--hero-max);
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -2939,7 +2939,7 @@ html.lenis-active::-webkit-scrollbar {
   flex-direction: column;
   width: 100%;
   min-height: 0;
-  max-width: var(--hero-max);
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -3653,7 +3653,7 @@ html.lenis-active::-webkit-scrollbar {
 
 .process__inner {
   position: relative;
-  max-width: min(90rem, calc(100vw - var(--hero-gutter) * 2));
+  max-width: none;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -4144,7 +4144,7 @@ html.lenis-active::-webkit-scrollbar {
 }
 
 .approach-page__inner {
-  max-width: min(60rem, calc(100vw - var(--hero-gutter) * 2));
+  max-width: none;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -4199,7 +4199,7 @@ html.lenis-active::-webkit-scrollbar {
 
 .footer__inner {
   position: relative;
-  max-width: min(90rem, calc(100vw - var(--hero-gutter) * 2));
+  max-width: none;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -4728,7 +4728,7 @@ html.lenis-active::-webkit-scrollbar {
 
 .svc-page__inner {
   width: 100%;
-  max-width: var(--hero-max);
+  max-width: none;
   margin-inline: auto;
   padding-inline: var(--hero-pad);
 }

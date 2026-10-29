@@ -1,5 +1,4 @@
 export function TrackRow({ index, variant, title, copy, link, tag }) {
-  const isProducts = variant === 'one'
 
   return (
     <article
