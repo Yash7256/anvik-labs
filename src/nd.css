@@ -11,7 +11,7 @@
   /* Slightly darkened for 4.75:1 white-on-button contrast (AA). */
   --cv-accent:        #D23D19;
   --cv-accent-hover:  #C73818;
-  --cv-accent-glow:   rgba(210, 61, 25, 0.32);
+  --cv-accent-glow: transparent;
   --cv-accent-soft:   rgba(210, 61, 25, 0.12);
 
   /* Tactile hero and navigation CTA finish */
@@ -19,13 +19,13 @@
   --cta-orange-mid: #E8481C;
   --cta-orange-bottom: #C93510;
   --cta-orange-base: #8F2408;
-  --cta-orange-glow: rgba(232, 72, 28, 0.3);
-  --cta-orange-glow-hover: rgba(255, 91, 39, 0.46);
+--cta-orange-glow: transparent;
+--cta-orange-glow-hover: transparent;
   --cta-glass-highlight: rgba(255, 250, 242, 0.78);
   --cta-inner-shade: rgba(105, 25, 6, 0.36);
   --cta-primary-gradient: linear-gradient(180deg, var(--cta-orange-top) 0%, var(--cta-orange-mid) 52%, var(--cta-orange-bottom) 100%);
-  --cta-primary-rest-shadow: inset 0 1px 0 var(--cta-glass-highlight), inset 0 -2px 0 var(--cta-inner-shade), 0 3px 12px var(--cta-orange-glow);
-  --cta-primary-hover-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), inset 0 -2px 0 rgba(105, 25, 6, 0.3), 0 5px 17px var(--cta-orange-glow-hover), 0 12px 26px rgba(232, 72, 28, 0.22);
+--cta-primary-rest-shadow: inset 0 1px 0 var(--cta-glass-highlight), inset 0 -2px 0 var(--cta-inner-shade);
+--cta-primary-hover-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), inset 0 -2px 0 rgba(105, 25, 6, 0.3);
   --cta-primary-press-shadow: inset 0 2px 5px rgba(105, 25, 6, 0.42), 0 1px 4px rgba(0, 0, 0, 0.18);
   --cta-secondary-fill: linear-gradient(180deg, rgba(31, 33, 36, 0.8), rgba(10, 11, 13, 0.9));
   --cta-secondary-fill-hover: linear-gradient(180deg, rgba(43, 38, 36, 0.9), rgba(16, 14, 14, 0.94));
@@ -35,7 +35,7 @@
   --cta-secondary-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 3px 0 rgba(0, 0, 0, 0.72), 0 7px 18px rgba(0, 0, 0, 0.22);
   --cta-secondary-hover-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38), 0 4px 0 rgba(0, 0, 0, 0.74), 0 10px 22px rgba(0, 0, 0, 0.28);
   --cta-secondary-press-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.18);
-  --cta-focus-ring: 0 0 0 5px rgba(225, 75, 33, 0.28), 0 8px 22px var(--cta-orange-glow);
+  --cta-focus-ring: 0 0 0 5px rgba(225, 75, 33, 0.28);
   --cta-glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 52%);
   --cta-light-sweep: linear-gradient(110deg, transparent 34%, rgba(255, 244, 233, 0.56) 49%, transparent 64%);
   --cta-press-depth: 5px;
@@ -155,7 +155,7 @@ html, body {
   height: 6px;
   border-radius: 50%;
   background: var(--cv-accent);
-  box-shadow: 0 0 10px var(--cv-accent-glow);
+  box-shadow: 0 0 10px var(--cv-accent-soft);
 }
 
 /* ── Section Titles & Typography ────────────────────────────────────────── */
@@ -206,7 +206,7 @@ html, body {
   border: none;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0px 0px 0px 1px var(--cv-accent-soft), 0 4px 16px var(--cv-accent-glow);
+  box-shadow: 0px 0px 0px 1px var(--cv-accent-soft);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
@@ -214,7 +214,7 @@ html, body {
 .cv-btn-primary:hover {
   background-color: var(--cv-accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0px 0px 0px 1px var(--cv-accent-glow), 0 6px 24px rgba(255, 69, 51, 0.35);
+  box-shadow: 0px 0px 0px 1px var(--cv-accent-soft);
 }
 
 .cv-btn-secondary {
@@ -334,7 +334,7 @@ html, body {
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 10px var(--cv-accent-glow);
+  box-shadow: 0 2px 10px var(--cv-accent-soft);
 }
 
 .nd-nav__cta.cv-btn-primary {
@@ -1157,8 +1157,8 @@ html, body {
 }
 
 @keyframes badge-dot-pulse {
-  0%, 100% { box-shadow: 0 0 6px var(--cv-accent-glow); }
-  50%       { box-shadow: 0 0 14px var(--cv-accent-glow), 0 0 24px var(--cv-accent-glow); }
+  0%, 100% { box-shadow: 0 0 6px var(--cv-accent-soft); }
+  50%       { box-shadow: 0 0 14px var(--cv-accent-soft), 0 0 24px var(--cv-accent-soft); }
 }
 
 @keyframes word-in {
@@ -1350,11 +1350,11 @@ html, body {
   font-weight: 600;
   padding: 0 28px;
   background-color: var(--cv-accent);
-  box-shadow: 0 0 0 1px var(--cv-accent-soft), 0 4px 20px var(--cv-accent-glow);
+  box-shadow: 0 0 0 1px var(--cv-accent-soft);
 }
 .cv-btn-primary:hover {
   background-color: var(--cv-accent-hover);
-  box-shadow: 0 0 0 1px var(--cv-accent-glow), 0 8px 28px var(--cv-accent-glow);
+  box-shadow: 0 0 0 1px var(--cv-accent-soft), 0 8px 28px var(--cv-accent-soft);
 }
 .cv-btn-primary:focus-visible {
   outline: 2px solid var(--cv-accent);
@@ -1757,7 +1757,7 @@ html, body {
   height: 7px;
   border-radius: 50%;
   background: var(--cv-accent);
-  box-shadow: 0 0 10px var(--cv-accent-glow);
+  box-shadow: 0 0 10px var(--cv-accent-soft);
   flex-shrink: 0;
   animation: badge-dot-pulse 2.5s ease-in-out infinite;
 }
@@ -2217,8 +2217,8 @@ html, body {
   }
 
   .nd-page .nd-hero__btn-primary {
-    --cta-primary-rest-shadow: inset 0 1px 0 var(--cta-glass-highlight), inset 0 -2px 0 var(--cta-inner-shade), 0 4px 0 var(--cta-orange-base), 0 9px 17px var(--cta-orange-glow);
-    --cta-primary-hover-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), inset 0 -2px 0 rgba(105, 25, 6, 0.3), 0 4px 0 var(--cta-orange-base), 0 10px 20px var(--cta-orange-glow-hover);
+--cta-primary-rest-shadow: inset 0 1px 0 var(--cta-glass-highlight), inset 0 -2px 0 var(--cta-inner-shade);
+--cta-primary-hover-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82), inset 0 -2px 0 rgba(105, 25, 6, 0.3);
     --cta-primary-press-shadow: inset 0 2px 5px rgba(105, 25, 6, 0.42), 0 1px 0 var(--cta-orange-base), 0 3px 7px rgba(0, 0, 0, 0.2);
   }
 
