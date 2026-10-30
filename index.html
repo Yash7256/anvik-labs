@@ -7,23 +7,6 @@
     <meta name="description" content="A product studio that ships its own software and partners with startups and teams on UI/UX design and web development." />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#080808" />
-    <script>
-      try {
-        if (
-          location.pathname === '/' &&
-          !sessionStorage.getItem('anvik:intro-seen')
-        ) {
-          document.documentElement.dataset.intro = 'pending'
-        }
-      } catch {}
-    </script>
-    <noscript>
-      <style>
-        html[data-intro='pending'] body::before {
-          display: none;
-        }
-      </style>
-    </noscript>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

@@ -1,14 +1,12 @@
 # Anvik Labs
 
-Technology studio site for Anvik Labs. Editorial hero, WebGL pill stack, preloader sequence, and scroll-driven storytelling.
+Technology studio site for Anvik Labs. Currently contains only the landing hero.
 
 ## Stack
 
 - React 19 + Vite + TypeScript
 - Tailwind CSS v4
-- GSAP + ScrollTrigger + SplitText + MorphSVG
-- Lenis smooth scrolling
-- OGL (WebGL shader pills with a CSS fallback)
+- GSAP
 
 ## Development
 
@@ -26,7 +24,9 @@ npm run build
 
 ## Structure
 
-- `src/components/hero` — preloader, navigation, WebGL pill stack, hero
-- `src/components/ui` — cursor, magnetic button, marquee
-- `src/hooks` — Lenis and reduced-motion hooks
-- `src/index.css` — design tokens and all component styles
+- `src/components/nd/NdNavbar.jsx` — fixed navigation with mobile drawer
+- `src/components/nd/NdHero.jsx` — hero section
+- `src/components/ui/MagneticButton.jsx` — magnetic CTA button
+- `src/data/heroData.js` — hero copy and assets
+- `src/index.css` — Tailwind entry
+- `src/nd.css` — hero design tokens and styles

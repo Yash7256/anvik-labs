@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 
 import { AppRoutes } from '@/AppRoutes'
-import { LenisProvider } from '@/hooks/useLenis'
 
 import './index.css'
 import './nd.css'
@@ -15,9 +14,7 @@ const app = (
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <LenisProvider>
-          <AppRoutes />
-        </LenisProvider>
+        <AppRoutes />
       </BrowserRouter>
     </HelmetProvider>
   </StrictMode>

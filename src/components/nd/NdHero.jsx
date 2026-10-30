@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { gsap, useGSAP } from '@/lib/gsap'
 import { MagneticButton } from '@/components/ui/MagneticButton'
-import { HeroSplineBg } from './HeroSplineBg'
+import { HeroSculpture } from './HeroSculpture'
 import { HERO_CONFIG } from '@/data/heroData'
 
 export function NdHero() {
@@ -11,7 +11,6 @@ export function NdHero() {
     headline,
     subheadline,
     ctas,
-    trustedLogos,
   } = HERO_CONFIG
 
   // Subtle load-in animation (fade up, 400–600ms, staggered)
@@ -37,9 +36,7 @@ export function NdHero() {
 
   return (
     <section ref={rootRef} className="nd-hero-section" aria-label="Hero">
-      <div className="nd-hero__visual-backdrop" aria-hidden="true">
-        <HeroSplineBg />
-      </div>
+      <HeroSculpture />
       <div className="nd-container">
         <div className="nd-hero__grid">
           <div className="nd-hero__content">
@@ -78,7 +75,7 @@ export function NdHero() {
             <div data-hero-reveal className="nd-hero__cta-group">
               <MagneticButton
                 href={ctas.primary.href}
-                className="cv-btn-primary nd-hero__btn-primary"
+                className="btn btn-primary nd-hero__btn-primary"
                 strength={10}
                 aria-label={ctas.primary.ariaLabel}
               >
@@ -103,7 +100,7 @@ export function NdHero() {
 
               <MagneticButton
                 href={ctas.secondary.href}
-                className="cv-btn-secondary nd-hero__btn-secondary"
+                className="btn btn-secondary nd-hero__btn-secondary"
                 strength={8}
                 aria-label={ctas.secondary.ariaLabel}
               >
@@ -113,25 +110,6 @@ export function NdHero() {
 
           </div>
         </div>
-
-        {/* Social Proof: Trusted by teams logo row
-        {trustedLogos && trustedLogos.length > 0 && (
-          // <div data-hero-reveal className="nd-hero__trusted-row" aria-label="Trusted by teams">
-          //   <p className="nd-hero__trusted-label">Trusted by founders and growing teams</p>
-          //   <div className="nd-hero__trusted-logos">
-          //     {trustedLogos.map((logo) => (
-          //       <div key={logo.name} className="nd-hero__trusted-item" title={logo.name}>
-          //         <img
-          //           src={logo.src}
-          //           alt={logo.alt || `${logo.name} logo`}
-          //           className="nd-hero__trusted-img"
-          //           loading="lazy"
-          //         />
-          //       </div>
-          //     ))}
-          //   </div>
-          // </div>
-        )} */}
       </div>
     </section>
   )
