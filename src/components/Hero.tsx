@@ -1,7 +1,143 @@
 import { site } from "@/lib/site";
 import { Link } from "react-router";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import Img from "./Img";
 
 const products = ["Chisel UI", "CyberSec Toolkit", "Designers Room"];
+
+const slides = [
+  {
+    src: "/mockups/designersroom.webp",
+    width: 1519,
+    height: 1036,
+    label: "Designers Room",
+    alt: "Designers Room community product mockup",
+  },
+  {
+    src: "/mockups/cybersec-toolkit.webp",
+    width: 1672,
+    height: 941,
+    label: "CyberSec Toolkit",
+    alt: "CyberSec Toolkit dashboard mockup",
+  },
+  {
+    src: "/mockups/notifyed.webp",
+    width: 1672,
+    height: 941,
+    label: "Notifyed",
+    alt: "Notifyed product interface mockup",
+  },
+  {
+    src: "/mockups/sedativephysio.webp",
+    width: 1447,
+    height: 1085,
+    label: "Sedative Physio",
+    alt: "Sedative Physio website mockup",
+  },
+];
+
+function HeroSlideshow() {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (reduceMotion || paused) return;
+
+    const timer = window.setInterval(() => {
+      setDirection(1);
+      setIndex((current) => (current + 1) % slides.length);
+    }, 4500);
+
+    return () => window.clearInterval(timer);
+  }, [reduceMotion, paused, index]);
+
+  const showSlide = (nextIndex: number) => {
+    setDirection(nextIndex >= index ? 1 : -1);
+    setIndex(nextIndex);
+  };
+
+  const current = slides[index];
+
+  return (
+    <div
+      role="group"
+      aria-label="Selected work mockups"
+      style={{
+        height: "var(--hero-frame-height)",
+        width: `calc(var(--hero-frame-height) * ${
+          current.width / current.height
+        })`,
+      }}
+      className="relative max-w-full shrink-0 overflow-hidden rounded-[2px] border border-white/10 bg-light-surface [--hero-frame-height:clamp(160px,44vw,260px)] lg:[--hero-frame-height:clamp(180px,18vw,280px)]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={current.src}
+          custom={direction}
+          variants={{
+            enter: (slideDirection: number) => ({
+              x: slideDirection > 0 ? "100%" : "-100%",
+            }),
+            center: { x: "0%" },
+            exit: (slideDirection: number) => ({
+              x: slideDirection > 0 ? "-100%" : "100%",
+            }),
+          }}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            duration: reduceMotion ? 0 : 0.6,
+            ease: [0.32, 0.72, 0, 1],
+          }}
+          className="absolute inset-0"
+        >
+          <Img
+            fill
+            src={current.src}
+            alt={current.alt}
+            loading="eager"
+            className="object-cover object-center"
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 border-t border-white/10 bg-background/85 px-3 py-2 sm:px-4">
+        <p className="truncate font-mono text-[12px] uppercase tracking-[0.16em] text-neutral-400">
+          {slides[index].label}
+        </p>
+        <div className="flex items-center">
+          {slides.map((slide, slideIndex) => (
+            <button
+              key={slide.src}
+              type="button"
+              onClick={() => showSlide(slideIndex)}
+              aria-label={`Show ${slide.label}`}
+              aria-current={slideIndex === index ? "true" : undefined}
+              className="group flex h-6 items-center px-1"
+            >
+              <span
+                aria-hidden="true"
+                className={`h-[2px] w-5 transition-colors duration-300 sm:w-6 ${
+                  slideIndex === index
+                    ? "bg-accent"
+                    : "bg-white/25 group-hover:bg-white/50"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -56,18 +192,8 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="flex w-full justify-end lg:col-span-5 lg:-mt-2 lg:-mr-[5vw] xl:-mr-[6vw] xl:col-span-5">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2px] border border-white/10 border-r-0 bg-light-surface">
-            <video
-              src="/hero.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              aria-label="Anvik Labs product work reel"
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
+        <div className="flex w-full justify-end lg:col-span-5 lg:-mt-2 xl:col-span-5">
+          <HeroSlideshow />
         </div>
       </div>
 

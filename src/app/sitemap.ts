@@ -1,11 +1,9 @@
-import journal from "@/data/journal";
 import { projects } from "@/data/projects";
 import { site } from "@/lib/site";
 
 const staticPaths = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/works", changefreq: "monthly", priority: "0.9" },
-  { path: "/journal", changefreq: "weekly", priority: "0.7" },
   { path: "/services/web-development", changefreq: "monthly", priority: "0.8" },
   { path: "/services/product-design", changefreq: "monthly", priority: "0.8" },
   { path: "/services/ai-solutions", changefreq: "monthly", priority: "0.8" },
@@ -36,13 +34,6 @@ export function loader() {
       changefreq: "yearly" as const,
       priority: "0.6",
     })),
-    ...journal
-      .filter((post) => !post.draft && !post.externalUrl)
-      .map((post) => ({
-        loc: url(`/journal/${post.id}`),
-        changefreq: "monthly" as const,
-        priority: "0.5",
-      })),
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

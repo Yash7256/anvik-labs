@@ -1,5 +1,4 @@
 import type { Config } from "@react-router/dev/config";
-import journal from "./src/data/journal";
 import { projects } from "./src/data/projects";
 
 export default {
@@ -10,10 +9,6 @@ export default {
     "/works",
     ...projects.map((project) => `/works/${project.id}`),
     "/contact",
-    "/journal",
-    ...journal
-      .filter((post) => !post.draft && !post.externalUrl)
-      .map((post) => `/journal/${post.id}`),
     "/services/web-development",
     "/services/product-design",
     "/services/ai-solutions",

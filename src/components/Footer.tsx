@@ -6,7 +6,6 @@ import { site } from "@/lib/site";
 const footerLinks = [
   { label: "Home", href: "/" },
   { label: "Works", href: "/works" },
-  { label: "Journal", href: "/journal" },
   { label: "Services", href: "/#services" },
   { label: "Contact", href: "/contact" },
 ];

@@ -5,7 +5,6 @@ import FeaturedProduct from "@/components/FeaturedProduct";
 import MeetTheHumans from "@/components/MeetTheHumans";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
-import Articles from "@/components/Articles";
 import Footer from "@/components/Footer";
 import { createMeta, site } from "@/lib/site";
 
@@ -22,7 +21,6 @@ export default function Home() {
         <MeetTheHumans />
         <Services />
         <Testimonials />
-        <Articles />
       </main>
       <Footer />
     </>

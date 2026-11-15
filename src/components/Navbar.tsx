@@ -9,7 +9,6 @@ import { site } from "@/lib/site";
 const quickLinks = [
   { label: "Works", href: "/works" },
   { label: "Services", href: "/#services" },
-  {label: "Journal", href: "/journal"},
   { label: "Contact", href: "/contact" },
 ];
 

@@ -103,14 +103,6 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 - Transitions use a short fade and vertical shift, disabled for reduced motion.
 - Keep the composition centered and spacious. Do not turn it into a card grid or add testimonial badges.
 
-### Writing
-
-- One editorial row: source/date and category on the left, title and description in the middle, and an optional 16:9 preview thumbnail on the right.
-- Author and external-link action sit as a small mono meta line beneath the description.
-- The thumbnail is approximately 220px wide on desktop, narrows on tablet, and stacks beneath the description on mobile. It uses a 4px radius, `object-fit: cover`, and scales to 1.03 on row hover over 300ms.
-- Articles without a preview image omit the thumbnail column without changing the row layout.
-- External articles open in a new tab with `rel="noreferrer"`.
-
 ### Contact
 
 - Contact details, studio description, and a contact form backed by FormSubmit.

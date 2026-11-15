@@ -1,6 +1,6 @@
 # Anvik Labs
 
-Portfolio and studio site for Anvik Labs, a product design and engineering studio. The site is a dark, type-led React Router application with a small set of editorial routes: home, selected work, project detail, journal, services, and contact.
+Portfolio and studio site for Anvik Labs, a product design and engineering studio. The site is a dark, type-led React Router application with a small set of editorial routes: home, selected work, project detail, services, and contact.
 
 ## Stack
 
@@ -40,11 +40,10 @@ Run all three before considering a change complete.
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Home: introduction, Designers Room feature, team, services, testimonials, writing |
+| `/` | Home: introduction, Designers Room feature, team, services, testimonials |
 | `/works` | Selected work index |
 | `/works/:slug` | Project case study |
 | `/contact` | Inquiry details and contact form |
-| `/journal` | Writing index |
 | `/services/web-development` | Web development service |
 | `/services/product-design` | UI/UX and product design service |
 | `/services/ai-solutions` | AI solutions service |

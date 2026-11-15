@@ -8,5 +8,4 @@
 - [Web Development](https://anviklabs.site/services/web-development): Fast, accessible React and TypeScript websites and apps.
 - [AI Solutions](https://anviklabs.site/services/ai-solutions): LLM integrations, RAG search, and chatbot development.
 - [Website Maintenance](https://anviklabs.site/services/website-maintenance): Ongoing updates, bug fixes, content changes, and hosting support.
-- [Journal](https://anviklabs.site/journal): Notes on product design, web development, and building with AI.
 - [Contact](https://anviklabs.site/contact): Start a project or ask a question.
