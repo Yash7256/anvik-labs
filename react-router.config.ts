@@ -8,6 +8,7 @@ export default {
     "/",
     "/works",
     ...projects.map((project) => `/works/${project.id}`),
+    "/aman-raj",
     "/contact",
     "/services/web-development",
     "/services/product-design",

@@ -4,6 +4,7 @@ import { site } from "@/lib/site";
 const staticPaths = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/works", changefreq: "monthly", priority: "0.9" },
+  { path: "/aman-raj", changefreq: "monthly", priority: "0.7" },
   { path: "/services/web-development", changefreq: "monthly", priority: "0.8" },
   { path: "/services/product-design", changefreq: "monthly", priority: "0.8" },
   { path: "/services/ai-solutions", changefreq: "monthly", priority: "0.8" },

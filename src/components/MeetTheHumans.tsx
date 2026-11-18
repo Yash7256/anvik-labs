@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Link } from "react-router";
 import {
   motion,
   useMotionValue,
@@ -386,11 +387,22 @@ export default function MeetTheHumans() {
               id="human-aman"
               className="mt-3 font-sans text-[clamp(2.125rem,3.5vw,2.75rem)] font-medium leading-none tracking-[-0.04em] text-foreground"
             >
-              Aman Raj
+              <Link
+                to="/aman-raj"
+                className="underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent/40"
+              >
+                Aman Raj
+              </Link>
             </h3>
             <p className="mt-2 font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-neutral-400 md:text-[13px]">
               Engineering / Product
             </p>
+            <Link
+              to="/aman-raj"
+              className="mt-4 inline-flex font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400 underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent/40"
+            >
+              View profile
+            </Link>
             <p className="mt-5 max-w-[46ch] text-pretty text-[14px] leading-[1.65] text-foreground md:text-[15px]">
               Aman is the engineer who loves the invisible work: architecture,
               performance, and the small decisions that keep a product fast and
