@@ -79,16 +79,36 @@ export default function FeaturedProduct() {
 
       <div className="grid grid-cols-1 items-center gap-8 md:gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
         <div className="w-full lg:col-span-6">
-          <div className="relative aspect-[4/3] w-full overflow-hidden border border-white/10 bg-light-surface">
-            <video
-              src="/designersroom.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              aria-label="Designers Room product showcase"
-              className="h-full w-full object-contain object-center"
-            />
+          <div className="grid grid-cols-2 gap-3 aspect-[4/3]">
+            <article className="col-span-2 flex flex-col justify-between rounded-[2px] border border-white/10 bg-light-surface p-4 sm:p-5">
+              <div>
+                <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+                  Roadmaps
+                </p>
+                <p className="mt-2 max-w-[28ch] font-sans text-[16px] leading-snug text-foreground md:text-[18px]">
+                  Clear paths to level up your design craft.
+                </p>
+              </div>
+              <span className="font-mono text-[12px] text-neutral-400">
+                Structured learning
+              </span>
+            </article>
+            <article className="flex flex-col justify-between rounded-[2px] border border-white/10 bg-light-surface p-4">
+              <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+                Challenges
+              </p>
+              <p className="mt-2 font-sans text-[14px] leading-snug text-neutral-200">
+                Practice with focused briefs.
+              </p>
+            </article>
+            <article className="flex flex-col justify-between rounded-[2px] border border-accent/30 bg-accent/5 p-4">
+              <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-accent-text">
+                Community
+              </p>
+              <p className="mt-2 font-sans text-[14px] leading-snug text-neutral-200">
+                Build and grow with peers.
+              </p>
+            </article>
           </div>
         </div>
 
