@@ -18,7 +18,7 @@ const budgetOptions = [
 ];
 
 const fieldClass =
-  "w-full border-b border-white/20 bg-transparent py-3 font-sans text-[15px] text-foreground placeholder:text-neutral-600 transition-colors focus:border-accent";
+  "w-full border-b border-white/20 bg-transparent py-3 font-sans text-[15px] text-foreground placeholder:text-[16px] placeholder:text-neutral-600 transition-colors focus:border-accent";
 
 const selectClass =
   "w-full cursor-pointer border-b border-white/20 bg-background py-3 font-sans text-[15px] text-foreground transition-colors [color-scheme:dark] focus:border-accent";
