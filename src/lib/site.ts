@@ -16,8 +16,8 @@ export const site = {
   ogImageHeight: "630",
   ogImageType: "image/png",
   ogImageAlt: "Anvik Labs — Product design & engineering studio",
-  themeColor: "#080808",
-  backgroundColor: "#080808",
+  themeColor: "#0d0d0d",
+  backgroundColor: "#0d0d0d",
   // Add verified Anvik Labs profiles here when official company accounts exist.
   // Individual team profiles live in `src/data/socials.json` and are not used here.
   sameAs: [] as string[],

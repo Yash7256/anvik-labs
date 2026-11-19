@@ -93,9 +93,9 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <nav aria-label="Primary navigation" className="hidden md:block">
-            <div className="flex items-center gap-1.5 font-sans text-neutral-300">
-              {quickLinks.map((item, index) => (
+          <nav aria-label="Primary navigation" className="hidden items-center gap-5 md:flex">
+            <div className="flex items-center gap-1.5 font-sans text-muted">
+              {quickLinks.slice(0, 2).map((item, index) => (
                 <span key={item.label} className="inline-flex items-center gap-1.5">
                   <Link
                     to={item.href}
@@ -103,21 +103,27 @@ export default function Navbar() {
                   >
                     {item.label}
                   </Link>
-                  {index < quickLinks.length - 1 && (
-                    <span aria-hidden="true" className="font-normal text-neutral-500">
+                  {index === 0 && (
+                    <span aria-hidden="true" className="font-normal text-muted">
                       ,
                     </span>
                   )}
                 </span>
               ))}
             </div>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 font-sans text-[13px] font-semibold tracking-tight text-black transition-colors duration-200 hover:bg-neutral-200"
+            >
+              Let's talk
+            </Link>
           </nav>
 
           <button
             type="button"
             onClick={() => setOpen(true)}
             ref={menuButtonRef}
-            className="inline-flex min-h-11 items-center font-mono text-[12px] font-semibold uppercase tracking-wider text-neutral-300 transition-opacity duration-200 hover:opacity-60 md:hidden"
+            className="inline-flex min-h-11 items-center font-mono text-[12px] font-semibold uppercase tracking-wider text-muted transition-opacity duration-200 hover:opacity-60 md:hidden"
             aria-label="Open navigation menu"
             aria-expanded={open}
             aria-controls="mobile-navigation"
@@ -128,7 +134,7 @@ export default function Navbar() {
       </div>
 
       <div aria-hidden className="w-full px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
-        <div className="h-px w-full origin-bottom scale-y-50 bg-white/15" />
+        <div className="h-px w-full origin-bottom scale-y-50 bg-white/10" />
       </div>
 
       </header>
@@ -167,7 +173,7 @@ export default function Navbar() {
                 type="button"
                 onClick={() => setOpen(false)}
                 ref={closeButtonRef}
-                className="inline-flex min-h-11 items-center font-mono text-[12px] font-semibold uppercase tracking-wider text-neutral-300"
+                className="inline-flex min-h-11 items-center font-mono text-[12px] font-semibold uppercase tracking-wider text-muted"
                 aria-label="Close navigation menu"
               >
                 [ CLOSE ]
@@ -175,7 +181,7 @@ export default function Navbar() {
             </div>
 
             <nav aria-label="Mobile navigation" className="mt-12 flex flex-col gap-5">
-              <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-neutral-400">
+              <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">
                 Quick links
               </span>
               {quickLinks.map((item) => (
@@ -194,7 +200,7 @@ export default function Navbar() {
               <span className="font-sans font-medium text-foreground">
                 {site.studioTagline}
               </span>
-              <span className="font-sans text-neutral-400">
+              <span className="font-sans text-muted">
                 Based in India, working globally
               </span>
             </div>

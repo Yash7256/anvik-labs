@@ -16,17 +16,17 @@ Tokens are defined in `src/app/globals.css`.
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--color-background` | `#080808` | Page background |
-| `--color-foreground` | `#e7e9ee` | Primary text |
-| `--color-text-secondary` / `--color-muted` | `rgba(231, 233, 238, 0.62)` | Secondary copy |
-| `--color-border` | `rgba(255, 255, 255, 0.12)` | Hairlines and dividers |
-| `--color-light-surface` / `--color-surface` | `#11100f` | Media wells and soft surfaces |
-| `--color-dark-surface` | `#0b0a09` | Deep surfaces |
-| `--color-accent` | `#ff6a00` | Primary accent |
-| `--color-accent-text` | `#ff8a4a` | Accent text on dark |
-| `--color-accent-strong` | `#ff6a1a` | Accent hover |
-| `--color-accent-soft` | `rgba(255, 106, 26, 0.12)` | Quiet accent wash |
-| `--color-on-accent` | `#080808` | Text on accent fills |
+| `--color-background` | `#0d0d0d` | Page background |
+| `--color-foreground` | `#f4f1ec` | Primary text |
+| `--color-text-secondary` / `--color-muted` | `#a39d95` | Secondary copy |
+| `--color-border` | `rgba(255, 255, 255, 0.1)` | Hairlines and dividers |
+| `--color-light-surface` / `--color-surface` | `#141414` | Media wells and soft surfaces |
+| `--color-dark-surface` | `#0d0d0d` | Deep surfaces |
+| `--color-accent` | `#ff5a0a` | Primary accent |
+| `--color-accent-text` | `#ff8a5a` | Accent text on dark |
+| `--color-accent-strong` | `#ff7026` | Accent hover |
+| `--color-accent-soft` | `rgba(255, 90, 10, 0.12)` | Quiet accent wash |
+| `--color-on-accent` | `#0d0d0d` | Text on accent fills |
 
 Do not introduce a second accent. Do not switch the site to a light theme. Avoid pure black and pure white as large surfaces; use the near-black and off-white tokens instead.
 
@@ -36,14 +36,14 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 
 - **Inter Display** — self-hosted from `public/fonts/`, weights 400/500/600/700. Used for headings, body copy, navigation, and form values.
 - **Monospace** — system monospace stack. Used for labels, indices, metadata, counters, and technical annotations.
-- **Michroma** — Google Fonts. Used only for the oversized `Anvik Labs` wordmark in the hero.
+- **Michroma** — Google Fonts. Used only on the Aman Raj profile page.
 - **Instrument Serif** — Google Fonts. Used only for testimonial quotations.
 
 ### Scale
 
 - Page title: `clamp(3.5rem, 10vw, 9rem)`, tight leading, `-0.05em` tracking.
 - Section heading: `clamp(2.4rem, 6vw, 5.5rem)`, `0.95` leading, `-0.04em` tracking.
-- Hero heading: `clamp(2.1rem, 3.8vw, 3.6rem)`, `1.08` leading.
+- Hero heading: `clamp(2.2rem, 4.6vw, 3.75rem)`, `1.04` leading, bold.
 - Testimonial quote: `clamp(1.6rem, 3.1vw, 2.7rem)` in Instrument Serif, `1.14` leading, max width `54ch`.
 - Body: 14–17px, relaxed leading.
 - Labels and metadata: 12px minimum, monospace, uppercase, wide tracking.
@@ -62,16 +62,17 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 ### Navigation
 
 - Fixed header with a translucent background and blur.
-- Desktop links: Home, Works, Services, Contact.
+- Desktop links: Works, Services, plus a rounded "Let's talk" CTA to `/contact`.
 - Mobile: `[ MENU ]` opens a full-screen drawer. Escape closes it; body scroll is locked while open.
 - Focus states are always visible. The skip link targets `#main-content`.
 
 ### Hero
 
 - Min-height fills the viewport minus the header.
-- Left: kicker, two-line introduction, supporting paragraph, selected-product list.
-- Right: autoplaying muted product reel.
-- Bottom: full-width Michroma wordmark, hairline rules, and studio metadata.
+- Centered two-line headline with a short supporting paragraph.
+- Segmented "Explore By" navigation to disciplines and all work.
+- Studio metadata on the left and a compact accent CTA on the right.
+- Three compact project cards in one row, closed by a hairline divider.
 
 ### Featured product
 

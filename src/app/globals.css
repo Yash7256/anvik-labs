@@ -33,31 +33,31 @@
 }
 
 @theme {
-  --color-background: #080808;
-  --color-foreground: #e7e9ee;
-  --color-text-secondary: rgba(231, 233, 238, 0.62);
-  --color-border: rgba(255, 255, 255, 0.12);
-  --color-light-surface: #11100f;
-  --color-dark-surface: #0b0a09;
-  --color-text-on-dark: #f5f4f0;
-  --color-muted: rgba(231, 233, 238, 0.62);
-  --color-inverse: #17140f;
-  --color-inverse-foreground: #f5f4f0;
-  --color-inverse-muted: rgba(245, 244, 240, 0.66);
-  --color-surface: #11100f;
+  --color-background: #0d0d0d;
+  --color-foreground: #f4f1ec;
+  --color-text-secondary: #a39d95;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-light-surface: #141414;
+  --color-dark-surface: #0d0d0d;
+  --color-text-on-dark: #f4f1ec;
+  --color-muted: #a39d95;
+  --color-inverse: #1a1a1a;
+  --color-inverse-foreground: #f4f1ec;
+  --color-inverse-muted: rgba(244, 241, 236, 0.66);
+  --color-surface: #141414;
 
-  --color-on-light: #171310;
-  --color-tone-1: #17140f;
-  --color-tone-2: #1c1916;
-  --color-tone-3: #302923;
+  --color-on-light: #0d0d0d;
+  --color-tone-1: #141414;
+  --color-tone-2: #1a1a1a;
+  --color-tone-3: #242424;
 
-  --color-accent: #ff6a00;
-  --color-accent-text: #ff8a4a;
-  --color-accent-strong: #ff6a1a;
-  --color-accent-soft-text: #ffd0a3;
-  --color-accent-soft: rgba(255, 106, 26, 0.12);
-  --color-accent-wash: rgba(255, 106, 26, 0.06);
-  --color-on-accent: #080808;
+  --color-accent: #ff5a0a;
+  --color-accent-text: #ff8a5a;
+  --color-accent-strong: #ff7026;
+  --color-accent-soft-text: #ffc9a8;
+  --color-accent-soft: rgba(255, 90, 10, 0.12);
+  --color-accent-wash: rgba(255, 90, 10, 0.06);
+  --color-on-accent: #0d0d0d;
 
   --font-sans: var(--font-inter-display), "Helvetica Neue", Helvetica, Arial,
     sans-serif;
@@ -179,6 +179,23 @@ select option {
   .container-page {
     padding-inline: 6vw;
   }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-glow {
+  background: radial-gradient(
+    60% 55% at 50% 0%,
+    rgba(255, 90, 10, 0.06),
+    transparent 70%
+  );
 }
 
 @keyframes marquee-scroll {

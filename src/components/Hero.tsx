@@ -1,107 +1,171 @@
-import { site } from "@/lib/site";
 import { Link } from "react-router";
-import { useReducedMotion } from "framer-motion";
-import Img from "./Img";
+import { motion, useReducedMotion } from "framer-motion";
+import { projects, type Project } from "@/data/projects";
 
-function HeroMedia() {
-  const reduceMotion = useReducedMotion();
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+const featuredIds = ["designers-room", "cybersec-toolkit", "notify-ed"];
+
+const featuredProjects = featuredIds
+  .map((id) => projects.find((project) => project.id === id))
+  .filter((project): project is Project => Boolean(project));
+
+const filters = [
+  { label: "Web Development", href: "/services/web-development" },
+  { label: "UI/UX Design", href: "/services/product-design" },
+  { label: "AI Development", href: "/services/ai-solutions" },
+];
+
+function ArrowIcon({ className = "" }: { className?: string }) {
   return (
-    <div
-      aria-label="Designers Room product preview"
-      className="relative aspect-[16/10] h-[var(--hero-frame-height)] max-w-full shrink-0 overflow-hidden rounded-[2px] border border-white/10 bg-light-surface [--hero-frame-height:clamp(220px,52vw,340px)] lg:[--hero-frame-height:clamp(260px,22vw,420px)]"
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
     >
-      {reduceMotion ? (
-        <Img
-          fill
-          src="/mockups/designersroom.webp"
-          alt="Designers Room product preview"
-          loading="eager"
-          className="object-cover object-center"
-        />
-      ) : (
-        <video
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          src="/designersroom.mp4"
-          poster="/mockups/designersroom.webp"
-          muted
-          loop
-          autoPlay
-          playsInline
-          preload="metadata"
-          aria-label="Designers Room product preview video"
-        />
-      )}
-    </div>
+      <path d="M4 12 12 4M5.5 4H12v6.5" />
+    </svg>
   );
 }
 
 export default function Hero() {
+  const reduceMotion = useReducedMotion();
+
+  const rise = (delay: number) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 14 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.7, delay, ease: EASE },
+        };
+
   return (
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative flex min-h-[calc(100svh-var(--header-height))] flex-col justify-between pb-3 pt-32 md:pb-5 md:pt-44"
+      className="relative isolate overflow-hidden"
     >
-      <div className="grid flex-1 grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
-        <div className="flex h-full flex-col justify-between pb-2 pt-0 lg:col-span-7 xl:col-span-7">
-          <div>
-            <h1
-              id="hero-heading"
-              className="mt-4 max-w-[18ch] font-sans text-[clamp(2.35rem,4.2vw,4rem)] font-medium leading-[1.08] tracking-[-0.035em] text-foreground"
-            >
-              We build useful products, and help you build yours.
-            </h1>
-            <p className="mt-4 max-w-[58ch] font-sans text-[16px] leading-relaxed text-neutral-300 md:text-[17px]">
-              Anvik Labs is a design and engineering studio in India. We own
-              Designers Room, and design and build websites, web apps and AI
-              tools for startups and small businesses.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href="#featured-product"
-                className="inline-flex min-h-11 items-center justify-center rounded-[2px] bg-accent px-5 font-sans text-[15px] font-medium text-on-accent transition-colors hover:bg-accent-strong"
+      <div
+        aria-hidden="true"
+        className="hero-glow pointer-events-none absolute inset-x-0 top-0 h-[440px]"
+      />
+
+      <div className="container-page relative flex min-h-[calc(100svh-var(--header-height))] flex-col py-14 md:py-16 lg:py-20">
+        <div className="mx-auto flex w-full max-w-[1180px] flex-1 flex-col justify-center">
+          <motion.h1
+            id="hero-heading"
+            {...rise(0.04)}
+            className="mx-auto max-w-[30ch] text-center font-sans text-[clamp(2.2rem,4.6vw,3.75rem)] font-bold leading-[1.04] tracking-[-0.04em] text-foreground"
+          >
+            We build useful products,
+            <br className="hidden md:block" /> and help you build yours.
+          </motion.h1>
+
+          <motion.p
+            {...rise(0.1)}
+            className="mx-auto mt-5 max-w-[62ch] text-center font-sans text-[16px] leading-[1.65] text-muted"
+          >
+            A product design and engineering studio in India. We build our own
+            products and help startups and small businesses build theirs.
+          </motion.p>
+
+          <motion.div
+            {...rise(0.16)}
+            className="mx-auto mt-9 w-full max-w-[920px] md:mt-11"
+          >
+            <div className="flex items-stretch rounded-[8px] border border-white/10 bg-surface">
+              <div className="hidden shrink-0 items-center gap-2 border-r border-white/10 px-4 font-sans text-[13px] font-medium text-muted sm:flex">
+                <span aria-hidden="true" className="text-accent">
+                  /
+                </span>
+                Explore By
+              </div>
+              <nav
+                aria-label="Explore work by discipline"
+                className="no-scrollbar flex min-w-0 flex-1 items-stretch overflow-x-auto"
               >
-                See our products
-              </a>
+                {filters.map((filter, index) => (
+                  <Link
+                    key={filter.href}
+                    to={filter.href}
+                    className={`flex shrink-0 items-center px-4 py-3 font-sans text-[13px] text-muted transition-colors duration-200 hover:bg-white/[0.04] hover:text-foreground active:bg-accent-soft active:text-foreground ${
+                      index < filters.length - 1 ? "border-r border-white/10" : ""
+                    }`}
+                  >
+                    {filter.label}
+                  </Link>
+                ))}
+              </nav>
               <Link
-                to="/contact"
-                className="inline-flex min-h-11 items-center justify-center rounded-[2px] border border-white/20 px-5 font-sans text-[15px] font-medium text-foreground transition-colors hover:border-white/40 hover:bg-white/5"
+                to="/works"
+                className="group inline-flex shrink-0 items-center gap-2 border-l border-white/10 px-4 font-sans text-[13px] font-medium text-foreground transition-colors duration-200 hover:bg-white/[0.04] sm:px-5"
               >
-                Work with us
+                All Work
+                <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
+          <motion.div
+            {...rise(0.22)}
+            className="mx-auto mt-4 flex w-full max-w-[920px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <p className="font-sans text-[13px] text-muted">
+              Product design &amp; engineering studio{" "}
+              <span aria-hidden="true" className="mx-1.5 text-white/20">
+                /
+              </span>{" "}
+              Based in India
+            </p>
+            <Link
+              to="/contact"
+              className="group inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-[4px] bg-accent px-4 font-sans text-[13px] font-medium text-on-accent transition-colors duration-200 hover:bg-accent-strong sm:self-auto"
+            >
+              Work With Us
+              <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </motion.div>
 
+          <motion.div {...rise(0.28)} className="mt-10 md:mt-12">
+            <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto md:grid md:grid-cols-3 md:overflow-visible">
+              {featuredProjects.map((project, index) => (
+                <Link
+                  key={project.id}
+                  to={`/works/${project.id}`}
+                  aria-label={`${project.name} — view project`}
+                  className="group block min-w-[78vw] snap-start rounded-[6px] sm:min-w-[46vw] md:min-w-0"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-[6px] border border-white/10 bg-[#141414] transition-colors duration-300 group-hover:border-white/20">
+                    <img
+                      src={project.coverImage}
+                      alt={project.coverAlt}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      className="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <div className="mt-4 flex items-baseline justify-between gap-3">
+                    <h2 className="font-sans text-[16px] font-semibold tracking-[-0.02em] text-foreground">
+                      {project.name}
+                    </h2>
+                    <ArrowIcon className="h-3.5 w-3.5 shrink-0 text-muted transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                  </div>
+                  <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.1em] text-muted">
+                    {project.genre}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        <div className="flex w-full justify-end lg:col-span-5 lg:-mt-2 xl:col-span-5">
-          <HeroMedia />
-        </div>
-      </div>
-
-      <div aria-hidden className="my-4 h-px w-full bg-white/15 md:my-5" />
-
-      <div className="relative w-full overflow-visible py-2 md:py-3">
-        <div className="relative z-10 flex w-full items-center justify-center font-sans font-bold leading-none tracking-[-0.045em] text-foreground">
-          <span className="inline-block whitespace-nowrap font-michroma font-normal text-[clamp(2rem,12vw,12rem)] [word-spacing:0.2em]">
-            Anvik Labs
-          </span>
-        </div>
-      </div>
-
-      <div aria-hidden className="my-2 h-px w-full bg-white/15 md:my-3" />
-
-      <div className="flex flex-col items-center justify-between gap-3 pb-1 pt-1 font-mono text-[12px] tracking-[0.04em] text-neutral-400 sm:flex-row md:text-[12px]">
-        <span>{site.studioTagline} / India</span>
-        <a
-          href="#featured-product"
-          className="text-neutral-300 transition-colors duration-200 hover:text-foreground"
-        >
-          Selected work
-        </a>
-
+        <div aria-hidden="true" className="mx-auto mt-10 h-px w-full max-w-[1180px] bg-white/10 md:mt-12" />
       </div>
     </section>
   );
