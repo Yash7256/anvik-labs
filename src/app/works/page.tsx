@@ -1,9 +1,11 @@
 import type { MetaFunction } from "react-router";
 import { useState } from "react";
 import { Link } from "react-router";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "@/components/Img";
+import ScrollProgressLine from "@/components/ScrollProgressLine";
 import { projects, getProjectWorkType, type Project, type ProjectLinks } from "@/data/projects";
 import { createMeta } from "@/lib/site";
 
@@ -56,14 +58,14 @@ function ProjectLinks({ project }: { project: Project }) {
   if (visibleLinks.length === 0) return null;
 
   return (
-    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 border-t border-white/10 pt-3">
+    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 border-t border-black/10 pt-3">
       {visibleLinks.map(({ key, label }) => (
         <a
           key={key}
           href={project.links?.[key]}
           target="_blank"
           rel="noreferrer"
-          className={`${mono} text-[11px] text-neutral-400 transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+          className={`${mono} text-[11px] text-muted transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
         >
           {label} <span aria-hidden="true">↗</span>
         </a>
@@ -74,6 +76,7 @@ function ProjectLinks({ project }: { project: Project }) {
 
 export default function WorksPage() {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
+  const reduceMotion = useReducedMotion();
   const filteredProjects =
     activeFilter === "all"
       ? projects
@@ -88,7 +91,7 @@ export default function WorksPage() {
         className="flex flex-1 flex-col pt-[var(--header-height)]"
       >
         {/* ── Mobile header (shown below md) ───────────────────────────────── */}
-        <header className="border-b border-white/10 px-4 py-8 sm:px-[4vw] sm:py-10 md:hidden">
+        <header className="border-b border-black/10 px-4 py-8 sm:px-[4vw] sm:py-10 md:hidden">
           <h1 className="mt-3 font-sans text-[clamp(2.75rem,14vw,7rem)] font-medium leading-[0.88] tracking-[-0.05em] text-foreground break-words">
             Works.
           </h1>
@@ -99,11 +102,12 @@ export default function WorksPage() {
 
           {/* LEFT — sticky panel, vertically balanced */}
           <aside className="hidden md:flex md:w-[42%] lg:w-[40%] xl:w-[38%] shrink-0">
-            <div className="sticky top-[var(--header-height)] h-[calc(100svh-var(--header-height))] w-full flex flex-col justify-between border-r border-white/10 px-[5vw] py-12 lg:px-[4vw] xl:px-[5vw]">
+            <div className="sticky top-[var(--header-height)] h-[calc(100svh-var(--header-height))] w-full flex flex-col justify-between border-r border-black/10 px-[5vw] py-12 lg:px-[4vw] xl:px-[5vw] relative">
+              <ScrollProgressLine targetId="works-list" className="right-0 top-0 h-full" />
               {/* Top meta */}
               <div>
-                <p className={`${mono} text-neutral-500`}>Selected work</p>
-                <p className={`${mono} mt-1 text-neutral-600`}>
+                <p className={`${mono} text-muted`}>Selected work</p>
+                <p className={`${mono} mt-1 text-muted`}>
                   {String(projects.length).padStart(2, "0")} projects · 2022–2026
                 </p>
               </div>
@@ -116,17 +120,18 @@ export default function WorksPage() {
               </div>
 
               {/* Bottom caption */}
-              <p className={`${mono} text-neutral-600`}>Anvik Labs / India</p>
+              <p className={`${mono} text-muted`}>Anvik Labs / India</p>
             </div>
           </aside>
 
           {/* RIGHT — scrollable project list */}
           <section
+            id="works-list"
             aria-label="Project index"
-            className="flex-1 divide-y divide-white/10 border-t border-white/10 md:border-t-0"
+            className="flex-1 divide-y divide-black/10 border-t border-black/10 md:border-t-0"
           >
-            <div className="flex flex-col gap-3 border-b border-white/10 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-[4vw] md:px-8 lg:px-10 xl:px-12">
-              <p className={`${mono} text-neutral-500`}>
+            <div className="flex flex-col gap-3 border-b border-black/10 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-[4vw] md:px-8 lg:px-10 xl:px-12">
+              <p className={`${mono} text-muted`}>
                 Showing {String(filteredProjects.length).padStart(2, "0")} of {String(projects.length).padStart(2, "0")} projects
               </p>
               <div
@@ -146,7 +151,7 @@ export default function WorksPage() {
                       className={`rounded-full border px-3 py-2 font-mono text-[12px] uppercase tracking-[0.08em] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
                         isActive
                           ? "border-accent bg-accent text-on-accent"
-                          : "border-white/15 text-neutral-400 hover:border-white/35 hover:text-foreground"
+                          : "border-black/15 text-muted hover:border-black/35 hover:text-foreground"
                       }`}
                     >
                       {filter.label}
@@ -156,15 +161,33 @@ export default function WorksPage() {
               </div>
             </div>
 
-            {filteredProjects.length === 0 ? (
-              <p className="px-4 py-12 text-[14px] text-neutral-400 sm:px-[4vw] md:px-8 lg:px-10 xl:px-12">
-                No projects in this collection yet.
-              </p>
-            ) : null}
+            <AnimatePresence initial={false} mode="popLayout">
+              {filteredProjects.length === 0 ? (
+                <motion.p
+                  key="empty"
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                  className="px-4 py-12 text-[14px] text-muted sm:px-[4vw] md:px-8 lg:px-10 xl:px-12"
+                >
+                  No projects in this collection yet.
+                </motion.p>
+              ) : null}
 
-            {filteredProjects.map((project, index) => (
-              <article key={project.id}>
-                <div className="group flex flex-col gap-4 px-4 py-6 transition-colors duration-200 hover:bg-white/[0.02] sm:gap-5 sm:px-[4vw] sm:py-8 md:flex-row md:items-center md:gap-7 md:px-8 md:py-9 lg:px-10 lg:py-10 xl:px-12">
+              {filteredProjects.map((project, index) => (
+                <motion.article
+                  key={project.id}
+                  layout={!reduceMotion}
+                  initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.22,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  <div className="group flex flex-col gap-4 px-4 py-6 transition-colors duration-200 hover:bg-black/[0.02] sm:gap-5 sm:px-[4vw] sm:py-8 md:flex-row md:items-center md:gap-7 md:px-8 md:py-9 lg:px-10 lg:py-10 xl:px-12">
                   {/* Cover image */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-light-surface md:w-[220px] md:shrink-0 lg:w-[260px] xl:w-[300px]">
                     <Image
@@ -180,11 +203,11 @@ export default function WorksPage() {
                   <div className="flex flex-1 flex-col justify-center gap-1.5 sm:gap-2 min-w-0">
                     {/* Index + badges */}
                     <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span className={`${mono} text-neutral-600`}>
+                      <span className={`${mono} text-muted`}>
                         {String(index + 1).padStart(3, "0")}
                       </span>
                       {/* Work type badge */}
-                      <span className="inline-flex items-center rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-neutral-400">
+                      <span className="inline-flex items-center rounded-full border border-black/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-muted">
                         {WORK_TYPE_LABEL[getProjectWorkType(project)] ?? project.workType}
                       </span>
                       {/* Own / Client badge */}
@@ -192,7 +215,7 @@ export default function WorksPage() {
                         className={`inline-flex items-center rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] ${
                           project.projectType === "own"
                             ? "border border-accent/40 text-accent-text"
-                            : "border border-white/10 text-neutral-400"
+                            : "border border-black/10 text-muted"
                         }`}
                       >
                         {PROJECT_TYPE_LABEL[project.projectType] ?? project.projectType}
@@ -205,17 +228,17 @@ export default function WorksPage() {
                     </h2>
 
                     {/* Genre */}
-                    <p className={`${mono} text-[11px] text-neutral-500`}>{project.genre}</p>
+                    <p className={`${mono} text-[11px] text-muted`}>{project.genre}</p>
 
                     {/* Description */}
-                    <p className="mt-1 max-w-[48ch] text-[13px] leading-relaxed text-neutral-400 lg:text-[14px]">
+                    <p className="mt-1 max-w-[48ch] text-[13px] leading-relaxed text-muted lg:text-[14px]">
                       {project.description}
                     </p>
 
                     {/* CTA */}
                     <Link
                       to={`/works/${project.id}`}
-                      className={`${mono} mt-2 inline-flex items-center gap-1.5 text-[11px] text-neutral-400 transition-colors duration-200 group-hover:text-accent`}
+                      className={`${mono} mt-2 inline-flex items-center gap-1.5 text-[11px] text-muted transition-colors duration-200 group-hover:text-accent`}
                     >
                       View project
                       <span
@@ -227,9 +250,10 @@ export default function WorksPage() {
                     </Link>
                     <ProjectLinks project={project} />
                   </div>
-                </div>
-              </article>
-            ))}
+                  </div>
+                </motion.article>
+              ))}
+            </AnimatePresence>
           </section>
 
         </div>

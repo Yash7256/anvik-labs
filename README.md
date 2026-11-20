@@ -1,13 +1,13 @@
 # Anvik Labs
 
-Portfolio and studio site for Anvik Labs, a product design and engineering studio. The site is a dark, type-led React Router application with a small set of editorial routes: home, selected work, project detail, services, and contact.
+Portfolio and studio site for Anvik Labs, a product design and engineering studio. The site is a light, type-led React Router application with a small set of editorial routes: home, selected work, project detail, services, and contact.
 
 ## Stack
 
 - React 19
 - React Router 8 with Vite
 - Tailwind CSS 4
-- Framer Motion
+- Framer Motion, GSAP + ScrollTrigger, and Lenis for motion
 - TypeScript
 
 ## Development
@@ -61,11 +61,12 @@ src/
   app/                 Route modules and global styles
   components/          Shared UI and home-page sections
   data/                Work and testimonial content
+  lib/gsap.ts          GSAP and ScrollTrigger registration
+  lib/smooth-scroll.ts Lenis setup and programmatic scrolling
   lib/site.ts          Site metadata
-  root.tsx             Document shell, fonts, skip link, hash scrolling
+  root.tsx             Document shell, fonts, skip link, Lenis and hash scrolling
   routes.ts            React Router route config
 public/
-  fonts/               Self-hosted Inter Display files
   mockups/             Project mockups
   profile/             Team imagery
 ```
@@ -80,7 +81,7 @@ public/
 ## Design and accessibility
 
 - Global tokens and base styles are in `src/app/globals.css`.
-- Keep the dark palette, restrained accent use, hairline rules, and editorial type hierarchy.
+- Keep the light palette, restrained accent use, hairline rules, and editorial type hierarchy.
 - Avoid decorative gradients, heavy shadows, oversized radii, and generic card grids.
 - Use semantic landmarks, one `h1` per page, visible focus states, labelled form controls, and alt text for meaningful images.
 - Respect `prefers-reduced-motion` for animated content.

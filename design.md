@@ -5,7 +5,7 @@ This document describes the current implementation. It replaces the stale TITARV
 ## Principles
 
 - **Editorial, not decorative.** The site is built from type, whitespace, hairlines, and restrained imagery. Avoid cards, glows, gradients, heavy shadows, glass effects, and generic SaaS layouts.
-- **Two voices.** Inter Display carries headings and body copy. Monospace carries metadata, labels, counters, and short UI controls.
+- **Three voices.** Space Grotesk carries headings; Geist carries body copy, navigation, and controls; Geist Mono carries metadata, labels, counters, and short UI controls.
 - **One accent.** Orange is a punctuation mark, not a theme. Use it for active states, small labels, links, and quote emphasis only.
 - **Structure visible.** Thin rules, numeric indices, and generous spacing make the page feel like a working document.
 - **Motion with restraint.** Animation clarifies a transition or adds tactility. It should not run constantly or compete with reading.
@@ -16,37 +16,39 @@ Tokens are defined in `src/app/globals.css`.
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--color-background` | `#0d0d0d` | Page background |
-| `--color-foreground` | `#f4f1ec` | Primary text |
-| `--color-text-secondary` / `--color-muted` | `#a39d95` | Secondary copy |
-| `--color-border` | `rgba(255, 255, 255, 0.1)` | Hairlines and dividers |
-| `--color-light-surface` / `--color-surface` | `#141414` | Media wells and soft surfaces |
-| `--color-dark-surface` | `#0d0d0d` | Deep surfaces |
+| `--color-background` | `#f5f5f5` | Page background |
+| `--color-foreground` | `#171717` | Primary text |
+| `--color-text-secondary` / `--color-muted` | `#656565` | Secondary copy |
+| `--color-border` | `rgba(23, 23, 23, 0.12)` | Hairlines and dividers |
+| `--color-light-surface` / `--color-surface` | `#ffffff` | Media wells and soft surfaces |
+| `--color-dark-surface` | `#ebebeb` | Recessed surfaces |
 | `--color-accent` | `#ff5a0a` | Primary accent |
-| `--color-accent-text` | `#ff8a5a` | Accent text on dark |
-| `--color-accent-strong` | `#ff7026` | Accent hover |
+| `--color-accent-text` | `#c2410c` | Accent text on light |
+| `--color-accent-strong` | `#e04e00` | Accent hover |
 | `--color-accent-soft` | `rgba(255, 90, 10, 0.12)` | Quiet accent wash |
 | `--color-on-accent` | `#0d0d0d` | Text on accent fills |
 
-Do not introduce a second accent. Do not switch the site to a light theme. Avoid pure black and pure white as large surfaces; use the near-black and off-white tokens instead.
+Do not introduce a second accent. Keep the light palette; use the warm gray canvas and white surfaces rather than introducing a second theme. Avoid pure black and pure white as large type colors; use the foreground and background tokens instead.
 
 ## Typography
 
 ### Families
 
-- **Inter Display** — self-hosted from `public/fonts/`, weights 400/500/600/700. Used for headings, body copy, navigation, and form values.
-- **Monospace** — system monospace stack. Used for labels, indices, metadata, counters, and technical annotations.
-- **Michroma** — Google Fonts. Used only on the Aman Raj profile page.
-- **Instrument Serif** — Google Fonts. Used only for testimonial quotations.
+All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src/app/globals.css`.
+
+- **Space Grotesk** — `font-display`. Used for hero, section, and card headings. Weight 600 for the hero, 500 elsewhere.
+- **Geist** — `font-sans`. Used for body copy, navigation, buttons, and form values. Weight 400 for body, 500 for UI controls.
+- **Geist Mono** — `font-mono`. Used for labels, indices, metadata, counters, and technical annotations at weight 400.
 
 ### Scale
 
 - Page title: `clamp(3.5rem, 10vw, 9rem)`, tight leading, `-0.05em` tracking.
 - Section heading: `clamp(2.4rem, 6vw, 5.5rem)`, `0.95` leading, `-0.04em` tracking.
-- Hero heading: `clamp(2.2rem, 4.6vw, 3.75rem)`, `1.04` leading, bold.
-- Testimonial quote: `clamp(1.6rem, 3.1vw, 2.7rem)` in Instrument Serif, `1.14` leading, max width `54ch`.
-- Body: 14–17px, relaxed leading.
-- Labels and metadata: 12px minimum, monospace, uppercase, wide tracking.
+- Hero heading: `clamp(2.75rem, 7.5vw, 5.75rem)`, `1.04` leading, weight 600, `-0.045em` tracking; `40ch` measure.
+- Hero description: 16px, weight 400, full foreground contrast.
+- Section headings: weight 500, `-0.04em` tracking. Card headings: weight 500.
+- Body: 14–17px, weight 400, `-0.01em` tracking, relaxed leading.
+- Labels and metadata: 12px minimum, Geist Mono, weight 400, uppercase, `0.04em` tracking.
 - Do not set body or label text below 12px. Monospace is not for sentences.
 
 ## Layout
@@ -69,15 +71,10 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 ### Hero
 
 - Min-height fills the viewport minus the header.
-- Centered two-line headline with a short supporting paragraph.
-- Segmented "Explore By" navigation to disciplines and all work.
-- Studio metadata on the left and a compact accent CTA on the right.
-- Three compact project cards in one row, closed by a hairline divider.
-
-### Featured product
-
-- Editorial two-column feature for Designers Room.
-- Logo, product name, short description, and the standard CTA: a white pill button with a black label and no icon.
+- Centered two-line headline, short supporting paragraph, and a dark "Work With Us" pill that matches the navbar CTA.
+- A single "All Work" link to `/works`; no segmented discipline navigation.
+- Three compact project cards in one row with subtle scroll-linked cover parallax. The horizontal strip uses `data-lenis-prevent` so native horizontal scrolling is preserved.
+- Orange is reserved for hover and focus accents, not primary CTAs.
 
 ### Meet the Humans
 
@@ -87,8 +84,8 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 
 ### Services
 
-- Four hairline rows: index, service name, discipline, technical detail, and scope.
-- Hover changes only type color and a quiet row wash.
+- Four hairline rows with three columns: service name, discipline, and technical detail. Numeric indices are intentionally absent.
+- Rows reveal on scroll with GSAP. Hover changes type color and adds a quiet row wash.
 
 ### Testimonials
 
@@ -97,11 +94,9 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 - Author block directly below: 56px circular avatar, name in Inter semibold, role and organization in muted Inter.
 - Avatars are optional. When no image exists, a circular initials fallback is used.
 - Data comes from `src/data/testimonials.json`.
-- The quote area reserves the height of the longest testimonial, so rotation never shifts the page.
-- Auto-advances every 7 seconds. Rotation pauses on hover, keyboard focus, or when the visitor presses Pause.
-- Navigation is also manual: previous/next controls, a pause/play control, and an `01 / 05` counter.
-- `aria-live` is polite only while rotation is paused, so automatic changes are not announced repeatedly.
-- Transitions use a short fade and vertical shift, disabled for reduced motion.
+- Quotes move in a GSAP-driven continuous marquee; scroll velocity briefly influences speed and direction.
+- Hover, keyboard focus, or the Pause control stops the marquee; Play resumes it.
+- Reduced-motion users see a static grid of all testimonials instead of the moving track.
 - Keep the composition centered and spacious. Do not turn it into a card grid or add testimonial badges.
 
 ### Contact
@@ -114,7 +109,7 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 ### Footer
 
 - Studio statement, footer navigation, email, and back-to-top control.
-- The CTA uses the same white pill button pattern as the featured product.
+- Tagline words reveal on scroll with GSAP; back-to-top scrolls through Lenis.
 
 ### Works and project galleries
 
@@ -123,10 +118,13 @@ Do not introduce a second accent. Do not switch the site to a light theme. Avoid
 
 ## Motion
 
-- Framer Motion is used for navigation, portrait reveals, accordions, and testimonial transitions.
-- Prefer opacity, small translate, and height transitions. Avoid long loops and scroll-jacking.
-- Respect `prefers-reduced-motion`; the global stylesheet also shortens animation and transition durations.
-- Hash navigation honors reduced motion.
+- Framer Motion handles navigation presence, portrait reveals and pointer parallax, accordions, and reduced-motion detection in components that need it.
+- GSAP + ScrollTrigger handle homepage entrances, service-row reveals, cover and portrait parallax, the testimonial marquee, and the footer tagline reveal.
+- Lenis provides site-wide smooth scrolling, driven by GSAP's ticker. Hash navigation and back-to-top use Lenis with a header offset; native CSS smooth scrolling stays off to avoid double easing.
+- Prefer opacity, small translate, scale, hairline, and mask transitions. Avoid long loops, scroll-jacking, elastic easing, and animating layout-driving properties.
+- The hero project strip opts out of Lenis with `data-lenis-prevent` so its native horizontal snap scrolling keeps working.
+- Route changes fade in only after hydration, so prerendered HTML stays visible without JavaScript. Works filtering, contact status changes, and scroll progress hairlines use short, reduced-motion-aware transitions.
+- Respect `prefers-reduced-motion`. Lenis honors it natively, Framer Motion is configured with `reducedMotion="user"`, GSAP blocks are skipped in reduced motion, testimonials become a static grid, and the global stylesheet shortens CSS transitions.
 
 ## Content and provenance
 

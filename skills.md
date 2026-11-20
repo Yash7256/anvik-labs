@@ -80,10 +80,10 @@ graph TD
   - Avoiding generic SaaS templates: no heavy drop shadows, neon glows, glassmorphism blur cards, or multicolor gradients.
   - Relying on negative space, crisp hairline borders (`rgba(255, 255, 255, 0.12)`), and exact typographic contrast.
   - **Single Accent Rule**: Orange (`#ff6a00`) is used strictly as a focal punctuation mark (status dots, active states, key CTAs, inline highlights), never diluted with secondary accents.
-- **Dual Typographic Voice**:
-  - **Voice 1: Display & Body (`Inter Display`)**: High legibility, negative tracking (`tracking-[-0.04em]`), tight leading (`0.95` to `1.08` for display titles).
-  - **Voice 2: Metadata & Annotations (`Monospace`)**: Uppercase, tracked out (`tracking-[0.12em]` to `0.2em`), 11px–13px, used exclusively for technical labels, indices (`[01]`), timestamps, and controls.
-  - **Specialist Type**: `Michroma` for monolithic branding; `Instrument Serif` for literary quotes.
+  - **Three Typographic Voices**:
+  - **Headings (`Space Grotesk`)**: Hero at weight 600 with `-0.045em` tracking; section and card headings at weight 500 with `-0.04em` tracking.
+  - **Body & UI (`Geist`)**: Body copy at weight 400 with `-0.01em` tracking; navigation and controls at weight 500.
+  - **Metadata & Annotations (`Geist Mono`)**: Uppercase, weight 400, `0.04em` tracking, 12px minimum, used for technical labels, indices (`[01]`), timestamps, and controls.
 - **Fluid Scalability**:
   - Calculating viewport-relative typographic formulas using `clamp()`, e.g., `text-[clamp(2.4rem,6vw,5.5rem)]`, ensuring headings adapt seamlessly across phone screens and 4K monitors without arbitrary breakpoint jumps.
 

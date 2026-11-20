@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { site } from "@/lib/site";
 
 const servicesOptions = [
@@ -18,10 +19,10 @@ const budgetOptions = [
 ];
 
 const fieldClass =
-  "w-full border-b border-white/20 bg-transparent py-3 font-sans text-[15px] text-foreground placeholder:text-[16px] placeholder:text-neutral-600 transition-colors focus:border-accent";
+  "w-full border-b border-black/20 bg-transparent py-3 font-sans text-[15px] text-foreground placeholder:text-[16px] placeholder:text-muted transition-colors focus:border-accent";
 
 const selectClass =
-  "w-full cursor-pointer border-b border-white/20 bg-background py-3 font-sans text-[15px] text-foreground transition-colors [color-scheme:dark] focus:border-accent";
+  "w-full cursor-pointer border-b border-black/20 bg-background py-3 font-sans text-[15px] text-foreground transition-colors [color-scheme:light] focus:border-accent";
 
 const FORM_ENDPOINT = `https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`;
 
@@ -30,6 +31,7 @@ type Status = "idle" | "submitting" | "success" | "error";
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -112,21 +114,21 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="border-t border-white/10 pb-16 pt-10 md:pb-24 md:pt-14"
+      className="border-t border-black/10 pb-16 pt-10 md:pb-24 md:pt-14"
     >
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400 md:mb-12">
-        <span className="text-neutral-500">Inquiry / 006</span>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
+        <span className="text-muted">Inquiry / 006</span>
         <span>{site.studioTagline} / India</span>
       </div>
 
-      <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-8 md:flex-row md:items-end">
+      <div className="flex flex-col justify-between gap-4 border-b border-black/10 pb-8 md:flex-row md:items-end">
         <h1
           id="contact-heading"
           className="font-sans text-[clamp(2.8rem,8vw,7.5rem)] font-medium leading-none tracking-[-0.045em] text-foreground"
         >
           Start a project.
         </h1>
-        <p className="max-w-[32ch] font-mono text-[12px] uppercase leading-relaxed tracking-[0.12em] text-neutral-400">
+        <p className="max-w-[32ch] font-mono text-[12px] uppercase leading-relaxed tracking-[0.12em] text-muted">
           Available for new product design and engineering work.
         </p>
       </div>
@@ -134,63 +136,80 @@ export default function Contact() {
       <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="space-y-10 lg:col-span-5">
           <div>
-            <span className="mb-2 block font-mono text-[12px] uppercase tracking-[0.14em] text-neutral-500">
+            <span className="mb-2 block font-mono text-[12px] uppercase tracking-[0.14em] text-muted">
               Direct email
             </span>
             <a
               href={`mailto:${site.email}`}
-              className="break-all font-sans text-[22px] font-semibold text-foreground underline decoration-white/20 underline-offset-8 transition-colors hover:text-accent md:text-[28px]"
+              className="break-all font-sans text-[22px] font-medium text-foreground underline decoration-white/20 underline-offset-8 transition-colors hover:text-accent md:text-[28px]"
             >
               {site.email}
             </a>
           </div>
 
           <div>
-            <span className="mb-2 block font-mono text-[12px] uppercase tracking-[0.14em] text-neutral-500">
+            <span className="mb-2 block font-mono text-[12px] uppercase tracking-[0.14em] text-muted">
               Studio
             </span>
-            <p className="max-w-[34ch] font-sans text-[15px] leading-relaxed text-neutral-300">
+            <p className="max-w-[34ch] font-sans text-[15px] leading-relaxed text-muted">
               Based in India, working with teams across time zones. Remote-first,
               with calls scheduled around your working day.
             </p>
           </div>
 
-          <div className="border-t border-white/10 pt-6">
-            <span className="mb-2 block font-mono text-[12px] uppercase tracking-[0.14em] text-neutral-500">
+          <div className="border-t border-black/10 pt-6">
+            <span className="mb-2 block font-mono text-[12px] uppercase tracking-[0.14em] text-muted">
               What to include
             </span>
-            <p className="max-w-[34ch] font-sans text-[15px] leading-relaxed text-neutral-300">
+            <p className="max-w-[34ch] font-sans text-[15px] leading-relaxed text-muted">
               A short description of the product, who it is for, what stage it is
               at, and any deadline you are working towards.
             </p>
           </div>
         </div>
 
-        <div className="border border-white/10 bg-white/[0.02] p-6 md:p-8 lg:col-span-7">
-          {status === "success" ? (
-            <div role="status" className="py-10">
+        <div className="border border-black/10 bg-black/[0.02] p-6 md:p-8 lg:col-span-7">
+          <AnimatePresence mode="wait" initial={false}>
+            {status === "success" ? (
+              <motion.div
+                key="success"
+                role="status"
+                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
+                transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.16, 1, 0.3, 1] }}
+                className="py-10"
+              >
               <h2 className="font-sans text-[24px] font-medium text-foreground">
                 Message sent.
               </h2>
-              <p className="mt-3 max-w-[46ch] font-sans text-[14px] leading-relaxed text-neutral-400">
+              <p className="mt-3 max-w-[46ch] font-sans text-[14px] leading-relaxed text-muted">
                 Thanks for reaching out. We have received your details and will
                 reply to you by email, usually within one to two business days.
               </p>
               <button
                 type="button"
                 onClick={() => setStatus("idle")}
-                className="mt-6 font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400 transition-colors hover:text-foreground"
+                className="mt-6 font-mono text-[12px] uppercase tracking-[0.12em] text-muted transition-colors hover:text-foreground"
               >
                 [ Send another message ]
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+                </button>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={handleSubmit}
+                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
+                transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-6"
+              >
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400"
+                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-muted"
                   >
                     Your name *
                   </label>
@@ -207,7 +226,7 @@ export default function Contact() {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400"
+                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-muted"
                   >
                     Email address *
                   </label>
@@ -227,7 +246,7 @@ export default function Contact() {
                 <div>
                   <label
                     htmlFor="contact-service"
-                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400"
+                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-muted"
                   >
                     Service
                   </label>
@@ -247,7 +266,7 @@ export default function Contact() {
                 <div>
                   <label
                     htmlFor="contact-budget"
-                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400"
+                    className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-muted"
                   >
                     Estimated budget
                   </label>
@@ -269,7 +288,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="contact-message"
-                  className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400"
+                  className="mb-1 block font-mono text-[12px] uppercase tracking-[0.12em] text-muted"
                 >
                   Project details *
                 </label>
@@ -292,30 +311,56 @@ export default function Contact() {
                 className="hidden"
               />
 
-              {status === "error" && error ? (
-                <p
-                  role="alert"
-                  className="border border-red-500/30 bg-red-500/[0.06] px-4 py-3 text-[13px] leading-relaxed text-red-300"
-                >
-                  {error}
-                </p>
-              ) : null}
+              <AnimatePresence initial={false}>
+                {status === "error" && error ? (
+                  <motion.p
+                    role="alert"
+                    initial={reduceMotion ? false : { opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduceMotion ? undefined : { opacity: 0 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.18 }}
+                    className="border border-red-500/30 bg-red-500/[0.06] px-4 py-3 text-[13px] leading-relaxed text-red-300"
+                  >
+                    {error}
+                  </motion.p>
+                ) : null}
+              </AnimatePresence>
 
               <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-                <p className="max-w-[38ch] text-[12px] leading-relaxed text-neutral-500">
+                <p className="max-w-[38ch] text-[12px] leading-relaxed text-muted">
                   Your details are sent straight to our inbox. We usually reply
                   within one to two business days.
                 </p>
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="inline-flex shrink-0 items-center justify-center rounded-[2px] bg-accent px-6 py-3 font-sans text-[14px] font-semibold text-background transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-60"
+                  className="relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-[2px] bg-accent px-6 py-3 font-sans text-[14px] font-medium text-on-accent transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {status === "submitting" ? "Sending…" : "Send message"}
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={status === "submitting" ? "sending" : "send"}
+                      initial={reduceMotion ? false : { opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={reduceMotion ? undefined : { opacity: 0 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.16 }}
+                    >
+                      {status === "submitting" ? "Sending…" : "Send message"}
+                    </motion.span>
+                  </AnimatePresence>
+                  {status === "submitting" && !reduceMotion ? (
+                    <motion.span
+                      aria-hidden="true"
+                      className="absolute inset-x-0 bottom-0 h-px origin-left bg-on-accent/60"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, ease: "linear" }}
+                    />
+                  ) : null}
                 </button>
-              </div>
-            </form>
-          )}
+                </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>

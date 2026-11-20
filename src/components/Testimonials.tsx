@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import testimonialsData from "../data/testimonials.json";
 
 type Testimonial = (typeof testimonialsData)[number] & {
@@ -22,12 +24,12 @@ function getInitials(person: string) {
 
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <article className="flex w-[300px] shrink-0 flex-col justify-between rounded-[8px] border border-white/10 bg-light-surface p-6 transition-colors duration-300 hover:border-white/20 sm:w-[360px] md:w-[420px] md:p-7">
-      <blockquote className="font-sans text-[14px] leading-[1.7] text-neutral-200 md:text-[15px]">
+    <article className="flex w-[300px] shrink-0 flex-col justify-between rounded-[8px] border border-black/10 bg-light-surface p-6 transition-colors duration-300 hover:border-accent/40 sm:w-[360px] md:w-[420px] md:p-7">
+      <blockquote className="font-sans text-[14px] leading-[1.7] text-foreground md:text-[15px]">
         &ldquo;{item.quote.trim()}&rdquo;
       </blockquote>
-      <div className="mt-6 flex items-center gap-3.5 border-t border-white/10 pt-4 md:mt-7 md:pt-5">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/[0.06] font-mono text-[11px] font-medium tracking-[0.08em] text-neutral-300">
+      <div className="mt-6 flex items-center gap-3.5 border-t border-black/10 pt-4 md:mt-7 md:pt-5">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/[0.06] font-mono text-[11px] tracking-[0.04em] text-muted">
           {item.avatar ? (
             <img
               src={item.avatar}
@@ -39,10 +41,10 @@ function TestimonialCard({ item }: { item: Testimonial }) {
           )}
         </div>
         <div className="min-w-0 flex-1">
-          <p className="truncate font-sans text-[14px] font-semibold text-foreground md:text-[15px]">
+          <p className="truncate font-display text-[14px] font-medium text-foreground md:text-[15px]">
             {item.person}
           </p>
-          <p className="truncate font-mono text-[11px] uppercase tracking-[0.1em] text-neutral-400 md:text-[12px]">
+          <p className="truncate font-mono text-[11px] uppercase tracking-[0.1em] text-muted md:text-[12px]">
             {item.role}
           </p>
         </div>
@@ -54,13 +56,135 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 export default function Testimonials() {
   const [isPaused, setIsPaused] = useState(false);
   const reduceMotion = useReducedMotion();
+  const rootRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const tweenRef = useRef<ReturnType<typeof gsap.to> | null>(null);
+  const pausedRef = useRef(false);
+  const hoveredRef = useRef(false);
+  const offscreenRef = useRef(false);
+  const hiddenRef = useRef(false);
+  const resetTimerRef = useRef<number | undefined>(undefined);
 
-  // Duplicate for seamless infinite loop
   const cards = [...testimonials, ...testimonials];
+
+  useGSAP(
+    () => {
+      const root = rootRef.current;
+      if (reduceMotion || !trackRef.current || !root) return;
+
+      const tween = gsap.to(trackRef.current, {
+        xPercent: -50,
+        duration: 45,
+        ease: "none",
+        repeat: -1,
+      });
+      tweenRef.current = tween;
+
+      const setSpeed = gsap.quickTo(tween, "timeScale", {
+        duration: 0.5,
+        ease: "power2.out",
+      });
+      const trigger = ScrollTrigger.create({
+        start: 0,
+        end: "max",
+        onUpdate: (self) => {
+          if (
+            pausedRef.current ||
+            hoveredRef.current ||
+            offscreenRef.current ||
+            hiddenRef.current
+          ) {
+            return;
+          }
+
+          const boost = Math.min(Math.abs(self.getVelocity()) / 600, 3);
+          const direction = self.direction === 1 ? 1 : -1;
+          setSpeed(direction * (1 + boost));
+
+          window.clearTimeout(resetTimerRef.current);
+          resetTimerRef.current = window.setTimeout(() => {
+            if (pausedRef.current || offscreenRef.current || hiddenRef.current) {
+              return;
+            }
+            setSpeed(direction);
+          }, 160);
+        },
+      });
+
+      const observer =
+        typeof IntersectionObserver !== "undefined"
+          ? new IntersectionObserver(
+              ([entry]) => {
+                offscreenRef.current = !entry.isIntersecting;
+                applyPlayback(pausedRef.current);
+              },
+              { threshold: 0.05 },
+            )
+          : null;
+      observer?.observe(root);
+
+      const onVisibilityChange = () => {
+        hiddenRef.current = document.hidden;
+        applyPlayback(pausedRef.current);
+      };
+      document.addEventListener("visibilitychange", onVisibilityChange);
+      hiddenRef.current = document.hidden;
+
+      return () => {
+        observer?.disconnect();
+        document.removeEventListener("visibilitychange", onVisibilityChange);
+        window.clearTimeout(resetTimerRef.current);
+        trigger.kill();
+        tween.kill();
+        tweenRef.current = null;
+      };
+    },
+    { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
+  );
+
+  function applyPlayback(paused: boolean) {
+    const tween = tweenRef.current;
+    if (!tween) return;
+
+    const shouldPause =
+      paused ||
+      hoveredRef.current ||
+      offscreenRef.current ||
+      hiddenRef.current;
+
+    if (shouldPause) {
+      window.clearTimeout(resetTimerRef.current);
+    }
+
+    gsap.to(tween, {
+      timeScale: shouldPause ? 0 : 1,
+      duration: 0.3,
+      ease: "power2.out",
+      overwrite: true,
+    });
+  }
+
+  function togglePause() {
+    const next = !pausedRef.current;
+    pausedRef.current = next;
+    setIsPaused(next);
+    applyPlayback(next);
+  }
+
+  function handlePointerEnter() {
+    hoveredRef.current = true;
+    applyPlayback(pausedRef.current);
+  }
+
+  function handlePointerLeave() {
+    hoveredRef.current = false;
+    applyPlayback(pausedRef.current);
+  }
 
   if (reduceMotion) {
     return (
       <section
+        ref={rootRef}
         id="testimonials"
         aria-labelledby="testimonials-heading"
         className="py-16 md:py-24"
@@ -85,6 +209,7 @@ export default function Testimonials() {
 
   return (
     <section
+      ref={rootRef}
       id="testimonials"
       aria-labelledby="testimonials-heading"
       className="py-16 md:py-24"
@@ -98,7 +223,13 @@ export default function Testimonials() {
         </h2>
       </div>
 
-      <div className="pause-on-hover relative -mx-4 overflow-hidden sm:-mx-[4vw] lg:-mx-[5vw] xl:-mx-[6vw]">
+      <div
+        className="relative -mx-4 overflow-hidden sm:-mx-[4vw] lg:-mx-[5vw] xl:-mx-[6vw]"
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onFocusCapture={handlePointerEnter}
+        onBlurCapture={handlePointerLeave}
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-background to-transparent sm:w-20 md:w-32"
@@ -108,10 +239,7 @@ export default function Testimonials() {
           className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background to-transparent sm:w-20 md:w-32"
         />
 
-        <div
-          className="animate-marquee-cards flex gap-5 py-2 md:gap-6"
-          style={{ animationPlayState: isPaused ? "paused" : undefined }}
-        >
+        <div ref={trackRef} className="flex w-max gap-5 py-2 md:gap-6">
           <div className="flex shrink-0 gap-5 md:gap-6">
             {cards.map((item, index) => (
               <TestimonialCard
@@ -131,17 +259,17 @@ export default function Testimonials() {
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+      <div className="mt-8 flex items-center justify-between font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
         <button
           type="button"
-          onClick={() => setIsPaused((prev) => !prev)}
+          onClick={togglePause}
           aria-pressed={isPaused}
           aria-label={
             isPaused
               ? "Resume automatic testimonial marquee"
               : "Pause automatic testimonial marquee"
           }
-          className="inline-flex min-h-11 items-center px-2 text-neutral-500 transition-colors duration-200 hover:text-accent focus-visible:text-accent"
+          className="inline-flex min-h-11 items-center px-2 text-muted transition-colors duration-200 hover:text-accent focus-visible:text-accent"
         >
           [ {isPaused ? "Play" : "Pause"} ]
         </button>

@@ -1,77 +1,42 @@
 @import "tailwindcss";
-
-@font-face {
-  font-family: "Inter Display";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/InterDisplay-Regular.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Inter Display";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("/fonts/InterDisplay-Medium.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Inter Display";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("/fonts/InterDisplay-SemiBold.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Inter Display";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/InterDisplay-Bold.woff2") format("woff2");
-}
+@import "lenis/dist/lenis.css";
 
 @theme {
-  --color-background: #0d0d0d;
-  --color-foreground: #f4f1ec;
-  --color-text-secondary: #a39d95;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-light-surface: #141414;
-  --color-dark-surface: #0d0d0d;
-  --color-text-on-dark: #f4f1ec;
-  --color-muted: #a39d95;
-  --color-inverse: #1a1a1a;
-  --color-inverse-foreground: #f4f1ec;
-  --color-inverse-muted: rgba(244, 241, 236, 0.66);
-  --color-surface: #141414;
+  --color-background: #f5f5f5;
+  --color-foreground: #171717;
+  --color-text-secondary: #656565;
+  --color-border: rgba(23, 23, 23, 0.12);
+  --color-light-surface: #ffffff;
+  --color-dark-surface: #ebebeb;
+  --color-text-on-dark: #f5f5f5;
+  --color-muted: #656565;
+  --color-inverse: #171717;
+  --color-inverse-foreground: #f5f5f5;
+  --color-inverse-muted: rgba(245, 245, 245, 0.66);
+  --color-surface: #ffffff;
 
-  --color-on-light: #0d0d0d;
-  --color-tone-1: #141414;
-  --color-tone-2: #1a1a1a;
-  --color-tone-3: #242424;
+  --color-on-light: #171717;
+  --color-tone-1: #ffffff;
+  --color-tone-2: #ececec;
+  --color-tone-3: #dedede;
 
   --color-accent: #ff5a0a;
-  --color-accent-text: #ff8a5a;
-  --color-accent-strong: #ff7026;
-  --color-accent-soft-text: #ffc9a8;
+  --color-accent-text: #c2410c;
+  --color-accent-strong: #e04e00;
+  --color-accent-soft-text: #9a3412;
   --color-accent-soft: rgba(255, 90, 10, 0.12);
   --color-accent-wash: rgba(255, 90, 10, 0.06);
   --color-on-accent: #0d0d0d;
 
-  --font-sans: var(--font-inter-display), "Helvetica Neue", Helvetica, Arial,
+  --font-sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Space Grotesk", "Geist", "Helvetica Neue", Helvetica, Arial,
     sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Roboto Mono",
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", "Cascadia Mono",
     Menlo, Consolas, monospace;
-  --font-michroma: "Michroma", var(--font-inter-display), "Helvetica Neue",
-    Helvetica, Arial, sans-serif;
-  --font-serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype",
-    Palatino, Georgia, serif;
 }
 
 :root {
-  color-scheme: dark;
-  --font-inter-display: "Inter Display";
+  color-scheme: light;
   --header-height: 50px;
   --radius-control: 2px;
   --radius-media: 8px;
@@ -89,7 +54,6 @@
 
 html {
   background: var(--color-background);
-  scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 16px);
 }
 
@@ -98,14 +62,42 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
   min-height: 100vh;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  letter-spacing: inherit;
 }
 
 h1,
 h2,
 h3 {
+  font-family: var(--font-display);
   text-wrap: balance;
+}
+
+h1 {
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+h3 {
+  font-weight: 500;
+}
+
+.font-mono {
+  font-weight: 400;
+  letter-spacing: 0.04em;
 }
 
 p {
@@ -114,7 +106,7 @@ p {
 
 ::selection {
   background: var(--color-accent);
-  color: var(--color-background);
+  color: var(--color-on-accent);
 }
 
 :focus-visible {
@@ -123,7 +115,7 @@ p {
 }
 
 select {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 select option {
@@ -132,7 +124,7 @@ select option {
 }
 
 * {
-  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  scrollbar-color: rgba(23, 23, 23, 0.22) transparent;
   scrollbar-width: thin;
 }
 
@@ -145,9 +137,9 @@ select option {
   background: var(--color-accent);
   color: var(--color-on-accent);
   padding: 10px 14px;
-  font: 600 12px/1 var(--font-mono);
+  font: 400 12px/1 var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   transition: transform 160ms ease;
 }
 
@@ -196,27 +188,6 @@ select option {
     rgba(255, 90, 10, 0.06),
     transparent 70%
   );
-}
-
-@keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee-cards {
-  display: flex;
-  width: max-content;
-  animation: marquee-scroll 45s linear infinite;
-  will-change: transform;
-}
-
-.pause-on-hover:hover .animate-marquee-cards,
-.pause-on-hover:focus-within .animate-marquee-cards {
-  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router";
+import { useGSAP } from "@gsap/react";
 import {
   motion,
   useMotionValue,
@@ -9,6 +10,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
+import { gsap } from "@/lib/gsap";
 import socials from "@/data/socials.json";
 
 // ── Minimal inline SVG icons ──────────────────────────────────────────────────
@@ -158,6 +160,38 @@ function Portrait({
   const springY = useSpring(pointerY, { stiffness: 180, damping: 24, mass: 0.45 });
   const imageX = useTransform(springX, [-0.5, 0.5], [-4, 4]);
   const imageY = useTransform(springY, [-0.5, 0.5], [-3, 3]);
+  const figureRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (reduceMotion || !figureRef.current) return;
+
+      const scrollConfig = {
+        trigger: figureRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      };
+      const image = figureRef.current.querySelector<HTMLElement>("[data-scroll-image]");
+      const watermark = figureRef.current.querySelector<HTMLElement>("[data-scroll-watermark]");
+
+      if (image) {
+        gsap.fromTo(
+          image,
+          { yPercent: -4 },
+          { yPercent: 4, ease: "none", scrollTrigger: scrollConfig },
+        );
+      }
+      if (watermark) {
+        gsap.fromTo(
+          watermark,
+          { yPercent: 4 },
+          { yPercent: -4, ease: "none", scrollTrigger: scrollConfig },
+        );
+      }
+    },
+    { scope: figureRef, dependencies: [reduceMotion], revertOnUpdate: true },
+  );
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
     if (reduceMotion || event.pointerType !== "mouse") return;
@@ -174,13 +208,14 @@ function Portrait({
 
   return (
     <motion.figure
+      ref={figureRef}
       initial={reduceMotion ? undefined : { opacity: 0, scale: 0.97 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ type: "spring", stiffness: 120, damping: 22, mass: 0.7, delay }}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
-      className={`group/portrait relative overflow-hidden rounded-[5px] bg-black ring-1 transition-colors duration-500 ${isOppositeHovered ? "ring-white/30" : "ring-white/10"}`}
+      className={`group/portrait relative overflow-hidden rounded-[5px] bg-black ring-1 transition-colors duration-500 ${isOppositeHovered ? "ring-black/30" : "ring-black/10"}`}
     >
       <div
         className="relative aspect-[4/5] w-full overflow-hidden bg-black"
@@ -194,21 +229,23 @@ function Portrait({
           />
         )}
 
-        {watermark === "Designer" || watermark === "Engineer" ? (
-          <span
-            aria-hidden="true"
-            className={`pointer-events-none absolute bottom-6 top-6 z-10 flex items-center font-mono text-[clamp(1rem,2.4vw,1.75rem)] font-semibold uppercase leading-none tracking-[0.18em] text-white/20 [writing-mode:vertical-rl] ${watermark === "Designer" ? "left-3 rotate-180" : "right-3"}`}
-          >
-            {watermark}
-          </span>
-        ) : (
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute right-5 top-6 z-10 whitespace-nowrap text-right font-mono text-[clamp(1rem,2.2vw,2rem)] font-semibold uppercase leading-none tracking-[0.12em] text-white/20"
-          >
-            {watermark}
-          </span>
-        )}
+        <div
+          data-scroll-watermark
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10"
+        >
+          {watermark === "Designer" || watermark === "Engineer" ? (
+            <span
+              className={`absolute bottom-6 top-6 flex items-center font-mono text-[clamp(1rem,2.4vw,1.75rem)] uppercase leading-none tracking-[0.04em] text-white/20 [writing-mode:vertical-rl] ${watermark === "Designer" ? "left-3 rotate-180" : "right-3"}`}
+            >
+              {watermark}
+            </span>
+          ) : (
+            <span className="absolute right-5 top-6 whitespace-nowrap text-right font-mono text-[clamp(1rem,2.2vw,2rem)] uppercase leading-none tracking-[0.04em] text-white/20">
+              {watermark}
+            </span>
+          )}
+        </div>
 
         <motion.div
           initial={reduceMotion ? undefined : { scale: 1.06 }}
@@ -219,15 +256,17 @@ function Portrait({
           className="absolute inset-x-0 top-0 z-20 bottom-4 md:bottom-6"
         >
           <motion.div className="absolute inset-0" style={{ x: imageX, y: imageY }}>
-            <img
-              src={src}
-              alt={alt}
-              width={width}
-              height={height}
-              loading="lazy"
-              decoding="async"
-              className={`h-full w-full origin-top scale-[1.1] object-contain object-bottom brightness-[1.06] contrast-[1.16] saturate-[1.04] transition-[filter] duration-500 ${imagePositionClassName}`}
-            />
+            <div data-scroll-image className="absolute -inset-y-6 inset-x-0">
+              <img
+                src={src}
+                alt={alt}
+                width={width}
+                height={height}
+                loading="lazy"
+                decoding="async"
+                className={`h-full w-full origin-top scale-[1.1] object-contain object-bottom brightness-[1.06] contrast-[1.16] saturate-[1.04] transition-[filter] duration-500 ${imagePositionClassName}`}
+              />
+            </div>
           </motion.div>
         </motion.div>
       </div>
@@ -321,7 +360,8 @@ export default function MeetTheHumans() {
             >
               Harshita Upadhyay
             </h3>
-            <p className="mt-2 font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-neutral-400 md:text-[13px]">
+            <p className="mt-2 flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.04em] text-muted md:text-[13px]">
+              <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-full bg-accent" />
               Design / Product / UI
             </p>
             <p className="mt-5 max-w-[46ch] text-pretty text-[14px] leading-[1.65] text-foreground md:text-[15px]">
@@ -339,7 +379,7 @@ export default function MeetTheHumans() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-neutral-400 transition-colors duration-200 hover:border-white/30 hover:text-foreground"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-black/10 text-muted transition-colors duration-200 hover:border-black/30 hover:text-accent"
                 >
                   <SocialIcon id={link.id as SocialIconId} className="h-[14px] w-[14px]" />
                 </a>
@@ -394,12 +434,13 @@ export default function MeetTheHumans() {
                 Aman Raj
               </Link>
             </h3>
-            <p className="mt-2 font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-neutral-400 md:text-[13px]">
+            <p className="mt-2 flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.04em] text-muted md:text-[13px]">
+              <span aria-hidden="true" className="h-1 w-1 shrink-0 rounded-full bg-accent" />
               Engineering / Product
             </p>
             <Link
               to="/aman-raj"
-              className="mt-4 inline-flex font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400 underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent/40"
+              className="mt-4 inline-flex font-mono text-[12px] uppercase tracking-[0.12em] text-muted underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent/40"
             >
               View profile
             </Link>
@@ -418,7 +459,7 @@ export default function MeetTheHumans() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-neutral-400 transition-colors duration-200 hover:border-white/30 hover:text-foreground"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-black/10 text-muted transition-colors duration-200 hover:border-black/30 hover:text-accent"
                 >
                   <SocialIcon id={link.id as SocialIconId} className="h-[14px] w-[14px]" />
                 </a>

@@ -55,27 +55,27 @@ export default function Faq({
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="border-t border-white/10 px-4 pt-16 sm:px-[4vw] md:px-8 md:pt-24 lg:px-12"
+      className="border-t border-black/10 px-4 pt-16 sm:px-[4vw] md:px-8 md:pt-24 lg:px-12"
     >
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-400 md:mb-12">
-        <span className="text-neutral-500">{metaLabel}</span>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
+        <span className="text-muted">{metaLabel}</span>
         <span>{metaTitle}</span>
       </div>
 
-      <div className="flex flex-col items-start justify-between gap-6 border-b border-white/10 pb-10 lg:flex-row lg:items-end">
+      <div className="flex flex-col items-start justify-between gap-6 border-b border-black/10 pb-10 lg:flex-row lg:items-end">
         <h2
           id="faq-heading"
           className="font-sans text-[clamp(2.4rem,6vw,5.5rem)] font-medium leading-none tracking-[-0.04em] text-foreground"
         >
           Questions.
         </h2>
-        <p className="max-w-md font-sans text-[14px] leading-relaxed text-neutral-400 md:text-[15px]">
+        <p className="max-w-md font-sans text-[14px] leading-relaxed text-muted md:text-[15px]">
           The practical details, before we begin. If something is missing, ask us
           directly.
         </p>
       </div>
 
-      <div className="mt-6 divide-y divide-white/10">
+      <div className="mt-6 divide-y divide-black/10">
         {items.map((item, index) => {
           const isOpen = openIndex === index;
           const panelId = `faq-panel-${index}`;
@@ -92,7 +92,7 @@ export default function Faq({
                 aria-controls={panelId}
               >
                 <div className="flex items-center gap-4 md:gap-8">
-                  <span className="w-8 font-mono text-[12px] text-neutral-500">
+                  <span className="w-8 font-mono text-[12px] text-muted">
                     [0{index + 1}]
                   </span>
                   <span className="font-sans text-[17px] font-medium text-foreground transition-colors group-hover:text-accent md:text-[20px]">
@@ -102,10 +102,10 @@ export default function Faq({
 
                 <span
                   aria-hidden="true"
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[2px] border border-white/15 font-mono text-[14px] transition-transform duration-200 ${
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[2px] border border-black/15 font-mono text-[14px] transition-transform duration-200 ${
                     isOpen
-                      ? "rotate-45 border-accent bg-accent text-background"
-                      : "text-neutral-400"
+                      ? "rotate-45 border-accent bg-accent text-on-accent"
+                      : "text-muted"
                   }`}
                 >
                   +
@@ -124,7 +124,7 @@ export default function Faq({
                     transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="max-w-3xl pb-2 pl-12 pr-4 pt-3 font-sans text-[14px] leading-relaxed text-neutral-400 md:pl-16 md:text-[15px]">
+                    <p className="max-w-3xl pb-2 pl-12 pr-4 pt-3 font-sans text-[14px] leading-relaxed text-muted md:pl-16 md:text-[15px]">
                       {item.a}
                     </p>
                   </motion.div>

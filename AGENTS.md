@@ -27,7 +27,7 @@ Run `typecheck`, `lint`, and `build` after code changes. For visual or responsiv
 
 ## Conventions
 
-- Use the existing dark palette and tokens. The accent is `#ff6a00`; avoid introducing a second accent or a new theme.
+- Use the existing light palette and tokens: `#f5f5f5` canvas, `#171717` primary text, `#656565` secondary text. Keep the single warm accent and avoid introducing a second theme.
 - Keep the visual language editorial: type, whitespace, hairlines, and a restrained accent. Avoid decorative gradients, glows, heavy shadows, glass cards, and generic SaaS card grids.
 - Keep body and label text at 12px or larger. Monospace is for metadata and labels, not sentences.
 - Preserve semantic structure: one `h1` per page, `main` landmarks, labelled controls, alt text, and visible focus states.

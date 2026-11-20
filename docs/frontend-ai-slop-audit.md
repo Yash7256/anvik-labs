@@ -10,6 +10,18 @@ The site no longer reads as a template or an AI-generated landing page. The rema
 
 The strongest signals were not individual colors or shadows. They were the number of unrelated page ideas, fake destinations, placeholder contact details, dead components, and repeated sections with no editorial reason to exist. Those have been removed or replaced.
 
+## Update — 20 November 2026
+
+The findings below record an earlier state. The current implementation differs in these ways:
+
+- Motion now uses GSAP + ScrollTrigger and Lenis alongside Framer Motion. Native CSS smooth scrolling is intentionally disabled so Lenis does not double-ease.
+- Testimonials use a GSAP marquee with a static grid for reduced motion, not the auto-advancing quotation described below.
+- The standalone Featured Product section and `src/components/FeaturedProduct.tsx` were removed. Designers Room remains only as a hero project card.
+- Service rows no longer show numeric indices.
+- The contact form posts to FormSubmit, not a `mailto:` draft. The older mailto notes below are superseded by `README.md`.
+- Additional motion now covers post-hydration route fades, works filter reflow, contact status feedback, sticky scroll-progress hairlines, the Aman timeline, and offscreen/hidden pausing for the testimonial marquee.
+- Typecheck, lint, and build pass after the motion changes. Headless Chrome screenshots at 1440px and 390px render all affected routes; a human visual comparison is still recommended.
+
 ## Findings and resolutions
 
 | # | Finding | Severity | Resolution |

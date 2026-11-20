@@ -3,18 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { site } from "@/lib/site";
 
 const quickLinks = [
   { label: "Works", href: "/works" },
   { label: "Services", href: "/#services" },
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const reduceMotion = useReducedMotion();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -69,13 +72,16 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 bg-background/85 backdrop-blur-md">
-      <div className="w-full px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
+      <header className="fixed inset-x-0 top-0 z-50 bg-background/80 shadow-[0_10px_30px_-18px_rgba(23,23,23,0.35)] backdrop-blur-xl backdrop-saturate-150">
+      <div className="w-full px-10 sm:px-[12vw] lg:px-[16vw] xl:px-[18vw]">
         <motion.div
-          initial={{ opacity: 0, y: -8 }}
+          initial={reduceMotion ? false : { opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex min-h-[var(--header-height)] items-center justify-between py-0 text-[13px] leading-snug md:text-[14px]"
+          transition={{
+            duration: reduceMotion ? 0 : 0.6,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="flex min-h-[var(--header-height)] items-center justify-between py-0 text-[14px] leading-snug md:text-[15px]"
         >
           <div className="flex flex-col">
             <Link
@@ -88,32 +94,26 @@ export default function Navbar() {
                 alt="Anvik Labs"
                 width={1010}
                 height={118}
-                className="h-5 w-auto md:h-6"
+                className="h-6 w-auto [filter:brightness(0)_invert(0.09)] md:h-7"
               />
             </Link>
           </div>
 
-          <nav aria-label="Primary navigation" className="hidden items-center gap-5 md:flex">
-            <div className="flex items-center gap-1.5 font-sans text-muted">
-              {quickLinks.slice(0, 2).map((item, index) => (
-                <span key={item.label} className="inline-flex items-center gap-1.5">
-                  <Link
-                    to={item.href}
-                    className="underline-offset-4 transition-colors duration-200 hover:text-foreground hover:underline"
-                  >
-                    {item.label}
-                  </Link>
-                  {index === 0 && (
-                    <span aria-hidden="true" className="font-normal text-muted">
-                      ,
-                    </span>
-                  )}
-                </span>
+          <nav aria-label="Primary navigation" className="hidden items-center gap-10 md:flex lg:gap-14">
+            <div className="flex items-center gap-6 font-sans text-[16px] font-medium text-foreground">
+              {quickLinks.slice(0, 4).map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.href}
+                  className="underline-offset-4 transition-colors duration-200 hover:text-accent hover:underline"
+                >
+                  {item.label}
+                </Link>
               ))}
             </div>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 font-sans text-[13px] font-semibold tracking-tight text-black transition-colors duration-200 hover:bg-neutral-200"
+              className="inline-flex items-center justify-center rounded-full border border-white/[0.08] bg-[linear-gradient(180deg,#242424_0%,#1c1c1c_100%)] px-6 py-3 font-sans text-[15px] font-medium tracking-tight text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.10)] transition-[transform,box-shadow] duration-200 ease-out active:shadow-[0_5px_14px_-8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.08)]"
             >
               Let's talk
             </Link>
@@ -123,7 +123,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setOpen(true)}
             ref={menuButtonRef}
-            className="inline-flex min-h-11 items-center font-mono text-[12px] font-semibold uppercase tracking-wider text-muted transition-opacity duration-200 hover:opacity-60 md:hidden"
+            className="inline-flex min-h-11 items-center font-mono text-[13px] uppercase tracking-[0.04em] text-foreground transition-opacity duration-200 hover:opacity-60 md:hidden"
             aria-label="Open navigation menu"
             aria-expanded={open}
             aria-controls="mobile-navigation"
@@ -132,11 +132,6 @@ export default function Navbar() {
           </button>
         </motion.div>
       </div>
-
-      <div aria-hidden className="w-full px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
-        <div className="h-px w-full origin-bottom scale-y-50 bg-white/10" />
-      </div>
-
       </header>
 
       {mounted
@@ -148,11 +143,14 @@ export default function Navbar() {
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 flex flex-col bg-black px-4 py-5 sm:px-[4vw] md:hidden"
+            exit={reduceMotion ? undefined : { opacity: 0 }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.25,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="fixed inset-0 z-50 flex flex-col bg-background px-10 py-5 sm:px-[12vw] md:hidden"
           >
             <div className="flex items-center justify-between">
               <Link
@@ -166,14 +164,14 @@ export default function Navbar() {
                   alt="Anvik Labs"
                   width={1010}
                   height={118}
-                  className="h-6 w-auto"
+                  className="h-7 w-auto [filter:brightness(0)_invert(0.09)]"
                 />
               </Link>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 ref={closeButtonRef}
-                className="inline-flex min-h-11 items-center font-mono text-[12px] font-semibold uppercase tracking-wider text-muted"
+                className="inline-flex min-h-11 items-center font-mono text-[13px] uppercase tracking-[0.04em] text-foreground transition-opacity duration-200 hover:opacity-60"
                 aria-label="Close navigation menu"
               >
                 [ CLOSE ]
@@ -181,22 +179,32 @@ export default function Navbar() {
             </div>
 
             <nav aria-label="Mobile navigation" className="mt-12 flex flex-col gap-5">
-              <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">
+              <span className="font-mono text-[13px] uppercase tracking-[0.04em] text-muted">
                 Quick links
               </span>
-              {quickLinks.map((item) => (
-                <Link
+              {quickLinks.map((item, index) => (
+                <motion.div
                   key={item.label}
-                  to={item.href}
-                  onClick={() => setOpen(false)}
-                  className="inline-flex min-h-11 items-center font-sans text-[22px] font-medium tracking-tight text-foreground transition-opacity duration-200 hover:opacity-60"
+                  initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: reduceMotion ? 0 : 0.22,
+                    delay: reduceMotion ? 0 : 0.04 + index * 0.012,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
                 >
-                  {item.label}
-                </Link>
+                  <Link
+                    to={item.href}
+                    onClick={() => setOpen(false)}
+                    className="inline-flex min-h-11 items-center font-sans text-[24px] font-medium tracking-tight text-foreground transition-opacity duration-200 hover:opacity-60"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
               ))}
             </nav>
 
-            <div className="mt-auto flex flex-col gap-1 border-t border-white/10 pt-6 text-[13px]">
+            <div className="mt-auto flex flex-col gap-1 border-t border-black/10 pt-6 text-[13px]">
               <span className="font-sans font-medium text-foreground">
                 {site.studioTagline}
               </span>

@@ -49,19 +49,18 @@ All design tokens are defined in [`src/app/globals.css`](file:///home/yash/Code/
 
 ## 3. Typographic System & Hierarchy
 
-The design system employs a strict **dual-voice** typographic rule:
+The design system employs three typographic voices:
 
 | Role | Font Family | Tailwind Class | Usage Guidelines |
 | :--- | :--- | :--- | :--- |
-| **Voice 1: Display & Body** | `Inter Display` | `font-sans` | Headings, hero narrative, body copy, article text. Tight leading (`leading-[0.95]`), negative tracking (`tracking-[-0.04em]`). |
-| **Voice 2: Annotation & UI** | Monospace Stack | `font-mono` | Uppercase, wide tracking (`tracking-[0.12em]` to `[0.2em]`), 11px–13px. Used for labels, indices, metadata, buttons, tags. |
-| **Literary Quotations** | `Instrument Serif` | `font-serif` | Quotations, italicized literary moments, testimonials. |
-| **Branding Wordmark** | `Michroma` | `font-michroma` | Strictly reserved for the oversized hero brand mark. |
+| **Headings** | `Space Grotesk` | `font-display` | Hero at weight 600 (`-0.045em` tracking); section and card headings at weight 500 (`-0.04em` tracking). Use weight contrast deliberately. |
+| **Body & UI** | `Geist` | `font-sans` | Body copy at weight 400 (`-0.01em` tracking); navigation and buttons at weight 500. |
+| **Annotation & UI** | `Geist Mono` | `font-mono` | Uppercase, weight 400, `0.04em` tracking, 12px minimum. Used for labels, indices, metadata, counters, and tags. |
 
 ### Typography Rules:
 1. **Never use Monospace for prose or sentences**; monospace is strictly for data, indices, and UI controls.
 2. **Never drop body or label text below 12px**.
-3. **Primary Body Contrast**: Use `text-foreground` (`#e7e9ee`) for body copy to guarantee WCAG AAA 16:1+ contrast against `#080808`. Use `text-neutral-400` for secondary metadata.
+3. **Primary Body Contrast**: Use `text-foreground` (`#171717`) for body copy against the `#f5f5f5` canvas. Use `text-muted` (`#656565`) for secondary metadata.
 
 ---
 

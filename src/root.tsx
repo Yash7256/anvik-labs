@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { MotionConfig, motion, useReducedMotion } from "framer-motion";
 import {
   Links,
   Meta,
@@ -9,6 +10,11 @@ import {
   type MetaFunction,
 } from "react-router";
 import Background from "@/components/Background";
+import {
+  destroySmoothScroll,
+  initSmoothScroll,
+  scrollToElement,
+} from "@/lib/smooth-scroll";
 import { createMeta, organizationId, site, websiteId } from "@/lib/site";
 import "./app/globals.css";
 
@@ -65,7 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Michroma&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap"
         />
         <script
           type="application/ld+json"
@@ -93,6 +99,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+function SmoothScroll() {
+  useEffect(() => {
+    initSmoothScroll();
+    return destroySmoothScroll;
+  }, []);
+
+  return null;
+}
+
 function ScrollToHash() {
   const location = useLocation();
 
@@ -103,13 +118,13 @@ function ScrollToHash() {
     const timer = window.setTimeout(() => {
       const target = document.getElementById(id);
       if (!target) return;
-      const reducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      target.scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-        block: "start",
-      });
+      const headerHeight =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--header-height",
+          ),
+        ) || 0;
+      scrollToElement(target, -(headerHeight + 16));
     }, 0);
 
     return () => window.clearTimeout(timer);
@@ -118,11 +133,46 @@ function ScrollToHash() {
   return null;
 }
 
+function AnimatedOutlet() {
+  const location = useLocation();
+  const reduceMotion = useReducedMotion();
+  const [hydrated, setHydrated] = useState(false);
+  const previousPathRef = useRef(location.pathname);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    previousPathRef.current = location.pathname;
+  }, [location.pathname]);
+
+  if (!hydrated) return <Outlet />;
+
+  const shouldAnimate =
+    location.pathname !== previousPathRef.current && !reduceMotion;
+
+  return (
+    <motion.div
+      key={location.pathname}
+      initial={shouldAnimate ? { opacity: 0, y: 4 } : false}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.18,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+    >
+      <Outlet />
+    </motion.div>
+  );
+}
+
 export default function App() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
+      <SmoothScroll />
       <ScrollToHash />
-      <Outlet />
-    </>
+      <AnimatedOutlet />
+    </MotionConfig>
   );
 }

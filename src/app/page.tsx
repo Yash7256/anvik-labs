@@ -1,7 +1,6 @@
 import type { MetaFunction } from "react-router";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import FeaturedProduct from "@/components/FeaturedProduct";
 import MeetTheHumans from "@/components/MeetTheHumans";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
@@ -17,9 +16,8 @@ export default function Home() {
       <Navbar />
       <main id="main-content" className="flex flex-1 flex-col">
         <Hero />
-        <FeaturedProduct />
-        <MeetTheHumans />
         <Services />
+        <MeetTheHumans />
         <Testimonials />
       </main>
       <Footer />

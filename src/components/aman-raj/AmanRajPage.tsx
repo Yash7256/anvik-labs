@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useReducedMotion } from "framer-motion";
+import ScrollProgressLine from "@/components/ScrollProgressLine";
 import {
   amanCertifications,
   amanEducation,
@@ -127,9 +128,9 @@ function WorkRow({ project }: { project: AmanProject }) {
   const [open, setOpen] = useState(project.featured ?? false);
 
   return (
-    <li className="border-b border-white/10">
+    <li className="border-b border-black/10">
       <div
-        className={`transition-colors ${open ? "bg-white/[0.02]" : ""}`}
+        className={`transition-colors ${open ? "bg-black/[0.02]" : ""}`}
         onMouseEnter={() => setOpen(true)}
       >
         <button
@@ -139,7 +140,7 @@ function WorkRow({ project }: { project: AmanProject }) {
           aria-expanded={open}
           className="group grid w-full grid-cols-1 gap-3 py-6 text-left md:grid-cols-[auto_1fr_auto] md:items-start md:gap-6 md:py-8"
         >
-          <span className="font-mono text-[12px] text-neutral-500">
+          <span className="font-mono text-[12px] text-muted">
             {project.index}
           </span>
           <div>
@@ -153,11 +154,11 @@ function WorkRow({ project }: { project: AmanProject }) {
               >
                 {project.title}
               </h3>
-              <span className="border border-white/10 px-2 py-0.5 font-mono text-[12px] text-neutral-400">
+              <span className="border border-black/10 px-2 py-0.5 font-mono text-[12px] text-muted">
                 {project.status}
               </span>
             </div>
-            <p className="mt-2 max-w-2xl font-sans text-[14px] leading-relaxed text-neutral-400 md:text-[15px]">
+            <p className="mt-2 max-w-2xl font-sans text-[14px] leading-relaxed text-muted md:text-[15px]">
               {project.description}
             </p>
           </div>
@@ -165,7 +166,7 @@ function WorkRow({ project }: { project: AmanProject }) {
             <a
               href={project.github}
               onClick={(e) => e.stopPropagation()}
-              className="font-mono text-[12px] text-neutral-400 underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent/40"
+              className="font-mono text-[12px] text-muted underline decoration-transparent underline-offset-4 transition-colors hover:text-accent hover:decoration-accent/40"
               aria-label={`${project.title} on GitHub`}
             >
               GitHub
@@ -181,14 +182,14 @@ function WorkRow({ project }: { project: AmanProject }) {
           <div className="overflow-hidden">
             <div className="grid gap-6 pb-7 md:grid-cols-[1.1fr_0.9fr] md:pl-10">
               <div>
-                <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+                <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
                   Highlights
                 </p>
                 <ul className="mt-3 space-y-2">
                   {project.highlights.map((h) => (
                     <li
                       key={h}
-                      className="flex gap-3 font-sans text-[14px] leading-relaxed text-neutral-300"
+                      className="flex gap-3 font-sans text-[14px] leading-relaxed text-muted"
                     >
                       <span
                         aria-hidden="true"
@@ -201,14 +202,14 @@ function WorkRow({ project }: { project: AmanProject }) {
                 {project.diagram && <ArchitectureDiagram />}
               </div>
               <div>
-                <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+                <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
                   Stack
                 </p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {project.stack.map((tech) => (
                     <li
                       key={tech}
-                      className="border border-white/10 px-2.5 py-1 font-mono text-[12px] text-neutral-400"
+                      className="border border-black/10 px-2.5 py-1 font-mono text-[12px] text-muted"
                     >
                       {tech}
                     </li>
@@ -228,20 +229,20 @@ export default function AmanRajPage() {
 
   return (
     <div className="flex flex-col">
-      <section id="hero" className="relative border-b border-white/10 pt-32 pb-12 md:pt-44 md:pb-16">
+      <section id="hero" className="relative border-b border-black/10 pt-32 pb-12 md:pt-44 md:pb-16">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-accent/10 blur-[100px]"
         />
         <div className="relative grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-end">
           <div>
-            <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+            <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
               {amanProfile.role} / India
             </p>
             <h1 className="mt-4 max-w-3xl font-sans text-[clamp(2.1rem,4vw,3.8rem)] font-medium leading-[1.08] tracking-[-0.035em] text-foreground">
               {amanHero.headline}
             </h1>
-            <p className="mt-5 max-w-xl font-sans text-[16px] leading-relaxed text-neutral-300 md:text-[17px]">
+            <p className="mt-5 max-w-xl font-sans text-[16px] leading-relaxed text-muted md:text-[17px]">
               {amanHero.body}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -253,7 +254,7 @@ export default function AmanRajPage() {
               </a>
               <a
                 href={amanHero.secondaryCta.href}
-                className="inline-flex min-h-11 items-center justify-center rounded-[2px] border border-white/20 px-5 font-sans text-[15px] font-medium text-foreground transition-colors hover:border-white/40 hover:bg-white/5"
+                className="inline-flex min-h-11 items-center justify-center rounded-[2px] border border-black/20 px-5 font-sans text-[15px] font-medium text-foreground transition-colors hover:border-black/40 hover:bg-black/5"
               >
                 {amanHero.secondaryCta.label}
               </a>
@@ -261,7 +262,7 @@ export default function AmanRajPage() {
           </div>
 
           <div className="md:justify-self-end">
-            <div className="w-full max-w-xs border border-white/10 bg-light-surface p-4 font-mono text-[13px] text-neutral-400">
+            <div className="w-full max-w-xs border border-black/10 bg-light-surface p-4 font-mono text-[13px] text-muted">
               <p className="text-foreground">{amanProfile.status}</p>
               <p className="mt-1">{amanProfile.location}</p>
               <p className="mt-3 flex items-center gap-2 text-accent-text">
@@ -275,11 +276,11 @@ export default function AmanRajPage() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 md:mt-16">
-          <p className="font-michroma text-[clamp(3rem,14vw,13rem)] font-normal leading-[0.9] tracking-[-0.02em] text-foreground">
+        <div className="mt-12 border-t border-black/10 pt-8 md:mt-16">
+          <p className="font-display text-[clamp(3rem,14vw,13rem)] font-semibold leading-[0.9] tracking-[-0.045em] text-foreground">
             Aman Raj
           </p>
-          <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-3 font-mono text-[12px] text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-4 flex flex-col gap-2 border-t border-black/10 pt-3 font-mono text-[12px] text-muted sm:flex-row sm:items-center sm:justify-between">
             <span>Backend / AI / Security engineer / India</span>
             <span>Selected work</span>
           </div>
@@ -288,21 +289,21 @@ export default function AmanRajPage() {
 
       <section
         ref={statsRef}
-        className="border-b border-white/10"
+        className="border-b border-black/10"
         aria-label="Key numbers"
       >
         <div className="grid grid-cols-2 md:grid-cols-4">
           {amanStats.map((stat, i) => (
             <div
               key={stat.caption}
-              className={`py-8 md:py-10 ${i % 2 === 0 ? "pr-6" : "border-l border-white/10 pl-6"} ${
-                i < 2 ? "border-b border-white/10 md:border-b-0" : ""
-              } ${i > 0 ? "md:border-l md:border-white/10 md:pl-6" : "md:pr-6"}`}
+              className={`py-8 md:py-10 ${i % 2 === 0 ? "pr-6" : "border-l border-black/10 pl-6"} ${
+                i < 2 ? "border-b border-black/10 md:border-b-0" : ""
+              } ${i > 0 ? "md:border-l md:border-black/10 md:pl-6" : "md:pr-6"}`}
             >
-              <p className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-none tracking-[-0.03em] text-foreground">
+              <p className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-none tracking-[-0.03em] text-foreground">
                 <CountUp stat={stat} start={statsInView} />
               </p>
-              <p className="mt-2 font-mono text-[12px] text-neutral-500">
+              <p className="mt-2 font-mono text-[12px] text-muted">
                 {stat.caption}
               </p>
             </div>
@@ -312,10 +313,10 @@ export default function AmanRajPage() {
 
       <section
         id="work"
-        className="scroll-mt-24 border-b border-white/10 py-12 md:py-16"
+        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
         aria-labelledby="aman-work-heading"
       >
-        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
           01 / Work
         </p>
         <h2
@@ -324,7 +325,7 @@ export default function AmanRajPage() {
         >
           Selected work
         </h2>
-        <ul className="mt-8 border-t border-white/10">
+        <ul className="mt-8 border-t border-black/10">
           {amanProjects.map((project) => (
             <WorkRow key={project.index} project={project} />
           ))}
@@ -333,10 +334,10 @@ export default function AmanRajPage() {
 
       <section
         id="experience"
-        className="scroll-mt-24 border-b border-white/10 py-12 md:py-16"
+        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
         aria-labelledby="aman-experience-heading"
       >
-        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
           02 / Experience
         </p>
         <h2
@@ -345,10 +346,14 @@ export default function AmanRajPage() {
         >
           Experience
         </h2>
-        <div className="relative mt-10">
+        <div id="aman-experience-timeline" className="relative mt-10">
           <div
             aria-hidden="true"
-            className="absolute bottom-2 left-[7px] top-2 w-px bg-white/10 md:left-[140px]"
+            className="absolute bottom-2 left-[7px] top-2 w-px bg-black/10 md:left-[140px]"
+          />
+          <ScrollProgressLine
+            targetId="aman-experience-timeline"
+            className="left-[7px] top-2 h-[calc(100%-1rem)] md:left-[140px]"
           />
           <ul className="space-y-10">
             {amanExperience.map((item) => (
@@ -361,7 +366,7 @@ export default function AmanRajPage() {
                     aria-hidden="true"
                     className="relative z-10 mt-1.5 h-3.5 w-3.5 shrink-0 border border-accent bg-background md:absolute md:left-[134px] md:mt-1.5"
                   />
-                  <p className="font-mono text-[12px] text-neutral-500 md:pr-8 md:text-right">
+                  <p className="font-mono text-[12px] text-muted md:pr-8 md:text-right">
                     {item.dates}
                   </p>
                 </div>
@@ -372,7 +377,7 @@ export default function AmanRajPage() {
                   <p className="mt-1 font-mono text-[13px] text-accent-text">
                     {item.company}
                   </p>
-                  <p className="mt-3 max-w-2xl font-sans text-[15px] leading-relaxed text-neutral-300">
+                  <p className="mt-3 max-w-2xl font-sans text-[15px] leading-relaxed text-muted">
                     {item.description}
                   </p>
                 </div>
@@ -384,10 +389,10 @@ export default function AmanRajPage() {
 
       <section
         id="stack"
-        className="scroll-mt-24 border-b border-white/10 py-12 md:py-16"
+        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
         aria-labelledby="aman-stack-heading"
       >
-        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
           03 / Stack
         </p>
         <h2
@@ -396,13 +401,13 @@ export default function AmanRajPage() {
         >
           Stack
         </h2>
-        <div className="mt-8 border-t border-white/10">
+        <div className="mt-8 border-t border-black/10">
           {amanStackGroups.map((group) => (
             <div
               key={group.group}
-              className="grid gap-3 border-b border-white/10 py-4 md:grid-cols-[220px_1fr] md:gap-6 md:py-5"
+              className="grid gap-3 border-b border-black/10 py-4 md:grid-cols-[220px_1fr] md:gap-6 md:py-5"
             >
-              <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+              <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
                 {group.group}
               </p>
               <ul className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-[13px]">
@@ -415,7 +420,7 @@ export default function AmanRajPage() {
                       />
                     )}
                     <span
-                      className={item.strong ? "text-foreground" : "text-neutral-400"}
+                      className={item.strong ? "text-foreground" : "text-muted"}
                     >
                       {item.name}
                     </span>
@@ -429,10 +434,10 @@ export default function AmanRajPage() {
 
       <section
         id="certifications"
-        className="scroll-mt-24 border-b border-white/10 py-12 md:py-16"
+        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
         aria-labelledby="aman-certs-heading"
       >
-        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
           04 / Certifications
         </p>
         <h2
@@ -445,18 +450,18 @@ export default function AmanRajPage() {
           {amanCertifications.map((cert) => (
             <li
               key={cert.name}
-              className="border border-white/10 bg-light-surface px-4 py-3"
+              className="border border-black/10 bg-light-surface px-4 py-3"
             >
               <p className="font-sans text-[14px] font-medium text-foreground">
                 {cert.name}
               </p>
-              <p className="mt-1 font-mono text-[12px] text-neutral-500">
+              <p className="mt-1 font-mono text-[12px] text-muted">
                 {cert.issuer}, {cert.year}
               </p>
             </li>
           ))}
         </ul>
-        <p className="mt-6 max-w-3xl font-mono text-[13px] leading-relaxed text-neutral-400">
+        <p className="mt-6 max-w-3xl font-mono text-[13px] leading-relaxed text-muted">
           {amanEducation}
         </p>
       </section>
@@ -466,16 +471,16 @@ export default function AmanRajPage() {
         className="scroll-mt-24 py-14 md:py-20"
         aria-labelledby="aman-contact-heading"
       >
-        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-neutral-500">
+        <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
           05 / Contact
         </p>
         <h2
           id="aman-contact-heading"
-          className="mt-6 font-michroma text-[clamp(2.4rem,7vw,6rem)] font-normal leading-[0.95] tracking-[-0.02em] text-foreground"
+          className="mt-6 font-display text-[clamp(2.4rem,7vw,6rem)] leading-[0.95] tracking-[-0.04em] text-foreground"
         >
           Let&apos;s build something.
         </h2>
-        <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-8 md:flex-row md:items-end md:justify-between">
+        <div className="mt-10 flex flex-col gap-8 border-t border-black/10 pt-8 md:flex-row md:items-end md:justify-between">
           <div className="space-y-3">
             <a
               href={`mailto:${amanProfile.email}`}
@@ -483,7 +488,7 @@ export default function AmanRajPage() {
             >
               {amanProfile.email}
             </a>
-            <div className="flex flex-wrap gap-4 font-mono text-[13px] text-neutral-400">
+            <div className="flex flex-wrap gap-4 font-mono text-[13px] text-muted">
               <a
                 href={amanProfile.github}
                 target="_blank"
@@ -502,7 +507,7 @@ export default function AmanRajPage() {
               </a>
             </div>
           </div>
-          <p className="font-mono text-[12px] text-neutral-500">
+          <p className="font-mono text-[12px] text-muted">
             <Link to="/" className="transition-colors hover:text-foreground">
               Anvik Labs
             </Link>

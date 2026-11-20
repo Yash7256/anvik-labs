@@ -3,6 +3,7 @@ import Image from "@/components/Img";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import Reveal from "@/components/Reveal";
 import {
   getNextProject,
   getProject,
@@ -43,7 +44,8 @@ function DecisionSection({ id, index, label, intro, items }: {
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-heading`} className="border-t border-border py-16 md:py-24">
-      <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
+      <Reveal>
+        <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
         <div>
           <p className={`${mono} text-accent`}>[{index}]</p>
           <h2 id={`${id}-heading`} className="mt-4 max-w-[8ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">
@@ -51,18 +53,19 @@ function DecisionSection({ id, index, label, intro, items }: {
           </h2>
         </div>
         <div>
-          <p className="max-w-[55ch] text-[17px] leading-[1.45] text-neutral-200 md:text-[20px]">{intro}</p>
-          <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
+          <p className="max-w-[55ch] text-[17px] leading-[1.45] text-foreground md:text-[20px]">{intro}</p>
+          <div className="mt-10 divide-y divide-black/10 border-y border-black/10">
             {items.map((item, itemIndex) => (
               <article key={item.title} className="grid gap-3 py-5 sm:grid-cols-[52px_0.8fr_1.2fr] sm:gap-5 sm:py-6">
-                <span className={`${mono} text-neutral-600`}>{String(itemIndex + 1).padStart(2, "0")}</span>
+                <span className={`${mono} text-muted`}>{String(itemIndex + 1).padStart(2, "0")}</span>
                 <h3 className="font-sans text-[17px] font-medium leading-tight text-foreground">{item.title}</h3>
-                <p className="text-[15px] leading-relaxed text-neutral-400">{item.description}</p>
+                <p className="text-[15px] leading-relaxed text-muted">{item.description}</p>
               </article>
             ))}
           </div>
+          </div>
         </div>
-      </div>
+        </Reveal>
     </section>
   );
 }
@@ -88,8 +91,8 @@ export default function WorkPage() {
     <><Navbar /><main id="main-content" className="flex flex-1 flex-col px-4 pt-[calc(var(--header-height)+24px)] sm:px-[4vw] md:px-[5vw] md:pt-[calc(var(--header-height)+32px)]">
       <JsonLd data={createBreadcrumbJsonLd([{ name: "Home", url: site.url }, { name: "Works", url: `${site.url}/works` }, { name: project.name, url: `${site.url}/works/${project.id}` }])} />
       <JsonLd data={createWorkJsonLd(project)} />
-      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 border-b border-white/10 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-500">
-        <Link to="/" className="transition-colors hover:text-foreground">Home</Link><span aria-hidden="true">/</span><Link to="/works" className="transition-colors hover:text-foreground">Works</Link><span aria-hidden="true">/</span><span className="text-neutral-300">{project.name}</span>
+      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 border-b border-black/10 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+        <Link to="/" className="transition-colors hover:text-foreground">Home</Link><span aria-hidden="true">/</span><Link to="/works" className="transition-colors hover:text-foreground">Works</Link><span aria-hidden="true">/</span><span className="text-muted">{project.name}</span>
       </nav>
 
       <article>
@@ -97,7 +100,7 @@ export default function WorkPage() {
           <div className={`${mono} flex items-center justify-between gap-4`}><Link to="/works" className="transition-opacity duration-200 hover:opacity-50">[ &larr; ALL WORKS ]</Link><span>[{String(projectIndex).padStart(3, "0")}]</span></div>
           <div className="mt-8 grid gap-6 sm:mt-10 md:mt-16 md:grid-cols-[1fr_0.6fr] md:items-end md:gap-12">
             <h1 className="max-w-[9ch] font-sans text-[clamp(3.5rem,10vw,9rem)] font-medium uppercase leading-[0.85] tracking-[-0.06em] break-words">{project.name}</h1>
-            <p className="max-w-[42ch] text-[17px] leading-[1.4] text-neutral-200 md:pb-2 md:text-[20px]">{project.description}</p>
+            <p className="max-w-[42ch] text-[17px] leading-[1.4] text-foreground md:pb-2 md:text-[20px]">{project.description}</p>
           </div>
           <dl className="mt-10 grid grid-cols-2 gap-x-4 gap-y-5 border-y border-border py-5 sm:mt-12 sm:grid-cols-4 sm:gap-8 sm:py-6">
             <div className="flex flex-col gap-2"><dt className={`${mono} text-muted`}>WORK TYPE</dt><dd className={mono}>{WORK_TYPE_LABEL[workType]}</dd></div>
@@ -107,9 +110,11 @@ export default function WorkPage() {
           </dl>
         </header>
 
-        <figure><div className="relative aspect-[16/9] overflow-hidden rounded-[6px] bg-light-surface"><Image src={project.coverImage} alt={project.coverAlt} fill className="object-cover" /></div><figcaption className={`${mono} mt-3 flex items-baseline justify-between gap-4 text-neutral-500`}><span>{project.name} / {project.year}</span><span>{WORK_TYPE_LABEL[workType]}</span></figcaption></figure>
+        <Reveal delay={0.05}>
+          <figure><div className="relative aspect-[16/9] overflow-hidden rounded-[6px] bg-light-surface"><Image src={project.coverImage} alt={project.coverAlt} fill className="object-cover" /></div><figcaption className={`${mono} mt-3 flex items-baseline justify-between gap-4 text-muted`}><span>{project.name} / {project.year}</span><span>{WORK_TYPE_LABEL[workType]}</span></figcaption></figure>
+        </Reveal>
 
-        <section className="py-16 md:py-24"><div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12"><h2 className="max-w-[8ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">The work</h2><div className="max-w-[58ch]"><p className="font-sans text-[clamp(1.6rem,3vw,2.5rem)] leading-[1.1] tracking-[-0.03em]">{project.name} brings product thinking, clear communication, and careful execution into one focused experience.</p><p className="mt-6 text-[16px] leading-[1.5] text-neutral-300">This case study separates the decisions behind the work so the role Anvik Labs played is clear at a glance.</p></div></div></section>
+        <section className="py-16 md:py-24"><div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12"><h2 className="max-w-[8ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">The work</h2><div className="max-w-[58ch]"><p className="font-sans text-[clamp(1.6rem,3vw,2.5rem)] leading-[1.1] tracking-[-0.03em]">{project.name} brings product thinking, clear communication, and careful execution into one focused experience.</p><p className="mt-6 text-[16px] leading-[1.5] text-muted">This case study separates the decisions behind the work so the role Anvik Labs played is clear at a glance.</p></div></div></section>
 
         {showDesign && <DecisionSection id="design-decisions" index="01" label="Design decisions" intro="The choices that shape how the product is understood, used, and remembered." items={project.designDecisions} />}
         {showDevelopment && <DecisionSection id="development-decisions" index={showDesign ? "02" : "01"} label="Development decisions" intro="The choices that make the experience dependable, adaptable, and ready to use." items={project.developmentDecisions} />}
