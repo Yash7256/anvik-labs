@@ -4,10 +4,10 @@ This document describes the current implementation. It replaces the stale TITARV
 
 ## Principles
 
-- **Editorial, not decorative.** The site is built from type, whitespace, hairlines, and restrained imagery. Avoid cards, glows, gradients, heavy shadows, glass effects, and generic SaaS layouts.
+- **Editorial, not decorative.** The site is built from type, whitespace, and restrained imagery. Avoid cards, glows, gradients, heavy shadows, glass effects, and generic SaaS layouts.
 - **Three voices.** Space Grotesk carries headings; Geist carries body copy, navigation, and controls; Geist Mono carries metadata, labels, counters, and short UI controls.
 - **One accent.** Orange is a punctuation mark, not a theme. Use it for active states, small labels, links, and quote emphasis only.
-- **Structure visible.** Thin rules, numeric indices, and generous spacing make the page feel like a working document.
+- **Structure visible.** Numeric indices, typographic hierarchy, and generous spacing make the page feel like a working document. Divider rules are not used.
 - **Motion with restraint.** Animation clarifies a transition or adds tactility. It should not run constantly or compete with reading.
 
 ## Color
@@ -19,7 +19,7 @@ Tokens are defined in `src/app/globals.css`.
 | `--color-background` | `#f5f5f5` | Page background |
 | `--color-foreground` | `#171717` | Primary text |
 | `--color-text-secondary` / `--color-muted` | `#656565` | Secondary copy |
-| `--color-border` | `rgba(23, 23, 23, 0.12)` | Hairlines and dividers |
+| `--color-border` | `rgba(23, 23, 23, 0.12)` | Component outlines |
 | `--color-light-surface` / `--color-surface` | `#ffffff` | Media wells and soft surfaces |
 | `--color-dark-surface` | `#ebebeb` | Recessed surfaces |
 | `--color-accent` | `#ff5a0a` | Primary accent |
@@ -54,7 +54,7 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 ## Layout
 
 - The app shell applies page gutters: 16px on mobile, then `4vw`, `5vw`, and `6vw` at larger breakpoints.
-- Sections generally use `border-t` hairline separators and vertical padding from 64px to 144px.
+- Sections use vertical padding from 64px to 144px and whitespace instead of divider rules.
 - Home sections use a consistent header pattern: a small mono index, a large sans heading, and a short supporting paragraph. The testimonial section intentionally breaks this pattern and is centered.
 - Media wells use `--color-light-surface`, a 1px hairline, and small radii (2px for controls, 5–8px for media). Avoid oversized rounded cards.
 - Responsive layouts collapse to a single column on mobile. Project grids use 1 column mobile, 3 columns desktop.
@@ -68,6 +68,11 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 - Mobile: `[ MENU ]` opens a full-screen drawer. Escape closes it; body scroll is locked while open.
 - Focus states are always visible. The skip link targets `#main-content`.
 
+### Calls to action
+
+- All primary CTAs — navbar, hero, footer, service pages, contact form, and Aman Raj hero — share `primaryCtaClass` from `src/lib/cta.ts`, matching the navbar's dark pill. Mobile uses a compact 13px/40px variant; the larger 15px/44px size starts at `md`.
+- Secondary links stay as underlined or mono text links. Orange remains a hover and focus accent, not a primary CTA fill.
+
 ### Hero
 
 - Min-height fills the viewport minus the header.
@@ -75,6 +80,7 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 - A single "All Work" link to `/works`; no segmented discipline navigation.
 - Three compact project cards in one row with subtle scroll-linked cover parallax. The horizontal strip uses `data-lenis-prevent` so native horizontal scrolling is preserved.
 - Orange is reserved for hover and focus accents, not primary CTAs.
+- At 375px wide, the headline stays on two lines with a 28px minimum size and the supporting copy switches to a shorter two-line variant. Project cards are hidden; a continuously rotating 20px project-name marquee sits at the bottom of the hero, with no visible section label.
 
 ### Meet the Humans
 
@@ -84,7 +90,7 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 
 ### Services
 
-- Four hairline rows with three columns: service name, discipline, and technical detail. Numeric indices are intentionally absent.
+- Four rows with two columns: service name and technical detail. The former discipline labels are intentionally absent; numeric indices are also absent.
 - Rows reveal on scroll with GSAP. Hover changes type color and adds a quiet row wash.
 
 ### Testimonials
@@ -95,7 +101,7 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 - Avatars are optional. When no image exists, a circular initials fallback is used.
 - Data comes from `src/data/testimonials.json`.
 - Quotes move in a GSAP-driven continuous marquee; scroll velocity briefly influences speed and direction.
-- Hover, keyboard focus, or the Pause control stops the marquee; Play resumes it.
+- Hover or keyboard focus temporarily stops the marquee; there is no visible pause control. Offscreen and hidden-tab states also pause it.
 - Reduced-motion users see a static grid of all testimonials instead of the moving track.
 - Keep the composition centered and spacious. Do not turn it into a card grid or add testimonial badges.
 
@@ -114,6 +120,7 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 ### Works and project galleries
 
 - `/works` is a data-driven index from `src/data/works.ts`.
+- Homepage feature cards and `/works` index cards share `projectCardClass` and `projectMediaClass` from `src/lib/project-card.ts`.
 - `/works/:slug` renders project metadata, narrative, gallery, and next-project link.
 
 ## Motion
@@ -121,8 +128,9 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 - Framer Motion handles navigation presence, portrait reveals and pointer parallax, accordions, and reduced-motion detection in components that need it.
 - GSAP + ScrollTrigger handle homepage entrances, service-row reveals, cover and portrait parallax, the testimonial marquee, and the footer tagline reveal.
 - Lenis provides site-wide smooth scrolling, driven by GSAP's ticker. Hash navigation and back-to-top use Lenis with a header offset; native CSS smooth scrolling stays off to avoid double easing.
-- Prefer opacity, small translate, scale, hairline, and mask transitions. Avoid long loops, scroll-jacking, elastic easing, and animating layout-driving properties.
+- Prefer opacity, small translate, scale, and mask transitions. Avoid long loops, scroll-jacking, elastic easing, and animating layout-driving properties.
 - The hero project strip opts out of Lenis with `data-lenis-prevent` so its native horizontal snap scrolling keeps working.
+- The mobile hero marquee loops one duplicated set of project names with a 12s linear CSS animation; reduced-motion users see the static set.
 - Route changes fade in only after hydration, so prerendered HTML stays visible without JavaScript. Works filtering, contact status changes, and scroll progress hairlines use short, reduced-motion-aware transitions.
 - Respect `prefers-reduced-motion`. Lenis honors it natively, Framer Motion is configured with `reducedMotion="user"`, GSAP blocks are skipped in reduced motion, testimonials become a static grid, and the global stylesheet shortens CSS transitions.
 

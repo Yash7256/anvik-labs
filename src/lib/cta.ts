@@ -1,0 +1,2 @@
+export const primaryCtaClass =
+  "inline-flex min-h-10 items-center justify-center rounded-full border border-white/[0.08] bg-[linear-gradient(180deg,#242424_0%,#1c1c1c_100%)] px-4 py-2 font-sans text-[13px] font-medium tracking-tight text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.10)] transition-[transform,box-shadow] duration-200 ease-out active:shadow-[0_5px_14px_-8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.08)] md:min-h-11 md:px-6 md:py-3 md:text-[15px]";

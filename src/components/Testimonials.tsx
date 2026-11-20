@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
@@ -28,7 +28,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
       <blockquote className="font-sans text-[14px] leading-[1.7] text-foreground md:text-[15px]">
         &ldquo;{item.quote.trim()}&rdquo;
       </blockquote>
-      <div className="mt-6 flex items-center gap-3.5 border-t border-black/10 pt-4 md:mt-7 md:pt-5">
+      <div className="mt-6 flex items-center gap-3.5 pt-4 md:mt-7 md:pt-5">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/[0.06] font-mono text-[11px] tracking-[0.04em] text-muted">
           {item.avatar ? (
             <img
@@ -54,12 +54,10 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 }
 
 export default function Testimonials() {
-  const [isPaused, setIsPaused] = useState(false);
   const reduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const tweenRef = useRef<ReturnType<typeof gsap.to> | null>(null);
-  const pausedRef = useRef(false);
   const hoveredRef = useRef(false);
   const offscreenRef = useRef(false);
   const hiddenRef = useRef(false);
@@ -88,12 +86,7 @@ export default function Testimonials() {
         start: 0,
         end: "max",
         onUpdate: (self) => {
-          if (
-            pausedRef.current ||
-            hoveredRef.current ||
-            offscreenRef.current ||
-            hiddenRef.current
-          ) {
+          if (hoveredRef.current || offscreenRef.current || hiddenRef.current) {
             return;
           }
 
@@ -103,7 +96,7 @@ export default function Testimonials() {
 
           window.clearTimeout(resetTimerRef.current);
           resetTimerRef.current = window.setTimeout(() => {
-            if (pausedRef.current || offscreenRef.current || hiddenRef.current) {
+            if (offscreenRef.current || hiddenRef.current) {
               return;
             }
             setSpeed(direction);
@@ -116,7 +109,7 @@ export default function Testimonials() {
           ? new IntersectionObserver(
               ([entry]) => {
                 offscreenRef.current = !entry.isIntersecting;
-                applyPlayback(pausedRef.current);
+                applyPlayback();
               },
               { threshold: 0.05 },
             )
@@ -125,7 +118,7 @@ export default function Testimonials() {
 
       const onVisibilityChange = () => {
         hiddenRef.current = document.hidden;
-        applyPlayback(pausedRef.current);
+        applyPlayback();
       };
       document.addEventListener("visibilitychange", onVisibilityChange);
       hiddenRef.current = document.hidden;
@@ -142,15 +135,12 @@ export default function Testimonials() {
     { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
   );
 
-  function applyPlayback(paused: boolean) {
+  function applyPlayback() {
     const tween = tweenRef.current;
     if (!tween) return;
 
     const shouldPause =
-      paused ||
-      hoveredRef.current ||
-      offscreenRef.current ||
-      hiddenRef.current;
+      hoveredRef.current || offscreenRef.current || hiddenRef.current;
 
     if (shouldPause) {
       window.clearTimeout(resetTimerRef.current);
@@ -164,21 +154,14 @@ export default function Testimonials() {
     });
   }
 
-  function togglePause() {
-    const next = !pausedRef.current;
-    pausedRef.current = next;
-    setIsPaused(next);
-    applyPlayback(next);
-  }
-
   function handlePointerEnter() {
     hoveredRef.current = true;
-    applyPlayback(pausedRef.current);
+    applyPlayback();
   }
 
   function handlePointerLeave() {
     hoveredRef.current = false;
-    applyPlayback(pausedRef.current);
+    applyPlayback();
   }
 
   if (reduceMotion) {
@@ -257,22 +240,6 @@ export default function Testimonials() {
             ))}
           </div>
         </div>
-      </div>
-
-      <div className="mt-8 flex items-center justify-between font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
-        <button
-          type="button"
-          onClick={togglePause}
-          aria-pressed={isPaused}
-          aria-label={
-            isPaused
-              ? "Resume automatic testimonial marquee"
-              : "Pause automatic testimonial marquee"
-          }
-          className="inline-flex min-h-11 items-center px-2 text-muted transition-colors duration-200 hover:text-accent focus-visible:text-accent"
-        >
-          [ {isPaused ? "Play" : "Pause"} ]
-        </button>
       </div>
     </section>
   );

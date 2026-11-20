@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { primaryCtaClass } from "@/lib/cta";
 import { site } from "@/lib/site";
 
 const servicesOptions = [
@@ -114,14 +115,14 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="border-t border-black/10 pb-16 pt-10 md:pb-24 md:pt-14"
+      className="pb-16 pt-10 md:pb-24 md:pt-14"
     >
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
         <span className="text-muted">Inquiry / 006</span>
         <span>{site.studioTagline} / India</span>
       </div>
 
-      <div className="flex flex-col justify-between gap-4 border-b border-black/10 pb-8 md:flex-row md:items-end">
+      <div className="flex flex-col justify-between gap-4 pb-8 md:flex-row md:items-end">
         <h1
           id="contact-heading"
           className="font-sans text-[clamp(2.8rem,8vw,7.5rem)] font-medium leading-none tracking-[-0.045em] text-foreground"
@@ -157,7 +158,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="border-t border-black/10 pt-6">
+          <div className="pt-6">
             <span className="mb-2 block font-mono text-[12px] uppercase tracking-[0.14em] text-muted">
               What to include
             </span>
@@ -334,7 +335,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-[2px] bg-accent px-6 py-3 font-sans text-[14px] font-medium text-on-accent transition-colors hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-60"
+                  className={`${primaryCtaClass} shrink-0 disabled:cursor-not-allowed disabled:opacity-60`}
                 >
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.span

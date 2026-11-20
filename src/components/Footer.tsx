@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
+import { primaryCtaClass } from "@/lib/cta";
 import { gsap } from "@/lib/gsap";
 import { scrollToTop } from "@/lib/smooth-scroll";
 import { site } from "@/lib/site";
@@ -42,7 +43,7 @@ export default function Footer() {
   return (
     <footer
       ref={rootRef}
-      className="-mx-4 border-t border-black/10 sm:-mx-[4vw] lg:-mx-[5vw] xl:-mx-[6vw]"
+      className="-mx-4 sm:-mx-[4vw] lg:-mx-[5vw] xl:-mx-[6vw]"
     >
       <div className="container-page py-14 md:py-20">
         <div className="flex items-center justify-between font-mono text-[12px] uppercase tracking-[0.14em] text-muted">
@@ -68,7 +69,7 @@ export default function Footer() {
             </p>
             <Link
               to="/contact"
-              className="mt-8 inline-flex items-center justify-center rounded-full bg-inverse px-6 py-3 font-sans text-[15px] font-medium tracking-tight text-inverse-foreground shadow-lg transition-colors hover:bg-black/80"
+              className={`mt-8 ${primaryCtaClass}`}
             >
               Start a conversation
             </Link>
@@ -110,7 +111,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-black/10 pt-5 md:mt-24">
+        <div className="mt-16 pt-5 md:mt-24">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <Link to="/" aria-label="Anvik Labs home" className="inline-flex">
               <img

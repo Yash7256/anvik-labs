@@ -2,8 +2,16 @@ import { useRef } from "react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
+import { primaryCtaClass } from "@/lib/cta";
+import { projectCardClass, projectMediaClass } from "@/lib/project-card";
 import { gsap } from "@/lib/gsap";
 import { projects, type Project } from "@/data/projects";
+
+const heroCopyClass =
+  "font-sans text-[14px] font-medium leading-[1.55] text-foreground";
+
+const heroMarqueeClass =
+  "font-sans text-[20px] font-medium leading-[1.3] text-foreground";
 
 const featuredIds = ["designers-room", "cybersec-toolkit", "notify-ed"];
 
@@ -25,6 +33,30 @@ function ArrowIcon({ className = "" }: { className?: string }) {
     >
       <path d="M4 12 12 4M5.5 4H12v6.5" />
     </svg>
+  );
+}
+
+function ProjectMarquee() {
+  const names = projects.map((project) => project.name);
+
+  return (
+    <div className="mt-10 md:hidden">
+      <span className="sr-only">{names.join(", ")}</span>
+      <div aria-hidden="true" className="overflow-hidden">
+        <div className="animate-hero-marquee flex w-max">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex shrink-0 items-center gap-8 pr-8">
+              {names.map((name) => (
+                <span key={name} className="flex shrink-0 items-center gap-8">
+                  <span className={heroMarqueeClass}>{name}</span>
+                  <span className="h-1 w-1 shrink-0 rounded-full bg-accent" />
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -111,18 +143,24 @@ export default function Hero() {
           <h1
             ref={headingRef}
             id="hero-heading"
-            className="mx-auto max-w-[40ch] text-center font-display text-[clamp(2.75rem,7.5vw,5.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-foreground [word-spacing:0.08em]"
+            className="mx-auto max-w-[40ch] text-center font-display text-[clamp(1.75rem,7.5vw,5.75rem)] font-semibold leading-[1.04] tracking-[-0.045em] text-foreground [word-spacing:0.08em]"
           >
             Curious By Design.
-            <br className="hidden md:block" /> Precise By Engineering.
+            <br /> Precise By Engineering.
           </h1>
 
           <p
             ref={copyRef}
-            className="mx-auto mt-5 max-w-[62ch] text-center font-sans text-[16px] font-medium leading-[1.65] text-foreground"
+            className={`mx-auto mt-5 max-w-[62ch] text-center ${heroCopyClass} md:text-[16px] md:leading-[1.65]`}
           >
-            A product design and engineering studio in India. We build our own
-            products and help startups and small businesses build theirs.
+            <span className="md:hidden">
+              A design and engineering studio building products for startups and
+              small businesses.
+            </span>
+            <span className="hidden md:inline">
+              A product design and engineering studio in India. We build our own
+              products and help startups and small businesses build theirs.
+            </span>
           </p>
 
           <div
@@ -139,7 +177,7 @@ export default function Hero() {
               </Link>
               <Link
                 to="/contact"
-                className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.08] bg-[linear-gradient(180deg,#242424_0%,#1c1c1c_100%)] px-6 py-3 font-sans text-[15px] font-medium tracking-tight text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.10)] transition-[transform,box-shadow] duration-200 ease-out active:shadow-[0_5px_14px_-8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.08)]"
+                className={`group gap-2 ${primaryCtaClass}`}
               >
                 Work With Us
                 <ArrowIcon className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -147,7 +185,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div ref={cardsRef} className="mt-10 md:mt-12">
+          <div ref={cardsRef} className="mt-10 hidden md:mt-12 md:block">
             <div
               data-lenis-prevent
               className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto md:grid md:grid-cols-3 md:overflow-visible"
@@ -157,9 +195,9 @@ export default function Hero() {
                   key={project.id}
                   to={`/works/${project.id}`}
                   aria-label={`${project.name} — ${project.id === "designers-room" ? "view live project" : "view case study"}`}
-                  className="group block min-w-[78vw] snap-start rounded-[8px] border border-black/[0.16] bg-white/[0.68] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_10px_28px_-18px_rgba(23,23,23,0.28)] backdrop-blur-[20px] backdrop-saturate-[1.1] transition-[border-color,box-shadow] duration-300 hover:border-black/25 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_14px_32px_-18px_rgba(23,23,23,0.36)] sm:min-w-[46vw] md:min-w-0"
+                  className={`group block min-w-[78vw] snap-start sm:min-w-[46vw] md:min-w-0 ${projectCardClass}`}
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-[6px] border border-black/10 bg-white transition-colors duration-300 group-hover:border-black/20">
+                    <div className={projectMediaClass}>
                     <div data-cover-parallax className="absolute -inset-y-6 inset-x-0">
                       <img
                         src={project.coverImage}
@@ -186,6 +224,8 @@ export default function Hero() {
             </div>
           </div>
         </div>
+
+        <ProjectMarquee />
       </div>
     </section>
   );

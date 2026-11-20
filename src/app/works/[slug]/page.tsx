@@ -43,7 +43,7 @@ function DecisionSection({ id, index, label, intro, items }: {
   items: ProjectDecision[];
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="border-t border-border py-16 md:py-24">
+    <section id={id} aria-labelledby={`${id}-heading`} className="py-16 md:py-24">
       <Reveal>
         <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
         <div>
@@ -54,7 +54,7 @@ function DecisionSection({ id, index, label, intro, items }: {
         </div>
         <div>
           <p className="max-w-[55ch] text-[17px] leading-[1.45] text-foreground md:text-[20px]">{intro}</p>
-          <div className="mt-10 divide-y divide-black/10 border-y border-black/10">
+          <div className="mt-10">
             {items.map((item, itemIndex) => (
               <article key={item.title} className="grid gap-3 py-5 sm:grid-cols-[52px_0.8fr_1.2fr] sm:gap-5 sm:py-6">
                 <span className={`${mono} text-muted`}>{String(itemIndex + 1).padStart(2, "0")}</span>
@@ -91,7 +91,7 @@ export default function WorkPage() {
     <><Navbar /><main id="main-content" className="flex flex-1 flex-col px-4 pt-[calc(var(--header-height)+24px)] sm:px-[4vw] md:px-[5vw] md:pt-[calc(var(--header-height)+32px)]">
       <JsonLd data={createBreadcrumbJsonLd([{ name: "Home", url: site.url }, { name: "Works", url: `${site.url}/works` }, { name: project.name, url: `${site.url}/works/${project.id}` }])} />
       <JsonLd data={createWorkJsonLd(project)} />
-      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 border-b border-black/10 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+      <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
         <Link to="/" className="transition-colors hover:text-foreground">Home</Link><span aria-hidden="true">/</span><Link to="/works" className="transition-colors hover:text-foreground">Works</Link><span aria-hidden="true">/</span><span className="text-muted">{project.name}</span>
       </nav>
 
@@ -102,7 +102,7 @@ export default function WorkPage() {
             <h1 className="max-w-[9ch] font-sans text-[clamp(3.5rem,10vw,9rem)] font-medium uppercase leading-[0.85] tracking-[-0.06em] break-words">{project.name}</h1>
             <p className="max-w-[42ch] text-[17px] leading-[1.4] text-foreground md:pb-2 md:text-[20px]">{project.description}</p>
           </div>
-          <dl className="mt-10 grid grid-cols-2 gap-x-4 gap-y-5 border-y border-border py-5 sm:mt-12 sm:grid-cols-4 sm:gap-8 sm:py-6">
+          <dl className="mt-10 grid grid-cols-2 gap-x-4 gap-y-5 py-5 sm:mt-12 sm:grid-cols-4 sm:gap-8 sm:py-6">
             <div className="flex flex-col gap-2"><dt className={`${mono} text-muted`}>WORK TYPE</dt><dd className={mono}>{WORK_TYPE_LABEL[workType]}</dd></div>
             <div className="flex flex-col gap-2"><dt className={`${mono} text-muted`}>PROJECT</dt><dd className={mono}>{project.projectType}</dd></div>
             <div className="flex flex-col gap-2"><dt className={`${mono} text-muted`}>YEAR</dt><dd className={mono}>{project.year}</dd></div>
@@ -119,7 +119,7 @@ export default function WorkPage() {
         {showDesign && <DecisionSection id="design-decisions" index="01" label="Design decisions" intro="The choices that shape how the product is understood, used, and remembered." items={project.designDecisions} />}
         {showDevelopment && <DecisionSection id="development-decisions" index={showDesign ? "02" : "01"} label="Development decisions" intro="The choices that make the experience dependable, adaptable, and ready to use." items={project.developmentDecisions} />}
 
-        <section className="border-t border-border py-16 md:py-24"><Link to={`/works/${next.id}`} className="group block"><div className={`${mono} flex items-center justify-between gap-4 text-muted`}><span>NEXT PROJECT</span><span>{String(nextIndex).padStart(3, "0")}</span></div><div className="mt-6 flex items-end justify-between gap-6"><h2 className="max-w-[11ch] font-sans text-[clamp(2.5rem,6vw,6rem)] font-medium uppercase leading-[0.9] tracking-[-0.05em] transition-opacity duration-200 group-hover:opacity-50">{next.name}</h2><span className={`${mono} shrink-0 pb-2`}>[ &rarr; ]</span></div></Link></section>
+        <section className="py-16 md:py-24"><Link to={`/works/${next.id}`} className="group block"><div className={`${mono} flex items-center justify-between gap-4 text-muted`}><span>NEXT PROJECT</span><span>{String(nextIndex).padStart(3, "0")}</span></div><div className="mt-6 flex items-end justify-between gap-6"><h2 className="max-w-[11ch] font-sans text-[clamp(2.5rem,6vw,6rem)] font-medium uppercase leading-[0.9] tracking-[-0.05em] transition-opacity duration-200 group-hover:opacity-50">{next.name}</h2><span className={`${mono} shrink-0 pb-2`}>[ &rarr; ]</span></div></Link></section>
       </article>
     </main><Footer /></>
   );

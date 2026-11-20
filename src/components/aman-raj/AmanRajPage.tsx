@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useReducedMotion } from "framer-motion";
 import ScrollProgressLine from "@/components/ScrollProgressLine";
+import { primaryCtaClass } from "@/lib/cta";
 import {
   amanCertifications,
   amanEducation,
@@ -128,7 +129,7 @@ function WorkRow({ project }: { project: AmanProject }) {
   const [open, setOpen] = useState(project.featured ?? false);
 
   return (
-    <li className="border-b border-black/10">
+    <li>
       <div
         className={`transition-colors ${open ? "bg-black/[0.02]" : ""}`}
         onMouseEnter={() => setOpen(true)}
@@ -229,7 +230,7 @@ export default function AmanRajPage() {
 
   return (
     <div className="flex flex-col">
-      <section id="hero" className="relative border-b border-black/10 pt-32 pb-12 md:pt-44 md:pb-16">
+      <section id="hero" className="relative pt-32 pb-12 md:pt-44 md:pb-16">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-accent/10 blur-[100px]"
@@ -248,7 +249,7 @@ export default function AmanRajPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={amanHero.primaryCta.href}
-                className="inline-flex min-h-11 items-center justify-center rounded-[2px] bg-accent px-5 font-sans text-[15px] font-medium text-on-accent transition-colors hover:bg-accent-strong"
+                className={primaryCtaClass}
               >
                 {amanHero.primaryCta.label}
               </a>
@@ -276,11 +277,11 @@ export default function AmanRajPage() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-black/10 pt-8 md:mt-16">
+        <div className="mt-12 pt-8 md:mt-16">
           <p className="font-display text-[clamp(3rem,14vw,13rem)] font-semibold leading-[0.9] tracking-[-0.045em] text-foreground">
             Aman Raj
           </p>
-          <div className="mt-4 flex flex-col gap-2 border-t border-black/10 pt-3 font-mono text-[12px] text-muted sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-4 flex flex-col gap-2 pt-3 font-mono text-[12px] text-muted sm:flex-row sm:items-center sm:justify-between">
             <span>Backend / AI / Security engineer / India</span>
             <span>Selected work</span>
           </div>
@@ -289,16 +290,15 @@ export default function AmanRajPage() {
 
       <section
         ref={statsRef}
-        className="border-b border-black/10"
         aria-label="Key numbers"
       >
         <div className="grid grid-cols-2 md:grid-cols-4">
           {amanStats.map((stat, i) => (
             <div
               key={stat.caption}
-              className={`py-8 md:py-10 ${i % 2 === 0 ? "pr-6" : "border-l border-black/10 pl-6"} ${
-                i < 2 ? "border-b border-black/10 md:border-b-0" : ""
-              } ${i > 0 ? "md:border-l md:border-black/10 md:pl-6" : "md:pr-6"}`}
+              className={`py-8 md:py-10 ${i % 2 === 0 ? "pr-6" : "pl-6"} ${
+                i > 0 ? "md:pl-6" : "md:pr-6"
+              }`}
             >
               <p className="font-sans text-[clamp(2rem,4vw,3.2rem)] font-medium leading-none tracking-[-0.03em] text-foreground">
                 <CountUp stat={stat} start={statsInView} />
@@ -313,7 +313,7 @@ export default function AmanRajPage() {
 
       <section
         id="work"
-        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
+        className="scroll-mt-24 py-12 md:py-16"
         aria-labelledby="aman-work-heading"
       >
         <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
@@ -325,7 +325,7 @@ export default function AmanRajPage() {
         >
           Selected work
         </h2>
-        <ul className="mt-8 border-t border-black/10">
+        <ul className="mt-8">
           {amanProjects.map((project) => (
             <WorkRow key={project.index} project={project} />
           ))}
@@ -334,7 +334,7 @@ export default function AmanRajPage() {
 
       <section
         id="experience"
-        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
+        className="scroll-mt-24 py-12 md:py-16"
         aria-labelledby="aman-experience-heading"
       >
         <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
@@ -347,10 +347,6 @@ export default function AmanRajPage() {
           Experience
         </h2>
         <div id="aman-experience-timeline" className="relative mt-10">
-          <div
-            aria-hidden="true"
-            className="absolute bottom-2 left-[7px] top-2 w-px bg-black/10 md:left-[140px]"
-          />
           <ScrollProgressLine
             targetId="aman-experience-timeline"
             className="left-[7px] top-2 h-[calc(100%-1rem)] md:left-[140px]"
@@ -389,7 +385,7 @@ export default function AmanRajPage() {
 
       <section
         id="stack"
-        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
+        className="scroll-mt-24 py-12 md:py-16"
         aria-labelledby="aman-stack-heading"
       >
         <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
@@ -401,11 +397,11 @@ export default function AmanRajPage() {
         >
           Stack
         </h2>
-        <div className="mt-8 border-t border-black/10">
+        <div className="mt-8">
           {amanStackGroups.map((group) => (
             <div
               key={group.group}
-              className="grid gap-3 border-b border-black/10 py-4 md:grid-cols-[220px_1fr] md:gap-6 md:py-5"
+              className="grid gap-3 py-4 md:grid-cols-[220px_1fr] md:gap-6 md:py-5"
             >
               <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
                 {group.group}
@@ -434,7 +430,7 @@ export default function AmanRajPage() {
 
       <section
         id="certifications"
-        className="scroll-mt-24 border-b border-black/10 py-12 md:py-16"
+        className="scroll-mt-24 py-12 md:py-16"
         aria-labelledby="aman-certs-heading"
       >
         <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">
@@ -480,7 +476,7 @@ export default function AmanRajPage() {
         >
           Let&apos;s build something.
         </h2>
-        <div className="mt-10 flex flex-col gap-8 border-t border-black/10 pt-8 md:flex-row md:items-end md:justify-between">
+        <div className="mt-10 flex flex-col gap-8 pt-8 md:flex-row md:items-end md:justify-between">
           <div className="space-y-3">
             <a
               href={`mailto:${amanProfile.email}`}

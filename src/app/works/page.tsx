@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Image from "@/components/Img";
 import ScrollProgressLine from "@/components/ScrollProgressLine";
 import { projects, getProjectWorkType, type Project, type ProjectLinks } from "@/data/projects";
+import { projectCardClass, projectMediaClass } from "@/lib/project-card";
 import { createMeta } from "@/lib/site";
 
 export const meta: MetaFunction = () =>
@@ -58,7 +59,7 @@ function ProjectLinks({ project }: { project: Project }) {
   if (visibleLinks.length === 0) return null;
 
   return (
-    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 border-t border-black/10 pt-3">
+    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 pt-3">
       {visibleLinks.map(({ key, label }) => (
         <a
           key={key}
@@ -91,7 +92,7 @@ export default function WorksPage() {
         className="flex flex-1 flex-col pt-[var(--header-height)]"
       >
         {/* ── Mobile header (shown below md) ───────────────────────────────── */}
-        <header className="border-b border-black/10 px-4 py-8 sm:px-[4vw] sm:py-10 md:hidden">
+        <header className="px-4 py-8 sm:px-[4vw] sm:py-10 md:hidden">
           <h1 className="mt-3 font-sans text-[clamp(2.75rem,14vw,7rem)] font-medium leading-[0.88] tracking-[-0.05em] text-foreground break-words">
             Works.
           </h1>
@@ -102,7 +103,7 @@ export default function WorksPage() {
 
           {/* LEFT — sticky panel, vertically balanced */}
           <aside className="hidden md:flex md:w-[42%] lg:w-[40%] xl:w-[38%] shrink-0">
-            <div className="sticky top-[var(--header-height)] h-[calc(100svh-var(--header-height))] w-full flex flex-col justify-between border-r border-black/10 px-[5vw] py-12 lg:px-[4vw] xl:px-[5vw] relative">
+            <div className="sticky top-[var(--header-height)] h-[calc(100svh-var(--header-height))] w-full flex flex-col justify-between px-[5vw] py-12 lg:px-[4vw] xl:px-[5vw] relative">
               <ScrollProgressLine targetId="works-list" className="right-0 top-0 h-full" />
               {/* Top meta */}
               <div>
@@ -128,9 +129,9 @@ export default function WorksPage() {
           <section
             id="works-list"
             aria-label="Project index"
-            className="flex-1 divide-y divide-black/10 border-t border-black/10 md:border-t-0"
+            className="flex-1 px-4 py-6 sm:px-[4vw] md:px-8 lg:px-10 xl:px-12"
           >
-            <div className="flex flex-col gap-3 border-b border-black/10 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-[4vw] md:px-8 lg:px-10 xl:px-12">
+            <div className="flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between">
               <p className={`${mono} text-muted`}>
                 Showing {String(filteredProjects.length).padStart(2, "0")} of {String(projects.length).padStart(2, "0")} projects
               </p>
@@ -169,7 +170,7 @@ export default function WorksPage() {
                   animate={{ opacity: 1 }}
                   exit={reduceMotion ? undefined : { opacity: 0 }}
                   transition={{ duration: reduceMotion ? 0 : 0.18 }}
-                  className="px-4 py-12 text-[14px] text-muted sm:px-[4vw] md:px-8 lg:px-10 xl:px-12"
+                  className="py-12 text-[14px] text-muted"
                 >
                   No projects in this collection yet.
                 </motion.p>
@@ -178,6 +179,7 @@ export default function WorksPage() {
               {filteredProjects.map((project, index) => (
                 <motion.article
                   key={project.id}
+                  className="mt-4 first:mt-0"
                   layout={!reduceMotion}
                   initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -187,9 +189,9 @@ export default function WorksPage() {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 >
-                  <div className="group flex flex-col gap-4 px-4 py-6 transition-colors duration-200 hover:bg-black/[0.02] sm:gap-5 sm:px-[4vw] sm:py-8 md:flex-row md:items-center md:gap-7 md:px-8 md:py-9 lg:px-10 lg:py-10 xl:px-12">
+                  <div className={`group flex flex-col gap-4 sm:gap-5 md:flex-row md:items-center md:gap-7 ${projectCardClass}`}>
                   {/* Cover image */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-light-surface md:w-[220px] md:shrink-0 lg:w-[260px] xl:w-[300px]">
+                  <div className={`w-full md:w-[220px] md:shrink-0 lg:w-[260px] xl:w-[300px] ${projectMediaClass}`}>
                     <Image
                       src={project.coverImage}
                       alt={project.coverAlt}

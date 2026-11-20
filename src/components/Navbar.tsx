@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { primaryCtaClass } from "@/lib/cta";
 import { site } from "@/lib/site";
 
 const quickLinks = [
   { label: "Works", href: "/works" },
   { label: "Services", href: "/#services" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -94,14 +93,14 @@ export default function Navbar() {
                 alt="Anvik Labs"
                 width={1010}
                 height={118}
-                className="h-6 w-auto [filter:brightness(0)_invert(0.09)] md:h-7"
+                className="h-5 w-auto [filter:brightness(0)_invert(0.09)] md:h-6"
               />
             </Link>
           </div>
 
           <nav aria-label="Primary navigation" className="hidden items-center gap-10 md:flex lg:gap-14">
             <div className="flex items-center gap-6 font-sans text-[16px] font-medium text-foreground">
-              {quickLinks.slice(0, 4).map((item) => (
+              {quickLinks.slice(0, 2).map((item) => (
                 <Link
                   key={item.label}
                   to={item.href}
@@ -113,7 +112,7 @@ export default function Navbar() {
             </div>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center rounded-full border border-white/[0.08] bg-[linear-gradient(180deg,#242424_0%,#1c1c1c_100%)] px-6 py-3 font-sans text-[15px] font-medium tracking-tight text-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.10)] transition-[transform,box-shadow] duration-200 ease-out active:shadow-[0_5px_14px_-8px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.08)]"
+              className={primaryCtaClass}
             >
               Let's talk
             </Link>
@@ -164,7 +163,7 @@ export default function Navbar() {
                   alt="Anvik Labs"
                   width={1010}
                   height={118}
-                  className="h-7 w-auto [filter:brightness(0)_invert(0.09)]"
+                  className="h-6 w-auto [filter:brightness(0)_invert(0.09)]"
                 />
               </Link>
               <button
@@ -204,7 +203,7 @@ export default function Navbar() {
               ))}
             </nav>
 
-            <div className="mt-auto flex flex-col gap-1 border-t border-black/10 pt-6 text-[13px]">
+            <div className="mt-auto flex flex-col gap-1 pt-6 text-[13px]">
               <span className="font-sans font-medium text-foreground">
                 {site.studioTagline}
               </span>

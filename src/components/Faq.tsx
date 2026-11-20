@@ -55,14 +55,14 @@ export default function Faq({
     <section
       id="faq"
       aria-labelledby="faq-heading"
-      className="border-t border-black/10 px-4 pt-16 sm:px-[4vw] md:px-8 md:pt-24 lg:px-12"
+      className="px-4 pt-16 sm:px-[4vw] md:px-8 md:pt-24 lg:px-12"
     >
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
         <span className="text-muted">{metaLabel}</span>
         <span>{metaTitle}</span>
       </div>
 
-      <div className="flex flex-col items-start justify-between gap-6 border-b border-black/10 pb-10 lg:flex-row lg:items-end">
+      <div className="flex flex-col items-start justify-between gap-6 pb-10 lg:flex-row lg:items-end">
         <h2
           id="faq-heading"
           className="font-sans text-[clamp(2.4rem,6vw,5.5rem)] font-medium leading-none tracking-[-0.04em] text-foreground"
@@ -75,7 +75,7 @@ export default function Faq({
         </p>
       </div>
 
-      <div className="mt-6 divide-y divide-black/10">
+      <div className="mt-6">
         {items.map((item, index) => {
           const isOpen = openIndex === index;
           const panelId = `faq-panel-${index}`;

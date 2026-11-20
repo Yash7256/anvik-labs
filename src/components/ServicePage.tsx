@@ -5,6 +5,7 @@ import Faq from "@/components/Faq";
 import JsonLd from "@/components/JsonLd";
 import ScrollProgressLine from "@/components/ScrollProgressLine";
 import type { Service } from "@/data/services";
+import { primaryCtaClass } from "@/lib/cta";
 import { createBreadcrumbJsonLd, createFaqJsonLd, createServiceJsonLd } from "@/lib/schema";
 import { site } from "@/lib/site";
 import { CardGrid2x2, Chips, GlanceCard, NumberedGrid, ProofStrip, RelatedServices } from "@/components/service/sections";
@@ -27,7 +28,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
         />
         <nav
           aria-label="Breadcrumb"
-          className="flex items-center gap-2 border-b border-black/10 px-4 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted sm:px-[4vw] md:px-8 lg:px-12"
+          className="flex items-center gap-2 px-4 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted sm:px-[4vw] md:px-8 lg:px-12"
         >
           <Link to="/" className="transition-colors hover:text-foreground">Home</Link>
           <span aria-hidden="true">/</span>
@@ -36,18 +37,18 @@ export default function ServicePage({ service, index }: { service: Service; inde
           <span className="text-muted">{service.name}</span>
         </nav>
 
-        <header className="border-b border-black/10 px-4 py-8 sm:px-[4vw] sm:py-10 md:hidden">
+        <header className="px-4 py-8 sm:px-[4vw] sm:py-10 md:hidden">
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Service [{String(index + 1).padStart(2, "0")}]</p>
           <h1 className="mt-3 break-words font-sans text-[clamp(2.25rem,10vw,5rem)] font-medium leading-[0.92] tracking-[-0.05em] text-foreground">{service.name}.</h1>
           <p className="mt-4 text-[14px] leading-relaxed text-muted">{service.heroSubline}</p>
           <div className="mt-6 flex justify-center sm:justify-start">
-            <Link to="/contact" className="inline-flex items-center justify-center rounded-full bg-inverse px-5 py-2.5 font-sans text-[13px] font-medium tracking-tight text-inverse-foreground transition-colors hover:bg-black/80">Start a project →</Link>
+            <Link to="/contact" className={primaryCtaClass}>Start a project →</Link>
           </div>
         </header>
 
         <div className="flex flex-1 flex-col md:flex-row">
           <aside className="hidden shrink-0 md:flex md:w-[42%] lg:w-[40%] xl:w-[38%]">
-            <div className="sticky top-[var(--header-height)] flex h-[calc(100svh-var(--header-height))] w-full flex-col justify-between border-r border-black/10 px-[5vw] py-12 lg:px-[4vw] xl:px-[5vw] relative">
+            <div className="sticky top-[var(--header-height)] flex h-[calc(100svh-var(--header-height))] w-full flex-col justify-between px-[5vw] py-12 lg:px-[4vw] xl:px-[5vw] relative">
               <ScrollProgressLine targetId="service-content" className="right-0 top-0 h-full" />
               <div>
                 <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Service [{String(index + 1).padStart(2, "0")}]</p>
@@ -56,13 +57,13 @@ export default function ServicePage({ service, index }: { service: Service; inde
               <div>
                 <div aria-hidden="true" className="font-sans text-[clamp(2.5rem,5vw,5.5rem)] font-medium leading-[0.88] tracking-[-0.055em] text-foreground">{service.name}.</div>
                 <p className="mt-6 max-w-[32ch] text-[14px] leading-relaxed text-muted lg:text-[15px]">{service.heroSubline}</p>
-                <Link to="/contact" className="mt-8 inline-flex items-center justify-center rounded-full bg-inverse px-6 py-3 font-sans text-[14px] font-medium tracking-tight text-inverse-foreground transition-colors hover:bg-black/80">Start a project</Link>
+                <Link to="/contact" className={`mt-8 ${primaryCtaClass}`}>Start a project</Link>
               </div>
               <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted">Based in India · Working worldwide</p>
             </div>
           </aside>
 
-          <div id="service-content" className="flex-1 divide-y divide-black/10 border-t border-black/10 md:border-t-0">
+          <div id="service-content" className="flex-1">
             <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16">
               <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-12">
                 <div>
@@ -88,7 +89,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
               <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Process</p>
               <div className={`grid gap-6 sm:grid-cols-2 ${stepGrid}`}>
                 {service.process.map(({ step, label, desc }) => (
-                  <div key={step} className="border-t border-black/10 pt-4 sm:pt-5">
+                  <div key={step} className="pt-4 sm:pt-5">
                     <p className="font-mono text-[12px] tracking-[0.12em] text-accent">{step}</p>
                     <h3 className="mt-2.5 font-display text-[15px] text-foreground sm:text-[16px]">{label}</h3>
                     <p className="mt-1.5 text-[14px] leading-relaxed text-muted">{desc}</p>
