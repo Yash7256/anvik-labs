@@ -1,6 +1,6 @@
 # Anvik Labs
 
-Portfolio and studio site for Anvik Labs, a product design and engineering studio. The site is a light, type-led React Router application with a small set of editorial routes: home, selected work, project detail, services, and contact.
+Portfolio and studio site for Anvik Labs, a product design and engineering studio. The site is a type-led React Router application with a small set of editorial routes: home, selected work, project detail, services, and contact. A light/dark theme toggle in the header persists the visitor's choice in local storage.
 
 ## Stack
 
@@ -8,6 +8,7 @@ Portfolio and studio site for Anvik Labs, a product design and engineering studi
 - React Router 8 with Vite
 - Tailwind CSS 4
 - Framer Motion, GSAP + ScrollTrigger, and Lenis for motion
+- Three.js + React Three Fiber for shader-driven hero and featured-image WebGL layers
 - TypeScript
 
 ## Development
@@ -40,7 +41,7 @@ Run all three before considering a change complete.
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Home: introduction, Designers Room feature, team, services, testimonials |
+| `/` | Home: typographic introduction over an interactive WebGL canvas, selected work, services, team, testimonials |
 | `/works` | Selected work index |
 | `/works/:slug` | Project case study |
 | `/contact` | Inquiry details and contact form |
@@ -61,9 +62,11 @@ src/
   app/                 Route modules and global styles
   components/          Shared UI and home-page sections
   data/                Work and testimonial content
-  lib/gsap.ts          GSAP and ScrollTrigger registration
+  lib/gsap.ts          GSAP, ScrollTrigger, and SplitText registration
+  lib/motion.ts        Shared motion tokens and hooks
   lib/smooth-scroll.ts Lenis setup and programmatic scrolling
   lib/site.ts          Site metadata
+  webgl/               Hero canvas, featured image surface, shaders, scroll controller
   root.tsx             Document shell, fonts, skip link, Lenis and hash scrolling
   routes.ts            React Router route config
 public/
@@ -84,7 +87,7 @@ public/
 - Keep the light palette, restrained accent use, hairline rules, and editorial type hierarchy.
 - Avoid decorative gradients, heavy shadows, oversized radii, and generic card grids.
 - Use semantic landmarks, one `h1` per page, visible focus states, labelled form controls, and alt text for meaningful images.
-- Respect `prefers-reduced-motion` for animated content.
+- Respect `prefers-reduced-motion` for animated content. The hero WebGL layer is skipped for reduced-motion visitors and when WebGL is unavailable; a static CSS ambience is shown instead. The featured image surface is lazily mounted near the viewport, pauses offscreen, and falls back to the source image when reduced motion or WebGL is unavailable.
 - The current design system is documented in [`design.md`](./design.md).
 - The frontend audit and its remaining risks are in [`docs/frontend-ai-slop-audit.md`](./docs/frontend-ai-slop-audit.md).
 

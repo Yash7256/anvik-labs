@@ -1,22 +1,67 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { primaryCtaClass } from "@/lib/cta";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useMagnetic } from "@/lib/motion";
 import { site } from "@/lib/site";
 
-const quickLinks = [
+const navLinks = [
+  { label: "Home", href: "/" },
   { label: "Works", href: "/works" },
   { label: "Services", href: "/#services" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/#about" },
 ];
+
+function DiagonalArrow({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M4 12 12 4M5.5 4H12v6.5" />
+    </svg>
+  );
+}
+
+function TalkCta({ onClick }: { onClick?: () => void }) {
+  const ctaRef = useMagnetic<HTMLAnchorElement>(0.18);
+
+  return (
+    <Link
+      ref={ctaRef}
+      to="/contact"
+      onClick={onClick}
+      data-cursor="talk"
+      className="nav-cta group inline-flex h-11 items-center gap-4 rounded-full pl-6 pr-1 font-sans text-[15px] font-semibold tracking-[-0.01em] md:h-12 md:pl-7"
+    >
+      Let&apos;s Talk
+      <span className="nav-cta__arrow inline-flex h-9 w-9 items-center justify-center rounded-full">
+        <DiagonalArrow className="h-4 w-4" />
+      </span>
+    </Link>
+  );
+}
+
+function isActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  if (href === "/works") return pathname.startsWith("/works");
+  return false;
+}
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const reduceMotion = useReducedMotion();
+  const location = useLocation();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -71,149 +116,164 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 bg-background/80 shadow-[0_10px_30px_-18px_rgba(23,23,23,0.35)] backdrop-blur-xl backdrop-saturate-150">
-      <div className="w-full px-10 sm:px-[12vw] lg:px-[16vw] xl:px-[18vw]">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.6,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="flex min-h-[var(--header-height)] items-center justify-between py-0 text-[14px] leading-snug md:text-[15px]"
-        >
-          <div className="flex flex-col">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background">
+        <div className="px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.6,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="grid h-[var(--header-height)] grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]"
+          >
             <Link
               to="/"
               aria-label="Anvik Labs home"
-              className="inline-flex items-center transition-opacity duration-200 hover:opacity-70"
+              className="inline-flex w-fit items-center transition-opacity duration-200 hover:opacity-70"
             >
               <img
                 src="/logo.svg"
                 alt="Anvik Labs"
                 width={1010}
                 height={118}
-                className="h-5 w-auto [filter:brightness(0)_invert(0.09)] md:h-6"
+                className="logo-mark h-6 w-auto md:h-7"
               />
             </Link>
-          </div>
 
-          <nav aria-label="Primary navigation" className="hidden items-center gap-10 md:flex lg:gap-14">
-            <div className="flex items-center gap-6 font-sans text-[16px] font-medium text-foreground">
-              {quickLinks.slice(0, 2).map((item) => (
+            <div className="hidden justify-center md:flex">
+              <ThemeToggle />
+            </div>
+
+            <nav
+              aria-label="Primary navigation"
+              className="hidden items-center justify-end gap-8 md:flex lg:gap-10"
+            >
+              {navLinks.map((item) => (
                 <Link
                   key={item.label}
                   to={item.href}
-                  className="underline-offset-4 transition-colors duration-200 hover:text-accent hover:underline"
+                  aria-current={
+                    isActive(location.pathname, item.href) ? "page" : undefined
+                  }
+                  className={`group relative py-2 font-sans text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-200 hover:text-accent lg:text-[16px] ${
+                    isActive(location.pathname, item.href)
+                      ? "text-foreground"
+                      : "text-muted"
+                  }`}
                 >
                   {item.label}
+                  <span
+                    aria-hidden="true"
+                    className={`nav-line absolute -bottom-0.5 left-0 h-px w-full origin-left bg-accent ${
+                      isActive(location.pathname, item.href) ? "nav-line--active" : ""
+                    }`}
+                  />
                 </Link>
               ))}
-            </div>
-            <Link
-              to="/contact"
-              className={primaryCtaClass}
-            >
-              Let's talk
-            </Link>
-          </nav>
+              <TalkCta />
+            </nav>
 
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            ref={menuButtonRef}
-            className="inline-flex min-h-11 items-center font-mono text-[13px] uppercase tracking-[0.04em] text-foreground transition-opacity duration-200 hover:opacity-60 md:hidden"
-            aria-label="Open navigation menu"
-            aria-expanded={open}
-            aria-controls="mobile-navigation"
-          >
-            [ MENU ]
-          </button>
-        </motion.div>
-      </div>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              ref={menuButtonRef}
+              className="inline-flex min-h-11 items-center justify-self-end font-mono text-[13px] uppercase tracking-[0.08em] text-foreground transition-opacity duration-200 hover:opacity-60 md:hidden"
+              aria-label="Open navigation menu"
+              aria-expanded={open}
+              aria-controls="mobile-navigation"
+            >
+              [ Menu ]
+            </button>
+          </motion.div>
+        </div>
       </header>
 
       {mounted
         ? createPortal(
             <AnimatePresence>
               {open && (
-          <motion.div
-            id="mobile-navigation"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Navigation menu"
-            initial={reduceMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={reduceMotion ? undefined : { opacity: 0 }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.25,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="fixed inset-0 z-50 flex flex-col bg-background px-10 py-5 sm:px-[12vw] md:hidden"
-          >
-            <div className="flex items-center justify-between">
-              <Link
-                to="/"
-                onClick={() => setOpen(false)}
-                aria-label="Anvik Labs home"
-                className="inline-flex items-center"
-              >
-                <img
-                  src="/logo.svg"
-                  alt="Anvik Labs"
-                  width={1010}
-                  height={118}
-                  className="h-6 w-auto [filter:brightness(0)_invert(0.09)]"
-                />
-              </Link>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                ref={closeButtonRef}
-                className="inline-flex min-h-11 items-center font-mono text-[13px] uppercase tracking-[0.04em] text-foreground transition-opacity duration-200 hover:opacity-60"
-                aria-label="Close navigation menu"
-              >
-                [ CLOSE ]
-              </button>
-            </div>
-
-            <nav aria-label="Mobile navigation" className="mt-12 flex flex-col gap-5">
-              <span className="font-mono text-[13px] uppercase tracking-[0.04em] text-muted">
-                Quick links
-              </span>
-              {quickLinks.map((item, index) => (
                 <motion.div
-                  key={item.label}
-                  initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  id="mobile-navigation"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label="Navigation menu"
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={reduceMotion ? undefined : { opacity: 0 }}
                   transition={{
-                    duration: reduceMotion ? 0 : 0.22,
-                    delay: reduceMotion ? 0 : 0.04 + index * 0.012,
+                    duration: reduceMotion ? 0 : 0.25,
                     ease: [0.16, 1, 0.3, 1],
                   }}
+                  className="fixed inset-0 z-50 flex flex-col bg-background px-4 py-5 sm:px-[4vw] md:hidden"
                 >
-                  <Link
-                    to={item.href}
-                    onClick={() => setOpen(false)}
-                    className="inline-flex min-h-11 items-center font-sans text-[24px] font-medium tracking-tight text-foreground transition-opacity duration-200 hover:opacity-60"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </nav>
+                  <div className="flex items-center justify-between">
+                    <Link
+                      to="/"
+                      onClick={() => setOpen(false)}
+                      aria-label="Anvik Labs home"
+                      className="inline-flex items-center"
+                    >
+                      <img
+                        src="/logo.svg"
+                        alt="Anvik Labs"
+                        width={1010}
+                        height={118}
+                        className="logo-mark h-7 w-auto"
+                      />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setOpen(false)}
+                      ref={closeButtonRef}
+                      className="inline-flex min-h-11 items-center font-mono text-[12px] uppercase tracking-[0.08em] text-foreground transition-opacity duration-200 hover:opacity-60"
+                      aria-label="Close navigation menu"
+                    >
+                      [ Close ]
+                    </button>
+                  </div>
 
-            <div className="mt-auto flex flex-col gap-1 pt-6 text-[13px]">
-              <span className="font-sans font-medium text-foreground">
-                {site.studioTagline}
-              </span>
-              <span className="font-sans text-muted">
-                Based in India, working globally
-              </span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>,
+                  <nav
+                    aria-label="Mobile navigation"
+                    className="mt-12 flex flex-col gap-2"
+                  >
+                    {navLinks.map((item, index) => (
+                      <motion.div
+                        key={item.label}
+                        initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: reduceMotion ? 0 : 0.22,
+                          delay: reduceMotion ? 0 : 0.04 + index * 0.03,
+                          ease: [0.16, 1, 0.3, 1],
+                        }}
+                      >
+                        <Link
+                          to={item.href}
+                          onClick={() => setOpen(false)}
+                          className="inline-flex min-h-12 items-center font-sans text-[34px] font-medium tracking-[-0.04em] text-foreground transition-opacity duration-200 hover:opacity-60"
+                        >
+                          {item.label}
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </nav>
+
+                  <div className="mt-auto flex flex-col items-start gap-6 pb-4 pt-8">
+                    <ThemeToggle />
+                    <TalkCta onClick={() => setOpen(false)} />
+                    <div className="flex flex-col gap-1 text-[13px]">
+                      <span className="font-sans font-medium text-foreground">
+                        {site.studioTagline}
+                      </span>
+                      <span className="font-sans text-muted">
+                        Based in India, working globally
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>,
             document.body,
           )
         : null}

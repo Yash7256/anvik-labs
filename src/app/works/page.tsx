@@ -34,6 +34,8 @@ const PROJECT_TYPE_LABEL: Record<string, string> = {
   "Client Work": "Client Work",
 };
 
+const LEAD_PROJECT_ID = "designers-room";
+
 const PROJECT_FILTERS = [
   { value: "all", label: "All work" },
   { value: "Anvik Labs", label: "Anvik Labs Product" },
@@ -78,10 +80,16 @@ function ProjectLinks({ project }: { project: Project }) {
 export default function WorksPage() {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
   const reduceMotion = useReducedMotion();
-  const filteredProjects =
+  const filteredProjects = (
     activeFilter === "all"
       ? projects
-      : projects.filter((project) => project.projectType === activeFilter);
+      : projects.filter((project) => project.projectType === activeFilter)
+  )
+    .slice()
+    .sort(
+      (a, b) =>
+        Number(b.id === LEAD_PROJECT_ID) - Number(a.id === LEAD_PROJECT_ID),
+    );
 
   return (
     <>

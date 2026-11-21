@@ -24,12 +24,12 @@ function getInitials(person: string) {
 
 function TestimonialCard({ item }: { item: Testimonial }) {
   return (
-    <article className="flex w-[300px] shrink-0 flex-col justify-between rounded-[8px] border border-black/10 bg-light-surface p-6 transition-colors duration-300 hover:border-accent/40 sm:w-[360px] md:w-[420px] md:p-7">
+    <article className="theme-transition flex w-[300px] shrink-0 flex-col justify-between rounded-[8px] border border-border bg-light-surface p-6 transition-colors duration-300 hover:border-accent/40 sm:w-[360px] md:w-[420px] md:p-7">
       <blockquote className="font-sans text-[14px] leading-[1.7] text-foreground md:text-[15px]">
         &ldquo;{item.quote.trim()}&rdquo;
       </blockquote>
       <div className="mt-6 flex items-center gap-3.5 pt-4 md:mt-7 md:pt-5">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-black/[0.06] font-mono text-[11px] tracking-[0.04em] text-muted">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-foreground/[0.06] font-mono text-[11px] tracking-[0.04em] text-muted">
           {item.avatar ? (
             <img
               src={item.avatar}

@@ -11,6 +11,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { gsap } from "@/lib/gsap";
+import { createMaskedText, MOTION } from "@/lib/motion";
 import socials from "@/data/socials.json";
 
 // ── Minimal inline SVG icons ──────────────────────────────────────────────────
@@ -215,7 +216,7 @@ function Portrait({
       transition={{ type: "spring", stiffness: 120, damping: 22, mass: 0.7, delay }}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
-      className={`group/portrait relative overflow-hidden rounded-[5px] bg-black ring-1 transition-colors duration-500 ${isOppositeHovered ? "ring-black/30" : "ring-black/10"}`}
+      className={`group/portrait relative overflow-hidden rounded-[5px] bg-black ring-1 transition-colors duration-500 ${isOppositeHovered ? "ring-foreground/30" : "ring-border"}`}
     >
       <div
         className="relative aspect-[4/5] w-full overflow-hidden bg-black"
@@ -306,15 +307,88 @@ function Portrait({
 export default function MeetTheHumans() {
   const reduceMotion = useReducedMotion();
   const [hoveredProfile, setHoveredProfile] = useState<"harshita" | "aman" | null>(null);
+  const rootRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (
+        reduceMotion ||
+        !rootRef.current ||
+        !headingRef.current ||
+        !gridRef.current
+      ) {
+        return;
+      }
+
+      const splits = [createMaskedText(headingRef.current, "words")];
+      const names = gsap.utils.toArray<HTMLElement>(
+        gridRef.current.querySelectorAll("[data-human-name]"),
+      );
+      names.forEach((name) => splits.push(createMaskedText(name, "words")));
+
+      const headingParts = splits[0].words;
+      const nameParts = splits.slice(1).flatMap((split) => split.words);
+      const articles = gsap.utils.toArray<HTMLElement>(
+        gridRef.current.querySelectorAll("article"),
+      );
+
+      gsap.set([...headingParts, ...nameParts], { yPercent: 110, opacity: 0 });
+      gsap.set(articles, {
+        transformPerspective: 1200,
+        transformOrigin: "50% 50%",
+      });
+
+      gsap
+        .timeline({
+          defaults: { ease: MOTION.ease },
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 82%",
+            end: "+=80%",
+            scrub: 1,
+          },
+        })
+        .to(
+          headingParts,
+          { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.08 },
+          0,
+        )
+        .fromTo(
+          articles,
+          { opacity: 0, y: 60, rotationY: (index) => (index ? 5 : -5) },
+          {
+            opacity: 1,
+            y: 0,
+            rotationY: 0,
+            duration: 1,
+            stagger: 0.2,
+          },
+          0.1,
+        )
+        .to(
+          nameParts,
+          { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.08 },
+          0.4,
+        );
+
+      return () => splits.forEach((split) => split.revert());
+    },
+    { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
+  );
 
   return (
     <section
+      ref={rootRef}
+      id="about"
       aria-labelledby="humans-heading"
       className="relative overflow-hidden py-16 md:py-24"
     >
 
       <div className="pb-8 md:pb-10">
         <h2
+          ref={headingRef}
           id="humans-heading"
           className="mt-3 font-sans text-[clamp(2.4rem,6vw,5.5rem)] font-medium leading-[0.95] tracking-[-0.04em] text-foreground"
         >
@@ -322,7 +396,10 @@ export default function MeetTheHumans() {
         </h2>
       </div>
 
-      <div className="relative mx-auto mt-8 grid w-full max-w-[1120px] grid-cols-1 gap-y-14 md:mt-10 md:gap-y-16 lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:gap-y-0 xl:gap-x-12">
+      <div
+        ref={gridRef}
+        className="relative mx-auto mt-8 grid w-full max-w-[1120px] grid-cols-1 gap-y-14 md:mt-10 md:gap-y-16 lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:gap-y-0 xl:gap-x-12"
+      >
         <article
           aria-labelledby="human-harshita"
           onMouseEnter={() => setHoveredProfile("harshita")}
@@ -355,6 +432,7 @@ export default function MeetTheHumans() {
             className="mt-4 md:mt-5"
           >
             <h3
+              data-human-name
               id="human-harshita"
               className="mt-3 font-sans text-[clamp(2.125rem,3.5vw,2.75rem)] font-medium leading-none tracking-[-0.04em] text-foreground"
             >
@@ -379,7 +457,7 @@ export default function MeetTheHumans() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-black/10 text-muted transition-colors duration-200 hover:border-black/30 hover:text-accent"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-colors duration-200 hover:border-foreground/30 hover:text-accent"
                 >
                   <SocialIcon id={link.id as SocialIconId} className="h-[14px] w-[14px]" />
                 </a>
@@ -424,6 +502,7 @@ export default function MeetTheHumans() {
             className="mt-4 md:mt-5"
           >
             <h3
+              data-human-name
               id="human-aman"
               className="mt-3 font-sans text-[clamp(2.125rem,3.5vw,2.75rem)] font-medium leading-none tracking-[-0.04em] text-foreground"
             >
@@ -453,7 +532,7 @@ export default function MeetTheHumans() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-black/10 text-muted transition-colors duration-200 hover:border-black/30 hover:text-accent"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-colors duration-200 hover:border-foreground/30 hover:text-accent"
                 >
                   <SocialIcon id={link.id as SocialIconId} className="h-[14px] w-[14px]" />
                 </a>

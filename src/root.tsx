@@ -10,6 +10,8 @@ import {
   type MetaFunction,
 } from "react-router";
 import Background from "@/components/Background";
+import GlobalCursor from "@/components/GlobalCursor";
+import MotionRuntime from "@/components/MotionRuntime";
 import {
   destroySmoothScroll,
   initSmoothScroll,
@@ -17,6 +19,8 @@ import {
 } from "@/lib/smooth-scroll";
 import { createMeta, organizationId, site, websiteId } from "@/lib/site";
 import "./app/globals.css";
+
+const themeInitScript = `try{var t=localStorage.getItem("anvik-theme");if(t!=="light"&&t!=="dark")t="light";var r=document.documentElement;r.dataset.theme=t;r.style.colorScheme=t;}catch(e){document.documentElement.dataset.theme="light";}`;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -65,6 +69,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           content="YKwDO53XArYWQP27b8PIS4l1ALXtKu3OeDreuFCzuN4"
         />
         <meta name="theme-color" content={site.themeColor} />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="icon" href="/assets/favicon.ico" sizes="48x48" type="image/x-icon" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -170,6 +175,8 @@ function AnimatedOutlet() {
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
+      <MotionRuntime />
+      <GlobalCursor />
       <SmoothScroll />
       <ScrollToHash />
       <AnimatedOutlet />

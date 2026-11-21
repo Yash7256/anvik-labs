@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { primaryCtaClass } from "@/lib/cta";
 import { gsap } from "@/lib/gsap";
+import { createMaskedText, MOTION } from "@/lib/motion";
 import { scrollToTop } from "@/lib/smooth-scroll";
 import { site } from "@/lib/site";
 
@@ -25,17 +26,24 @@ export default function Footer() {
     () => {
       if (reduceMotion || !taglineRef.current) return;
 
-      gsap.from("[data-footer-word]", {
-        opacity: 0,
-        y: 14,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power3.out",
+      const split = createMaskedText(taglineRef.current, "words");
+      gsap.set(split.words, { yPercent: 110, opacity: 0 });
+
+      gsap.to(split.words, {
+        yPercent: 0,
+        opacity: 1,
+        duration: 0.9,
+        stagger: 0.06,
+        ease: MOTION.ease,
         scrollTrigger: {
           trigger: taglineRef.current,
-          start: "top 85%",
+          start: "top 86%",
+          end: "+=50%",
+          scrub: 1,
         },
       });
+
+      return () => split.revert();
     },
     { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
   );
@@ -69,6 +77,7 @@ export default function Footer() {
             </p>
             <Link
               to="/contact"
+              data-cursor="hello"
               className={`mt-8 ${primaryCtaClass}`}
             >
               Start a conversation
@@ -119,7 +128,7 @@ export default function Footer() {
                 alt="Anvik Labs"
                 width={1010}
                 height={118}
-                className="h-8 w-auto md:h-10"
+                className="logo-mark h-8 w-auto md:h-10"
               />
             </Link>
 
