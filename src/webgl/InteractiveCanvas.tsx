@@ -12,6 +12,7 @@ import {
   getVisualQuality,
   releasePointer,
   setPointerTarget,
+  setThemeMode,
 } from "./state";
 import { supportsWebGL } from "./support";
 
@@ -59,15 +60,30 @@ export default function InteractiveCanvas() {
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const syncSupport = () =>
       setEnabled(supportsWebGL() && !motion.matches);
 
+    const syncTheme = () => {
+      const theme = document.documentElement.dataset.theme;
+      setThemeMode(theme === "dark" ? "dark" : "light");
+    };
+
     syncSupport();
+    syncTheme();
     motion.addEventListener("change", syncSupport);
+    finePointer.addEventListener("change", syncSupport);
+
+    const themeObserver = new MutationObserver(syncTheme);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     const stopScroll = initScrollController();
 
     const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
       setPointerTarget(
         event.clientX / window.innerWidth,
         1 - event.clientY / window.innerHeight,
@@ -95,7 +111,7 @@ export default function InteractiveCanvas() {
     if (hero && "IntersectionObserver" in window) {
       observer = new IntersectionObserver(
         ([entry]) => setVisible(entry.isIntersecting && !document.hidden),
-        { threshold: 0 },
+        { threshold: 0.01 },
       );
       observer.observe(hero);
     }
@@ -106,6 +122,8 @@ export default function InteractiveCanvas() {
 
     return () => {
       motion.removeEventListener("change", syncSupport);
+      finePointer.removeEventListener("change", syncSupport);
+      themeObserver.disconnect();
       stopScroll();
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerleave", handlePointerEnd);

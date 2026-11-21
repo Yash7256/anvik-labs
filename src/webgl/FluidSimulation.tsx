@@ -21,10 +21,12 @@ precision highp float;
 uniform sampler2D uPrev;
 uniform vec2 uPointer;
 uniform vec2 uTrail;
+uniform vec2 uPointerVelocity;
 uniform vec2 uAspect;
 uniform float uTime;
 uniform float uDelta;
 uniform float uStrength;
+uniform float uPointerSpeed;
 uniform float uScroll;
 uniform float uScrollVelocity;
 
@@ -39,7 +41,7 @@ void main() {
   vec2 velocity = (previous.rg - 0.5) * 2.0;
 
   vec2 flow = curlNoise(vUv * 3.1 + vec2(uTime * 0.012, -uTime * 0.009));
-  velocity = mix(velocity, flow * 0.16, 0.035 * frameScale);
+  velocity = mix(velocity, flow * 0.14, 0.028 * frameScale);
 
   vec2 segment = uPointer - uTrail;
   vec2 local = vUv - uTrail;
@@ -52,26 +54,29 @@ void main() {
 
   vec2 delta = (vUv - nearest) * uAspect;
   float distanceToPointer = length(delta);
-  float influence = exp(-distanceToPointer * distanceToPointer * 24.0) * uStrength;
+  float radius = 16.0 - uPointerSpeed * 3.0;
+  float influence = exp(-distanceToPointer * distanceToPointer * radius) * uStrength;
   vec2 push = delta / max(distanceToPointer, 0.001);
-  velocity += push * influence * 0.45 * frameScale;
+  vec2 motionDir = normalize(uPointerVelocity + vec2(0.0001, 0.0));
+  velocity += push * influence * (0.22 + uPointerSpeed * 0.3) * frameScale;
+  velocity += motionDir * influence * (0.04 + uPointerSpeed * 0.14) * frameScale;
 
   float wave = ripple(
     vUv * uAspect,
     uPointer * uAspect,
-    0.05 + uStrength * 0.28,
-    0.09
+    0.045 + uStrength * 0.2 + uPointerSpeed * 0.04,
+    0.085
   ) * uStrength;
-  velocity += push * wave * 0.18 * frameScale;
-  velocity.y -= uScrollVelocity * 0.18 * frameScale;
+  velocity += push * wave * (0.1 + uPointerSpeed * 0.08) * frameScale;
+  velocity.y -= uScrollVelocity * (0.12 + abs(uScrollVelocity) * 0.06) * frameScale;
   velocity = clamp(velocity, vec2(-1.0), vec2(1.0));
 
   vec2 backtrace = clamp(
-    vUv - velocity * uDelta * (0.16 + uScroll * 0.34),
+    vUv - velocity * uDelta * (0.14 + uScroll * 0.28),
     vec2(0.001),
     vec2(0.999)
   );
-  float dye = texture2D(uPrev, backtrace).b * pow(0.994, frameScale);
+  float dye = texture2D(uPrev, backtrace).b * pow(0.9955, frameScale);
 
   float ambient = smoothstep(
     0.42,
@@ -131,10 +136,12 @@ export default function FluidSimulation() {
           uPrev: { value: null },
           uPointer: { value: new THREE.Vector2(0.5, 0.5) },
           uTrail: { value: new THREE.Vector2(0.5, 0.5) },
+          uPointerVelocity: { value: new THREE.Vector2(0, 0) },
           uAspect: { value: new THREE.Vector2(1, 1) },
           uTime: { value: 0 },
           uDelta: { value: 0 },
           uStrength: { value: 0 },
+          uPointerSpeed: { value: 0 },
           uScroll: { value: 0 },
           uScrollVelocity: { value: 0 },
         },
@@ -197,8 +204,13 @@ export default function FluidSimulation() {
       visualState.pointer.trailX,
       visualState.pointer.trailY,
     );
+    material.uniforms.uPointerVelocity.value.set(
+      visualState.pointer.velocityX,
+      visualState.pointer.velocityY,
+    );
     material.uniforms.uAspect.value.set(size.width / size.height, 1);
     material.uniforms.uStrength.value = visualState.pointer.strength;
+    material.uniforms.uPointerSpeed.value = visualState.pointer.speed;
     material.uniforms.uScroll.value = visualState.scroll.progress;
     material.uniforms.uScrollVelocity.value = visualState.scroll.velocity;
 

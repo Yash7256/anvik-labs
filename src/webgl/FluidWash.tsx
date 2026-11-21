@@ -23,6 +23,8 @@ uniform vec2 uTrail;
 uniform vec2 uAspect;
 uniform float uStrength;
 uniform float uScroll;
+uniform float uScrollAccent;
+uniform float uDark;
 
 varying vec2 vUv;
 
@@ -56,18 +58,22 @@ void main() {
     (1.0 - 0.85 * headline) *
     (1.0 - uScroll * 0.28);
 
-  vec3 warmGrey = vec3(0.8, 0.79, 0.77);
+  vec3 warmGrey = mix(vec3(0.8, 0.79, 0.77), vec3(0.62, 0.6, 0.58), uDark);
   vec3 burntOrange = vec3(0.72, 0.28, 0.08);
+  float accentBoost = 1.0 + uScrollAccent * 0.9;
   float tint = clamp(
-    halo * 0.6 + smoothstep(0.75, 1.0, dye) * 0.05,
+    halo * 0.55 + smoothstep(0.72, 1.0, dye) * (0.05 + uScrollAccent * 0.12),
     0.0,
-    0.35
+    0.32 + uScrollAccent * 0.18
   );
   vec3 color = mix(warmGrey, burntOrange, tint);
 
-  float washAlpha = pigment * mask * 0.12 * (1.0 + hover * 0.6);
-  float haloAlpha = halo * (0.65 + pigment * 0.35) * 0.18;
-  gl_FragColor = vec4(color, clamp(washAlpha + haloAlpha, 0.0, 0.18));
+  float baseWash = mix(0.11, 0.085, uDark) * accentBoost;
+  float haloBase = mix(0.17, 0.13, uDark) * (1.0 + uScrollAccent * 0.55);
+  float washAlpha = pigment * mask * baseWash * (1.0 + hover * 0.55);
+  float haloAlpha = halo * (0.6 + pigment * 0.4) * haloBase;
+  float maxAlpha = mix(0.18, 0.16, uDark) + uScrollAccent * 0.07;
+  gl_FragColor = vec4(color, clamp(washAlpha + haloAlpha, 0.0, maxAlpha));
 }
 `;
 
@@ -94,6 +100,8 @@ export default function FluidWash() {
           uAspect: { value: new THREE.Vector2(1, 1) },
           uStrength: { value: 0 },
           uScroll: { value: 0 },
+          uScrollAccent: { value: 0 },
+          uDark: { value: 0 },
         },
         vertexShader,
         fragmentShader,
@@ -128,6 +136,10 @@ export default function FluidWash() {
     material.uniforms.uAspect.value.set(size.width / size.height, 1);
     material.uniforms.uStrength.value = pointer.strength;
     material.uniforms.uScroll.value = visualState.scroll.progress;
+    material.uniforms.uScrollAccent.value = visualState.scroll.accent;
+    const darkTarget = visualState.theme === "dark" ? 1 : 0;
+    material.uniforms.uDark.value +=
+      (darkTarget - material.uniforms.uDark.value) * 0.08;
   });
 
   return <primitive object={mesh} />;

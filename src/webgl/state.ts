@@ -29,12 +29,16 @@ type ScrollState = {
   targetVelocity: number;
   speed: number;
   flowOffset: number;
+  accent: number;
 };
+
+export type ThemeMode = "light" | "dark";
 
 export type VisualState = {
   pointer: PointerState;
   scroll: ScrollState;
   fluidTexture: THREE.Texture | null;
+  theme: ThemeMode;
 };
 
 export const visualState: VisualState = {
@@ -59,8 +63,10 @@ export const visualState: VisualState = {
     targetVelocity: 0,
     speed: 0,
     flowOffset: 0,
+    accent: 0,
   },
   fluidTexture: null,
+  theme: "light",
 };
 
 export function setPointerTarget(x: number, y: number) {
@@ -70,29 +76,30 @@ export function setPointerTarget(x: number, y: number) {
   const deltaX = x - pointer.targetX;
   const deltaY = y - pointer.targetY;
 
+  const nextVelocityX = deltaX / elapsed;
+  const nextVelocityY = deltaY / elapsed;
+
   pointer.velocityX = Math.max(
-    -1.5,
-    Math.min(1.5, pointer.velocityX * 0.55 + (deltaX / elapsed) * 0.45),
+    -2.2,
+    Math.min(2.2, pointer.velocityX * 0.5 + nextVelocityX * 0.5),
   );
   pointer.velocityY = Math.max(
-    -1.5,
-    Math.min(1.5, pointer.velocityY * 0.55 + (deltaY / elapsed) * 0.45),
+    -2.2,
+    Math.min(2.2, pointer.velocityY * 0.5 + nextVelocityY * 0.5),
   );
   pointer.speed = Math.min(
     1,
-    Math.hypot(pointer.velocityX, pointer.velocityY) * 2.5,
+    Math.hypot(pointer.velocityX, pointer.velocityY) / 1.8,
   );
 
   pointer.targetX = x;
   pointer.targetY = y;
-  pointer.targetStrength = 1;
+  pointer.targetStrength = Math.max(pointer.targetStrength, 0.55 + pointer.speed * 0.45);
   pointer.lastMove = now;
 }
 
 export function releasePointer() {
-  visualState.pointer.targetStrength = 0;
-  visualState.pointer.trailX = visualState.pointer.targetX;
-  visualState.pointer.trailY = visualState.pointer.targetY;
+  visualState.pointer.targetStrength = 0.12;
 }
 
 export function setScrollTarget(progress: number, velocity = 0) {
@@ -100,40 +107,57 @@ export function setScrollTarget(progress: number, velocity = 0) {
   visualState.scroll.targetVelocity = Math.min(1, Math.max(-1, velocity));
 }
 
+export function setThemeMode(theme: ThemeMode) {
+  visualState.theme = theme;
+}
+
 export function advanceVisualState(delta: number) {
   const step = Math.min(delta, 1 / 20);
-  const pointerEase = 1 - Math.exp(-step * 4);
-  const strengthEase = 1 - Math.exp(-step * 2);
-  const trailEase = 1 - Math.exp(-step * 2.2);
+  const pointerEase = 1 - Math.exp(-step * 4.5);
+  const strengthEase = 1 - Math.exp(-step * 2.4);
+  const trailEase = 1 - Math.exp(-step * 2.8);
   const scrollEase = 1 - Math.exp(-step * 3.2);
-  const scrollVelocityEase = 1 - Math.exp(-step * 5);
+  const scrollVelocityEase = 1 - Math.exp(-step * 5.5);
 
   const pointer = visualState.pointer;
   pointer.x += (pointer.targetX - pointer.x) * pointerEase;
   pointer.y += (pointer.targetY - pointer.y) * pointerEase;
   pointer.trailX += (pointer.x - pointer.trailX) * trailEase;
   pointer.trailY += (pointer.y - pointer.trailY) * trailEase;
-  pointer.strength += (pointer.targetStrength - pointer.strength) * strengthEase;
 
-  const friction = Math.exp(-step * 4);
+  const friction = Math.exp(-step * 4.2);
   pointer.velocityX *= friction;
   pointer.velocityY *= friction;
-  pointer.speed *= Math.exp(-step * 3);
+  pointer.speed *= Math.exp(-step * 3.2);
 
-  const idle = (performance.now() - pointer.lastMove) / 1000;
-  const idleFade = 1 - Math.min(1, Math.max(0, idle - 0.12) / 1.1);
-  pointer.targetStrength = Math.min(pointer.targetStrength, idleFade);
+  const now = performance.now();
+  const idle = (now - pointer.lastMove) / 1000;
+  const activeBlend = 1 - Math.min(1, Math.max(0, (idle - 0.08) / 0.9));
+  const ambientBlend = Math.min(1, Math.max(0, (idle - 0.7) / 1.6));
+  const ambientStrength =
+    (0.1 + Math.sin(now * 0.00042) * 0.018 + Math.cos(now * 0.00067) * 0.01) *
+    ambientBlend;
+  const desiredStrength = Math.max(pointer.targetStrength * activeBlend, ambientStrength);
+  pointer.strength += (desiredStrength - pointer.strength) * strengthEase;
+  pointer.targetStrength *= Math.exp(-step * (idle < 0.2 ? 0.35 : 1.6));
 
   const scroll = visualState.scroll;
   scroll.progress += (scroll.target - scroll.progress) * scrollEase;
   scroll.velocity +=
     (scroll.targetVelocity - scroll.velocity) * scrollVelocityEase;
-  scroll.speed = Math.min(1, Math.abs(scroll.velocity) * 2.4);
-  scroll.targetVelocity *= Math.exp(-step * 3.5);
+  scroll.speed = Math.min(1, Math.abs(scroll.velocity) * 2.8);
+  scroll.targetVelocity *= Math.exp(-step * 4.2);
   scroll.flowOffset = Math.max(
     -0.55,
-    Math.min(0.55, scroll.flowOffset + scroll.velocity * step * 0.36 + step * 0.004),
+    Math.min(
+      0.55,
+      scroll.flowOffset + scroll.velocity * step * 0.42 + step * 0.0025,
+    ),
   );
+  const progressAccent = Math.min(1, Math.max(0, (scroll.progress - 0.08) / 0.72));
+  const peak = 1 - Math.min(1, Math.max(0, (scroll.progress - 0.78) / 0.22));
+  const accentTarget = Math.min(1, progressAccent * 0.9 * peak + scroll.speed * 0.45);
+  scroll.accent += (accentTarget - scroll.accent) * (1 - Math.exp(-step * 3.2));
 }
 
 export function getVisualQuality(): VisualQuality {

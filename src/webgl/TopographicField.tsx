@@ -29,6 +29,8 @@ uniform float uScroll;
 uniform float uScrollVelocity;
 uniform float uScrollSpeed;
 uniform float uFlowOffset;
+uniform float uScrollAccent;
+uniform float uDark;
 
 varying vec2 vUv;
 
@@ -110,19 +112,27 @@ void main() {
     (1.0 - 0.94 * headline) *
     (1.0 - uScroll * 0.28);
 
-  vec3 warmGrey = vec3(0.73, 0.72, 0.7);
-  vec3 shadow = vec3(0.64, 0.63, 0.61);
-  vec3 highlight = vec3(1.0, 0.995, 0.985);
+  vec3 lightWarmGrey = vec3(0.73, 0.72, 0.7);
+  vec3 lightShadow = vec3(0.64, 0.63, 0.61);
+  vec3 lightHighlight = vec3(1.0, 0.995, 0.985);
+  vec3 darkWarmGrey = vec3(0.58, 0.57, 0.55);
+  vec3 darkShadow = vec3(0.36, 0.35, 0.34);
+  vec3 darkHighlight = vec3(0.95, 0.93, 0.9);
+  vec3 warmGrey = mix(lightWarmGrey, darkWarmGrey, uDark);
+  vec3 shadow = mix(lightShadow, darkShadow, uDark);
+  vec3 highlight = mix(lightHighlight, darkHighlight, uDark);
   vec3 accent = vec3(1.0, 0.353, 0.039);
 
   vec3 color = mix(shadow, warmGrey, diffuse);
-  color = mix(color, highlight, specular * 0.6);
+  color = mix(color, highlight, specular * (0.6 - uDark * 0.18));
   color *= ambientOcclusion;
-  color = mix(color, accent, smoothstep(0.7, 1.0, dye) * 0.08);
+  float accentMix = smoothstep(0.66, 1.0, dye) * (0.08 + uDark * 0.04 + uScrollAccent * 0.12);
+  color = mix(color, accent, accentMix);
 
-  float opacity = line * reveal * (0.7 + diffuse * 0.45) * ambientOcclusion;
+  float opacityBoost = mix(1.0, 0.82, uDark) * (1.0 + uScrollAccent * 0.08);
+  float opacity = line * reveal * (0.7 + diffuse * 0.45) * ambientOcclusion * opacityBoost;
 
-  gl_FragColor = vec4(color, clamp(opacity, 0.0, 0.26));
+  gl_FragColor = vec4(color, clamp(opacity, 0.0, mix(0.26, 0.22, uDark) + uScrollAccent * 0.05));
 }
 `;
 
@@ -156,6 +166,8 @@ export default function TopographicField() {
           uScrollVelocity: { value: 0 },
           uScrollSpeed: { value: 0 },
           uFlowOffset: { value: 0 },
+          uScrollAccent: { value: 0 },
+          uDark: { value: 0 },
         },
         vertexShader,
         fragmentShader,
@@ -199,6 +211,10 @@ export default function TopographicField() {
     material.uniforms.uScrollVelocity.value = scroll.velocity;
     material.uniforms.uScrollSpeed.value = scroll.speed;
     material.uniforms.uFlowOffset.value = scroll.flowOffset;
+    material.uniforms.uScrollAccent.value = scroll.accent;
+    const darkTarget = visualState.theme === "dark" ? 1 : 0;
+    material.uniforms.uDark.value +=
+      (darkTarget - material.uniforms.uDark.value) * 0.08;
   });
 
   if (!quality.topographic) return null;

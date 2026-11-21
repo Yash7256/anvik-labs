@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -64,6 +64,52 @@ export default function Navbar() {
   const location = useLocation();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const navLineRef = useRef<HTMLSpanElement>(null);
+
+  const syncNavLine = useCallback(
+    (target?: HTMLElement | null) => {
+      const nav = navRef.current;
+      const line = navLineRef.current;
+      if (!nav || !line) return;
+
+      const item =
+        target ??
+        nav.querySelector<HTMLElement>('[data-nav-item="active"]') ??
+        null;
+      if (!item) {
+        line.style.opacity = "0";
+        line.style.setProperty("--nav-line-scale", "0");
+        return;
+      }
+
+      const navRect = nav.getBoundingClientRect();
+      const rect = item.getBoundingClientRect();
+      line.style.opacity = "1";
+      line.style.width = `${rect.width}px`;
+      line.style.setProperty("--nav-line-x", `${rect.left - navRect.left}px`);
+      line.style.setProperty("--nav-line-scale", "1");
+    },
+    [],
+  );
+
+  const moveNavLine = useCallback(
+    (target: HTMLElement) => {
+      syncNavLine(target);
+    },
+    [syncNavLine],
+  );
+
+  const resetNavLine = useCallback(() => {
+    syncNavLine();
+  }, [syncNavLine]);
+
+  useEffect(() => {
+    syncNavLine();
+    const onResize = () => syncNavLine();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [location.pathname, syncNavLine]);
 
   useEffect(() => {
     setMounted(true);
@@ -146,31 +192,40 @@ export default function Navbar() {
             </div>
 
             <nav
+              ref={navRef}
               aria-label="Primary navigation"
-              className="hidden items-center justify-end gap-8 md:flex lg:gap-10"
+              className="relative hidden items-center justify-end gap-8 md:flex lg:gap-10"
+              onPointerLeave={resetNavLine}
+              onBlurCapture={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                  resetNavLine();
+                }
+              }}
             >
-              {navLinks.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.href}
-                  aria-current={
-                    isActive(location.pathname, item.href) ? "page" : undefined
-                  }
-                  className={`group relative py-2 font-sans text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-200 hover:text-accent lg:text-[16px] ${
-                    isActive(location.pathname, item.href)
-                      ? "text-foreground"
-                      : "text-muted"
-                  }`}
-                >
-                  {item.label}
-                  <span
-                    aria-hidden="true"
-                    className={`nav-line absolute -bottom-0.5 left-0 h-px w-full origin-left bg-accent ${
-                      isActive(location.pathname, item.href) ? "nav-line--active" : ""
+              {navLinks.map((item) => {
+                const active = isActive(location.pathname, item.href);
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    data-nav-item={active ? "active" : undefined}
+                    aria-current={active ? "page" : undefined}
+                    onPointerEnter={(event) => moveNavLine(event.currentTarget)}
+                    onFocus={(event) => moveNavLine(event.currentTarget)}
+                    className={`relative py-2 font-sans text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-200 hover:text-foreground lg:text-[16px] ${
+                      active ? "text-foreground" : "text-muted"
                     }`}
-                  />
-                </Link>
-              ))}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <span
+                aria-hidden="true"
+                ref={navLineRef}
+                className="nav-line pointer-events-none absolute bottom-1 left-0 h-px bg-accent"
+                style={{ width: 1, opacity: 0 }}
+              />
               <TalkCta />
             </nav>
 

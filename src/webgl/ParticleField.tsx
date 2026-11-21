@@ -17,6 +17,7 @@ uniform vec2 uAspect;
 uniform float uTime;
 uniform float uStrength;
 uniform float uScroll;
+uniform float uDark;
 
 varying vec2 vUv;
 varying float vAlpha;
@@ -62,18 +63,19 @@ varying vec2 vUv;
 varying float vAlpha;
 varying float vTint;
 
+uniform float uDark;
+
 void main() {
   float distanceToCenter = length(vUv - 0.5);
   float alpha = smoothstep(0.5, 0.05, distanceToCenter) * vAlpha;
-
-  vec3 warmWhite = vec3(0.99, 0.985, 0.975);
-  vec3 warmGrey = vec3(0.72, 0.71, 0.69);
+  vec3 warmWhite = mix(vec3(0.99, 0.985, 0.975), vec3(0.95, 0.93, 0.9), uDark);
+  vec3 warmGrey = mix(vec3(0.72, 0.71, 0.69), vec3(0.58, 0.57, 0.55), uDark);
   vec3 accent = vec3(1.0, 0.353, 0.039);
 
   vec3 color = mix(warmGrey, warmWhite, smoothstep(0.15, 0.8, vTint));
   color = mix(color, accent, smoothstep(0.88, 1.0, vTint) * 0.12);
 
-  gl_FragColor = vec4(color, alpha);
+  gl_FragColor = vec4(color, alpha * mix(1.0, 0.88, uDark));
 }
 `;
 
@@ -125,6 +127,7 @@ export default function ParticleField() {
           uTime: { value: 0 },
           uStrength: { value: 0 },
           uScroll: { value: 0 },
+          uDark: { value: 0 },
         },
         vertexShader,
         fragmentShader,
@@ -161,6 +164,9 @@ export default function ParticleField() {
     material.uniforms.uAspect.value.set(size.width / size.height, 1);
     material.uniforms.uStrength.value = visualState.pointer.strength;
     material.uniforms.uScroll.value = visualState.scroll.progress;
+    const darkTarget = visualState.theme === "dark" ? 1 : 0;
+    material.uniforms.uDark.value +=
+      (darkTarget - material.uniforms.uDark.value) * 0.08;
   });
 
   return <primitive object={mesh} />;
