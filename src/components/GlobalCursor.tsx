@@ -6,7 +6,7 @@ import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { useFinePointer } from "@/lib/motion";
 
-type CursorState = "default" | "link" | "button" | "talk" | "scroll" | "text";
+type CursorState = "default" | "link" | "button" | "talk" | "scroll" | "text" | "design";
 
 function getCursorState(target: HTMLElement): { state: CursorState | "native"; label: string } {
   if (target.closest("input, textarea, select, [contenteditable='true']")) {
@@ -17,6 +17,8 @@ function getCursorState(target: HTMLElement): { state: CursorState | "native"; l
   if (explicit === "project") return { state: "native", label: "" };
   if (explicit === "talk") return { state: "talk", label: "talk" };
   if (explicit === "scroll") return { state: "scroll", label: "scroll" };
+  if (explicit === "design") return { state: "design", label: "DESIGNER ✦" };
+  if (explicit === "engineer") return { state: "design", label: "ENGINEER ✦" };
   if (explicit) return { state: "button", label: explicit };
 
   if (target.closest("a[href], button, [role='button']")) {

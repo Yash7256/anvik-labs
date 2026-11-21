@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { gsap } from "@/lib/gsap";
+import { createMaskedText, MOTION } from "@/lib/motion";
 
 type FaqItem = {
   q: string;
@@ -46,6 +49,40 @@ export default function Faq({
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const reduceMotion = useReducedMotion();
+  const rootRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useGSAP(
+    () => {
+      if (reduceMotion || !headingRef.current) return;
+      const split = createMaskedText(headingRef.current, "chars");
+      const chars = split.chars.length ? split.chars : split.words;
+      gsap.set(chars, {
+        yPercent: 112,
+        rotationX: 6,
+        opacity: 0,
+        transformPerspective: 900,
+        transformOrigin: "50% 100%",
+      });
+      gsap.to(chars, {
+        yPercent: 0,
+        rotationX: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.045,
+        ease: MOTION.ease,
+        force3D: true,
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: "top 85%",
+          end: "+=55%",
+          scrub: 1,
+        },
+      });
+      return () => split.revert();
+    },
+    { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
+  );
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -53,6 +90,7 @@ export default function Faq({
 
   return (
     <section
+      ref={rootRef}
       id="faq"
       aria-labelledby="faq-heading"
       className="px-4 pt-16 sm:px-[4vw] md:px-8 md:pt-24 lg:px-12"
@@ -64,8 +102,9 @@ export default function Faq({
 
       <div className="flex flex-col items-start justify-between gap-6 pb-10 lg:flex-row lg:items-end">
         <h2
+          ref={headingRef}
           id="faq-heading"
-          className="font-sans text-[clamp(2.4rem,6vw,5.5rem)] font-medium leading-none tracking-[-0.04em] text-foreground"
+          className="font-display text-[clamp(4.5rem,16vw,15rem)] font-extralight leading-[0.8] tracking-[-0.06em] text-foreground"
         >
           Questions.
         </h2>

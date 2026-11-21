@@ -55,21 +55,38 @@ export default function Works() {
             scrub: 1,
           },
         })
-        .to(
-          headingParts,
-          { yPercent: 0, opacity: 1, duration: 1, stagger: 0.045 },
-          0,
-        )
-        .to(
-          leadParts,
-          { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.025 },
-          0.2,
-        )
-        .to(
-          bodyParts,
-          { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.018 },
-          0.34,
-        );
+        .to(headingParts, { yPercent: 0, opacity: 1, duration: 1, stagger: 0.045 }, 0)
+        .to(leadParts, { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.025 }, 0.2)
+        .to(bodyParts, { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.018 }, 0.34);
+
+      const featuredCard = rootRef.current?.querySelector<HTMLElement>(
+        '[data-project-card][data-project-variant="featured"]',
+      );
+      if (featuredCard) {
+        const featuredTitle = featuredCard.querySelector<HTMLElement>("h3");
+        const featuredPill = featuredCard.querySelector<HTMLElement>(".project-pill");
+        const featuredInner = featuredCard.querySelector<HTMLElement>("[data-project-image-inner]");
+        const featuredOverlay = featuredCard.querySelector<HTMLElement>(".project-featured-gradient");
+        const featuredTitleSplit = featuredTitle ? createMaskedText(featuredTitle, "words") : null;
+        if (featuredTitleSplit) allSplits.push(featuredTitleSplit);
+
+        gsap.set(featuredCard, { opacity: 0, y: 48, scale: 0.985, force3D: true });
+        if (featuredInner) gsap.set(featuredInner, { clipPath: "inset(7% 0% 7% 0%)", scale: 1.04, force3D: true });
+        if (featuredOverlay) gsap.set(featuredOverlay, { opacity: 0.7 });
+        if (featuredTitleSplit) gsap.set(featuredTitleSplit.words, { yPercent: 105, opacity: 0 });
+        if (featuredPill) gsap.set(featuredPill, { y: 10, opacity: 0 });
+
+        gsap
+          .timeline({
+            defaults: { ease: MOTION.ease },
+            scrollTrigger: { trigger: featuredCard, start: "top 88%", end: "+=60%", scrub: 1 },
+          })
+          .to(featuredCard, { opacity: 1, y: 0, scale: 1, duration: 1, clearProps: "opacity,transform" }, 0)
+          .to(featuredInner ?? [], { clipPath: "inset(0% 0% 0% 0%)", scale: 1, duration: 0.9, clearProps: "clipPath,transform" }, 0.08)
+          .to(featuredOverlay ?? [], { opacity: 1, duration: 0.6, clearProps: "opacity" }, 0.1)
+          .to(featuredTitleSplit?.words ?? [], { yPercent: 0, opacity: 1, duration: 0.6, stagger: 0.045 }, 0.26)
+          .to(featuredPill ?? [], { y: 0, opacity: 1, duration: 0.45, clearProps: "opacity,transform" }, 0.38);
+      }
 
       const grid = gridRef.current;
       if (grid) {
@@ -79,44 +96,35 @@ export default function Works() {
         const titles = cards
           .map((card) => card.querySelector("h3"))
           .filter((title): title is HTMLHeadingElement => title !== null);
+        const inners = cards
+          .map((card) => card.querySelector<HTMLElement>("[data-project-image-inner]"))
+          .filter((el): el is HTMLElement => el !== null);
+        const infos = cards
+          .map((card) => card.querySelector<HTMLElement>("[data-project-info]"))
+          .filter((el): el is HTMLElement => el !== null);
         const cardSplits = titles.map((title) => createMaskedText(title, "words"));
         allSplits.push(...cardSplits);
         const titleParts = cardSplits.flatMap((split) => split.words);
 
-        gsap.set(cards, {
-          transformPerspective: 1100,
-          transformOrigin: "50% 50%",
-        });
+        gsap.set(cards, { transformPerspective: 1100, transformOrigin: "50% 50%" });
+        gsap.set(inners, { clipPath: "inset(6% 0% 6% 0%)", scale: 1.04, force3D: true });
+        gsap.set(infos, { y: 14, opacity: 0 });
         gsap.set(titleParts, { yPercent: 110, opacity: 0 });
 
         gsap
           .timeline({
             defaults: { ease: MOTION.ease },
-            scrollTrigger: {
-              trigger: grid,
-              start: "top 86%",
-              end: "+=70%",
-              scrub: 1,
-            },
+            scrollTrigger: { trigger: grid, start: "top 86%", end: "+=70%", scrub: 1 },
           })
           .fromTo(
             cards,
-            { opacity: 0, y: 52, rotationX: 4, scale: 0.98 },
-            {
-              opacity: 1,
-              y: 0,
-              rotationX: 0,
-              scale: 1,
-              duration: 1,
-              stagger: 0.16,
-            },
+            { opacity: 0, y: 44, rotationX: 2.5, scale: 0.985 },
+            { opacity: 1, y: 0, rotationX: 0, scale: 1, duration: 1, stagger: 0.14, clearProps: "transform,opacity" },
             0,
           )
-          .to(
-            titleParts,
-            { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.07 },
-            0.35,
-          );
+          .to(inners, { clipPath: "inset(0% 0% 0% 0%)", scale: 1, duration: 0.85, stagger: 0.14, clearProps: "clipPath,transform" }, 0.06)
+          .to(infos, { y: 0, opacity: 1, duration: 0.55, stagger: 0.14, clearProps: "transform,opacity" }, 0.28)
+          .to(titleParts, { yPercent: 0, opacity: 1, duration: 0.62, stagger: 0.045 }, 0.3);
       }
 
       return () => allSplits.forEach((split) => split.revert());
@@ -158,7 +166,7 @@ export default function Works() {
         </div>
 
         {featuredProject ? (
-          <div className="mx-auto mt-16 w-full md:mt-24 md:w-[96%]">
+          <div className="mx-auto mt-14 w-full max-w-[1180px] md:mt-20 md:w-[92%] lg:w-[84%]">
             <ProjectCard project={featuredProject} variant="featured" priority />
           </div>
         ) : null}
@@ -166,7 +174,7 @@ export default function Works() {
         <div
           ref={gridRef}
           data-project-grid
-          className="mt-10 grid grid-cols-1 gap-8 md:mt-14 md:grid-cols-2 md:gap-7"
+          className="mx-auto mt-8 grid w-full max-w-[1180px] grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 md:gap-6"
         >
           {gridProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} priority={index === 0} />

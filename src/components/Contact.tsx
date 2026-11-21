@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { gsap } from "@/lib/gsap";
+import { createMaskedText, MOTION } from "@/lib/motion";
 import { primaryCtaClass } from "@/lib/cta";
 import { site } from "@/lib/site";
 
@@ -33,6 +36,40 @@ export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
+  const rootRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useGSAP(
+    () => {
+      if (reduceMotion || !headingRef.current) return;
+      const split = createMaskedText(headingRef.current, "chars");
+      const chars = split.chars.length ? split.chars : split.words;
+      gsap.set(chars, {
+        yPercent: 112,
+        rotationX: 6,
+        opacity: 0,
+        transformPerspective: 900,
+        transformOrigin: "50% 100%",
+      });
+      gsap.to(chars, {
+        yPercent: 0,
+        rotationX: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.045,
+        ease: MOTION.ease,
+        force3D: true,
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: "top 85%",
+          end: "+=55%",
+          scrub: 1,
+        },
+      });
+      return () => split.revert();
+    },
+    { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -113,6 +150,7 @@ export default function Contact() {
 
   return (
     <section
+      ref={rootRef}
       id="contact"
       aria-labelledby="contact-heading"
       className="pb-16 pt-10 md:pb-24 md:pt-14"
@@ -124,8 +162,9 @@ export default function Contact() {
 
       <div className="flex flex-col justify-between gap-4 pb-8 md:flex-row md:items-end">
         <h1
+          ref={headingRef}
           id="contact-heading"
-          className="font-sans text-[clamp(2.8rem,8vw,7.5rem)] font-medium leading-none tracking-[-0.045em] text-foreground"
+          className="font-display text-[clamp(4.5rem,16vw,15rem)] font-extralight leading-[0.8] tracking-[-0.06em] text-foreground"
         >
           Start a project.
         </h1>
@@ -142,7 +181,8 @@ export default function Contact() {
             </span>
             <a
               href={`mailto:${site.email}`}
-              className="break-all font-sans text-[22px] font-medium text-foreground underline decoration-white/20 underline-offset-8 transition-colors hover:text-accent md:text-[28px]"
+                data-cursor="email"
+                className="break-all font-sans text-[22px] font-medium text-foreground underline decoration-white/20 underline-offset-8 transition-colors hover:text-accent md:text-[28px]"
             >
               {site.email}
             </a>
@@ -334,7 +374,8 @@ export default function Contact() {
                 </p>
                 <button
                   type="submit"
-                  disabled={status === "submitting"}
+                    data-cursor="send"
+                    disabled={status === "submitting"}
                   className={`${primaryCtaClass} shrink-0 disabled:cursor-not-allowed disabled:opacity-60`}
                 >
                   <AnimatePresence mode="wait" initial={false}>

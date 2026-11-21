@@ -280,10 +280,10 @@ export default function ProjectCard({
           ) : null}
 
           <span ref={followerRef} aria-hidden="true" className="project-follower">
-            <ArrowIcon />
+            <span className="project-follower__label">Case Study</span>
           </span>
           <span aria-hidden="true" className="project-tap">
-            <ArrowIcon />
+            <span className="project-tap__label">Case Study</span>
           </span>
         </div>
 

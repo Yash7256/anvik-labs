@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { createMaskedText, MOTION } from "@/lib/motion";
 import testimonialsData from "../data/testimonials.json";
 
 type Testimonial = (typeof testimonialsData)[number] & {
@@ -56,6 +57,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 export default function Testimonials() {
   const reduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const tweenRef = useRef<ReturnType<typeof gsap.to> | null>(null);
   const hoveredRef = useRef(false);
@@ -68,7 +70,41 @@ export default function Testimonials() {
   useGSAP(
     () => {
       const root = rootRef.current;
-      if (reduceMotion || !trackRef.current || !root) return;
+      const heading = headingRef.current;
+      if (!root) return;
+
+      const splits: Array<ReturnType<typeof createMaskedText>> = [];
+      if (heading && !reduceMotion) {
+        const split = createMaskedText(heading, "chars");
+        splits.push(split);
+        const chars = split.chars.length ? split.chars : split.words;
+        gsap.set(chars, {
+          yPercent: 112,
+          rotationX: 6,
+          opacity: 0,
+          transformPerspective: 900,
+          transformOrigin: "50% 100%",
+        });
+        gsap.to(chars, {
+          yPercent: 0,
+          rotationX: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.045,
+          ease: MOTION.ease,
+          force3D: true,
+          scrollTrigger: {
+            trigger: heading,
+            start: "top 85%",
+            end: "+=55%",
+            scrub: 1,
+          },
+        });
+      }
+
+      if (reduceMotion || !trackRef.current) {
+        return () => splits.forEach((s) => s.revert());
+      }
 
       const tween = gsap.to(trackRef.current, {
         xPercent: -50,
@@ -130,6 +166,7 @@ export default function Testimonials() {
         trigger.kill();
         tween.kill();
         tweenRef.current = null;
+        splits.forEach((s) => s.revert());
       };
     },
     { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
@@ -174,8 +211,9 @@ export default function Testimonials() {
       >
         <div className="pb-8 md:pb-10">
           <h2
+            ref={headingRef}
             id="testimonials-heading"
-            className="mt-3 font-sans text-[clamp(2.4rem,6vw,5.5rem)] font-medium leading-[0.95] tracking-[-0.04em] text-foreground"
+            className="font-display text-[clamp(3rem,10vw,9rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
           >
             What people say.
           </h2>
@@ -199,8 +237,9 @@ export default function Testimonials() {
     >
       <div className="pb-8 md:pb-10">
         <h2
+          ref={headingRef}
           id="testimonials-heading"
-          className="mt-3 font-sans text-[clamp(2.4rem,6vw,5.5rem)] font-medium leading-[0.95] tracking-[-0.04em] text-foreground"
+          className="font-display text-[clamp(3rem,10vw,9rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
         >
           What people say.
         </h2>
