@@ -32,11 +32,21 @@ type ScrollState = {
   accent: number;
 };
 
+type CueState = {
+  x: number;
+  y: number;
+  strength: number;
+  targetStrength: number;
+  pulse: number;
+  active: boolean;
+};
+
 export type ThemeMode = "light" | "dark";
 
 export type VisualState = {
   pointer: PointerState;
   scroll: ScrollState;
+  cue: CueState;
   fluidTexture: THREE.Texture | null;
   theme: ThemeMode;
 };
@@ -64,6 +74,14 @@ export const visualState: VisualState = {
     speed: 0,
     flowOffset: 0,
     accent: 0,
+  },
+  cue: {
+    x: 0.5,
+    y: 0.82,
+    strength: 0,
+    targetStrength: 0,
+    pulse: 0,
+    active: false,
   },
   fluidTexture: null,
   theme: "light",
@@ -158,6 +176,12 @@ export function advanceVisualState(delta: number) {
   const peak = 1 - Math.min(1, Math.max(0, (scroll.progress - 0.78) / 0.22));
   const accentTarget = Math.min(1, progressAccent * 0.9 * peak + scroll.speed * 0.45);
   scroll.accent += (accentTarget - scroll.accent) * (1 - Math.exp(-step * 3.2));
+
+  const cue = visualState.cue;
+  cue.strength +=
+    (cue.targetStrength - cue.strength) * (1 - Math.exp(-step * (cue.active ? 8 : 4.5)));
+  cue.pulse = Math.max(0, cue.pulse - step * 1.8);
+  if (!cue.active) cue.targetStrength *= Math.exp(-step * 3.5);
 }
 
 export function getVisualQuality(): VisualQuality {

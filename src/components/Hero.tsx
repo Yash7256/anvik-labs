@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION, useFinePointer, useMagnetic } from "@/lib/motion";
 import { scrollToElement } from "@/lib/smooth-scroll";
 import WebGLBackground from "@/webgl/WebGLBackground";
+import { visualState } from "@/webgl/state";
 
 export default function Hero() {
   const reduceMotion = useReducedMotion();
@@ -16,7 +17,18 @@ export default function Hero() {
   const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const copyRef = useRef<HTMLParagraphElement>(null);
-  const cueRef = useMagnetic<HTMLButtonElement>(0.18);
+  const cueButtonRef = useRef<HTMLButtonElement | null>(null);
+  const cueDotRef = useRef<HTMLSpanElement>(null);
+  const cueFillRef = useRef<HTMLSpanElement>(null);
+  const cueMagneticRef = useMagnetic<HTMLButtonElement>(0.14);
+  const cueWakeRef = useRef(0);
+  const cueRef = useCallback(
+    (node: HTMLButtonElement | null) => {
+      cueButtonRef.current = node;
+      cueMagneticRef.current = node;
+    },
+    [cueMagneticRef],
+  );
 
   useGSAP(
     () => {
@@ -29,7 +41,7 @@ export default function Hero() {
       const splits = lineElements.map((line) => createMaskedText(line, "lines"));
       const lines = splits.flatMap((split) => split.lines);
 
-      gsap.set([eyebrowRef.current, copyRef.current, cueRef.current], {
+      gsap.set([eyebrowRef.current, copyRef.current, cueButtonRef.current], {
         autoAlpha: 1,
       });
 
@@ -59,7 +71,7 @@ export default function Hero() {
           0.52,
         )
         .from(
-          cueRef.current,
+          cueButtonRef.current,
           { autoAlpha: 0, y: 14, duration: 0.75 },
           0.64,
         );
@@ -89,6 +101,18 @@ export default function Hero() {
             start: "top top",
             end: "bottom top",
             scrub: 1.15,
+            onUpdate: (self) => {
+              const now = self.scroll();
+              const delta = Math.abs(now - cueWakeRef.current);
+              if (delta > 18 && self.progress > 0.01 && self.progress < 0.35) {
+                visualState.cue.pulse = Math.max(visualState.cue.pulse, 0.55);
+                visualState.cue.targetStrength = Math.max(
+                  visualState.cue.targetStrength,
+                  0.55,
+                );
+              }
+              cueWakeRef.current = now;
+            },
           },
         })
         .to(contentRef.current, { yPercent: -5, duration: 1 }, 0)
@@ -96,7 +120,13 @@ export default function Hero() {
         .to(eyebrowRef.current, { autoAlpha: 0, duration: 0.35 }, 0.65)
         .to(copyRef.current, { y: -24, autoAlpha: 0.35, duration: 0.4 }, 0.35)
         .to(copyRef.current, { autoAlpha: 0, duration: 0.3 }, 0.75)
-        .to(cueRef.current, { y: 14, autoAlpha: 0, duration: 0.3 }, 0.15)
+        .to(cueDotRef.current, { y: 44, duration: 0.28, ease: "none" }, 0)
+        .to(cueFillRef.current, { scaleY: 1, duration: 0.28, ease: "none" }, 0)
+        .to(
+          cueButtonRef.current,
+          { y: 18, autoAlpha: 0, duration: 0.24, ease: "power1.in" },
+          0.12,
+        )
         .to(
           lineElements[0],
           { yPercent: -14, xPercent: -1.2, opacity: 0.58, duration: 1 },
@@ -114,6 +144,78 @@ export default function Hero() {
     },
     { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
   );
+
+  useEffect(() => {
+    const button = cueButtonRef.current;
+    if (!button) return;
+
+    const updateCuePosition = () => {
+      const rect = button.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      visualState.cue.x = (rect.left + rect.width / 2) / window.innerWidth;
+      visualState.cue.y = (rect.top + rect.height / 2) / window.innerHeight;
+    };
+
+    updateCuePosition();
+    window.addEventListener("resize", updateCuePosition);
+    window.addEventListener("scroll", updateCuePosition, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", updateCuePosition);
+      window.removeEventListener("scroll", updateCuePosition);
+      visualState.cue.active = false;
+      visualState.cue.targetStrength = 0;
+    };
+  }, []);
+
+  useEffect(() => {
+    const button = cueButtonRef.current;
+    if (!button) return;
+
+    const active = !reduceMotion && finePointer;
+    if (!active) {
+      visualState.cue.active = false;
+      visualState.cue.targetStrength = 0;
+      return;
+    }
+
+    const onEnter = () => {
+      visualState.cue.active = true;
+      visualState.cue.targetStrength = 0.7;
+    };
+    const onLeave = () => {
+      visualState.cue.active = false;
+      visualState.cue.targetStrength = 0;
+    };
+    const onMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+      const rect = button.getBoundingClientRect();
+      const dx = event.clientX - (rect.left + rect.width / 2);
+      const dy = event.clientY - (rect.top + rect.height / 2);
+      const dist = Math.hypot(dx, dy);
+      const proximity = Math.max(0, 1 - dist / 120);
+      visualState.cue.active = proximity > 0.02;
+      visualState.cue.targetStrength = proximity * 0.85;
+    };
+    const onClick = () => {
+      visualState.cue.pulse = 1;
+      visualState.cue.targetStrength = Math.max(visualState.cue.targetStrength, 1);
+    };
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    button.addEventListener("pointerenter", onEnter);
+    button.addEventListener("pointerleave", onLeave);
+    button.addEventListener("click", onClick);
+
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      button.removeEventListener("pointerenter", onEnter);
+      button.removeEventListener("pointerleave", onLeave);
+      button.removeEventListener("click", onClick);
+      visualState.cue.active = false;
+      visualState.cue.targetStrength = 0;
+    };
+  }, [finePointer, reduceMotion]);
 
   useEffect(() => {
     if (reduceMotion || !finePointer) return;
@@ -267,20 +369,28 @@ export default function Hero() {
             onClick={scrollToWorks}
             aria-label="Scroll to selected work"
             data-cursor="scroll"
-            className="scroll-cue mt-11 inline-flex h-[50px] w-[50px] items-center justify-center rounded-full md:mt-12"
+            className="scroll-cue group mt-11 inline-flex flex-col items-center gap-3 md:mt-12"
           >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="scroll-cue__icon h-4 w-4"
-            >
-              <path d="M8 2.5v10M4 8.5l4 4 4-4" />
-            </svg>
+            <span className="scroll-cue__label font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+              Scroll
+            </span>
+            <span aria-hidden="true" className="scroll-cue__track">
+              <span ref={cueFillRef} className="scroll-cue__fill" />
+              <span ref={cueDotRef} className="scroll-cue__dot" />
+            </span>
+            <span aria-hidden="true" className="scroll-cue__ring">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="scroll-cue__icon"
+              >
+                <path d="M12 5v12M7.5 13.5 12 18l4.5-4.5" />
+              </svg>
+            </span>
           </button>
         </div>
       </div>

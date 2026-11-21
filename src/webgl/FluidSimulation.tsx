@@ -22,10 +22,13 @@ uniform sampler2D uPrev;
 uniform vec2 uPointer;
 uniform vec2 uTrail;
 uniform vec2 uPointerVelocity;
+uniform vec2 uCue;
 uniform vec2 uAspect;
 uniform float uTime;
 uniform float uDelta;
 uniform float uStrength;
+uniform float uCueStrength;
+uniform float uCuePulse;
 uniform float uPointerSpeed;
 uniform float uScroll;
 uniform float uScrollVelocity;
@@ -68,6 +71,21 @@ void main() {
     0.085
   ) * uStrength;
   velocity += push * wave * (0.1 + uPointerSpeed * 0.08) * frameScale;
+
+  vec2 cueDelta = vUv - uCue;
+  cueDelta.x *= uAspect.x / uAspect.y;
+  float cueDistance = length(cueDelta);
+  float cueInfluence = exp(-cueDistance * cueDistance * 42.0) * uCueStrength;
+  vec2 cuePush = cueDelta / max(cueDistance, 0.001);
+  float cueWave = ripple(
+    vUv * uAspect,
+    uCue * uAspect,
+    0.025 + uCueStrength * 0.12 + uCuePulse * 0.08,
+    0.045
+  ) * uCueStrength;
+  velocity += cuePush * cueInfluence * (0.06 + uCuePulse * 0.12) * frameScale;
+  velocity += cuePush * cueWave * (0.04 + uCuePulse * 0.1) * frameScale;
+
   velocity.y -= uScrollVelocity * (0.12 + abs(uScrollVelocity) * 0.06) * frameScale;
   velocity = clamp(velocity, vec2(-1.0), vec2(1.0));
 
@@ -137,10 +155,13 @@ export default function FluidSimulation() {
           uPointer: { value: new THREE.Vector2(0.5, 0.5) },
           uTrail: { value: new THREE.Vector2(0.5, 0.5) },
           uPointerVelocity: { value: new THREE.Vector2(0, 0) },
+          uCue: { value: new THREE.Vector2(0.5, 0.82) },
           uAspect: { value: new THREE.Vector2(1, 1) },
           uTime: { value: 0 },
           uDelta: { value: 0 },
           uStrength: { value: 0 },
+          uCueStrength: { value: 0 },
+          uCuePulse: { value: 0 },
           uPointerSpeed: { value: 0 },
           uScroll: { value: 0 },
           uScrollVelocity: { value: 0 },
@@ -208,8 +229,11 @@ export default function FluidSimulation() {
       visualState.pointer.velocityX,
       visualState.pointer.velocityY,
     );
+    material.uniforms.uCue.value.set(visualState.cue.x, visualState.cue.y);
     material.uniforms.uAspect.value.set(size.width / size.height, 1);
     material.uniforms.uStrength.value = visualState.pointer.strength;
+    material.uniforms.uCueStrength.value = visualState.cue.strength;
+    material.uniforms.uCuePulse.value = visualState.cue.pulse;
     material.uniforms.uPointerSpeed.value = visualState.pointer.speed;
     material.uniforms.uScroll.value = visualState.scroll.progress;
     material.uniforms.uScrollVelocity.value = visualState.scroll.velocity;
