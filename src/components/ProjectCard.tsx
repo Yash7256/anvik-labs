@@ -6,8 +6,6 @@ import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
-import FeaturedImage from "@/webgl/FeaturedImage";
-import type { FeaturedPointer } from "@/webgl/FeaturedSurface";
 import type { Project } from "@/data/projects";
 
 type ProjectCardProps = {
@@ -57,8 +55,6 @@ export default function ProjectCard({
     x: (value: number) => void;
     y: (value: number) => void;
   } | null>(null);
-  const pointerRef = useRef<FeaturedPointer>({ x: 0.5, y: 0.5, strength: 0 });
-  const scrollRef = useRef(0);
 
   useEffect(() => () => cancelAnimationFrame(frameRef.current), []);
 
@@ -85,9 +81,6 @@ export default function ProjectCard({
               start: "top 90%",
               end: "top 38%",
               scrub: 1,
-              onUpdate: (self) => {
-                scrollRef.current = self.progress;
-              },
             },
           })
           .fromTo(
@@ -184,7 +177,6 @@ export default function ProjectCard({
 
   const handlePointerEnter = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (reduceMotion || event.pointerType !== "mouse") return;
-    pointerRef.current.strength = 1;
     updatePointer(event);
     currentRef.current = { ...targetRef.current };
     if (followerRef.current) {
@@ -201,7 +193,6 @@ export default function ProjectCard({
 
   const handlePointerLeave = () => {
     cancelAnimationFrame(frameRef.current);
-    pointerRef.current.strength = 0;
     tiltRef.current?.x(0);
     tiltRef.current?.y(0);
   };
@@ -214,10 +205,6 @@ export default function ProjectCard({
     const rect = media.getBoundingClientRect();
     const nx = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
     const ny = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
-
-    pointerRef.current.x = nx;
-    pointerRef.current.y = 1 - ny;
-    pointerRef.current.strength = 1;
 
     if (lightRef.current) {
       lightRef.current.style.setProperty("--light-x", `${nx * 100}%`);
@@ -268,14 +255,6 @@ export default function ProjectCard({
             decoding="async"
             className="project-image h-full w-full object-cover object-center"
           />
-
-          {isFeatured ? (
-            <FeaturedImage
-              src={project.coverImage}
-              pointerRef={pointerRef}
-              scrollRef={scrollRef}
-            />
-          ) : null}
 
           <span ref={lightRef} aria-hidden="true" className="project-light" />
           <span aria-hidden="true" className="project-hover-shade" />

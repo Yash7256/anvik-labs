@@ -8,7 +8,7 @@ Portfolio and studio site for Anvik Labs, a product design and engineering studi
 - React Router 8 with Vite
 - Tailwind CSS 4
 - Framer Motion, GSAP + ScrollTrigger, and Lenis for motion
-- Three.js + React Three Fiber for shader-driven hero and featured-image WebGL layers
+- Three.js + React Three Fiber for the shader-driven hero WebGL layer
 - TypeScript
 
 ## Development
@@ -66,7 +66,7 @@ src/
   lib/motion.ts        Shared motion tokens and hooks
   lib/smooth-scroll.ts Lenis setup and programmatic scrolling
   lib/site.ts          Site metadata
-  webgl/               Hero canvas, featured image surface, shaders, scroll controller
+  webgl/               Hero canvas, shaders, scroll controller
   root.tsx             Document shell, fonts, skip link, Lenis and hash scrolling
   routes.ts            React Router route config
 public/
@@ -87,7 +87,7 @@ public/
 - Keep the light palette, restrained accent use, hairline rules, and editorial type hierarchy.
 - Avoid decorative gradients, heavy shadows, oversized radii, and generic card grids.
 - Use semantic landmarks, one `h1` per page, visible focus states, labelled form controls, and alt text for meaningful images.
-- Respect `prefers-reduced-motion` for animated content. The hero WebGL layer is skipped for reduced-motion visitors and when WebGL is unavailable; a static CSS ambience is shown instead. The featured image surface is lazily mounted near the viewport, pauses offscreen, and falls back to the source image when reduced motion or WebGL is unavailable.
+- Respect `prefers-reduced-motion` for animated content. The hero WebGL layer is skipped for reduced-motion visitors and when WebGL is unavailable; a static CSS ambience is shown instead.
 - The current design system is documented in [`design.md`](./design.md).
 - The frontend audit and its remaining risks are in [`docs/frontend-ai-slop-audit.md`](./docs/frontend-ai-slop-audit.md).
 

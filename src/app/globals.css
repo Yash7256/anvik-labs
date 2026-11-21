@@ -335,25 +335,6 @@ select option {
   filter: brightness(0.88);
 }
 
-.featured-surface {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 600ms ease;
-}
-
-.featured-surface--ready {
-  opacity: 1;
-}
-
-.featured-surface canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-}
-
 .project-light {
   position: absolute;
   inset: 0;
@@ -494,10 +475,6 @@ select option {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .featured-surface {
-    display: none;
-  }
-
   .project-light {
     opacity: 0 !important;
   }

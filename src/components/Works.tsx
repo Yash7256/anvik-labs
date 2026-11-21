@@ -6,9 +6,9 @@ import { createMaskedText, MOTION } from "@/lib/motion";
 import { getProject, type Project } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 
-const featuredProject = getProject("sedative-physio");
+const featuredProject = getProject("designers-room");
 
-const gridProjects = ["designers-room", "cybersec-toolkit", "notify-ed"]
+const gridProjects = ["cybersec-toolkit", "notify-ed", "sedative-physio"]
   .map((id) => getProject(id))
   .filter((project): project is Project => Boolean(project));
 
