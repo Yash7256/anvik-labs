@@ -1205,36 +1205,36 @@ select option {
 }
 
 .service-card {
-  --sc-bg: rgba(255, 255, 255, 0.62);
-  --sc-bg-hover: rgba(255, 255, 255, 0.78);
-  --sc-border: rgba(23, 23, 23, 0.1);
-  --sc-border-hover: rgba(23, 23, 23, 0.18);
-  --sc-text: #171717;
-  --sc-text-muted: rgba(23, 23, 23, 0.62);
-  --sc-text-faint: rgba(23, 23, 23, 0.46);
-  --sc-line: rgba(23, 23, 23, 0.12);
-  --sc-line-hover: rgba(23, 23, 23, 0.24);
-  --sc-shadow: 0 30px 90px -55px rgba(23, 23, 23, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.88);
-  --sc-shadow-hover: 0 40px 110px -60px rgba(23, 23, 23, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.96);
-  --sc-gloss: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,255,255,0.18) 38%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.42));
-  --sc-sheen: rgba(255, 255, 255, 0.7);
-  --sc-ring: rgba(23, 23, 23, 0.04);
-  --sc-ambient: radial-gradient(ellipse at 18% 15%, rgba(255,255,255,0.55), transparent 28%), radial-gradient(ellipse at 78% 30%, rgba(23,23,23,0.04), transparent 34%), radial-gradient(ellipse at 72% 72%, rgba(126,108,255,0.06), transparent 30%);
-  --sc-fluid-a: rgba(23, 23, 23, 0.06);
-  --sc-fluid-b: rgba(126, 108, 255, 0.08);
-  --sc-fluid-c: rgba(255, 255, 255, 0.55);
-  --sc-preview-bg: rgba(255, 255, 255, 0.52);
-  --sc-preview-border: rgba(23, 23, 23, 0.1);
-  --sc-preview-inner: rgba(23, 23, 23, 0.08);
-  --sc-preview-img-bg: rgba(23, 23, 23, 0.04);
-  --sc-preview-overlay: linear-gradient(to top, rgba(23,23,23,0.08), transparent, rgba(255,255,255,0.18));
-  --sc-visual-overlay: radial-gradient(ellipse at 30% 25%, rgba(23,23,23,0.05), transparent 34%), radial-gradient(ellipse at 72% 62%, rgba(132,104,255,0.08), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0));
-  --sc-visual-blob-a: rgba(23, 23, 23, 0.06);
-  --sc-visual-blob-b: rgba(140, 118, 255, 0.1);
-  --sc-visual-shadow: rgba(23, 23, 23, 0.12);
-  --sc-pill-bg: rgba(23, 23, 23, 0.035);
-  --sc-pill-border: rgba(23, 23, 23, 0.1);
-  --sc-pill-text: rgba(23, 23, 23, 0.62);
+  --sc-bg: rgba(18, 18, 18, 0.72);
+  --sc-bg-hover: rgba(24, 24, 24, 0.82);
+  --sc-border: rgba(255, 255, 255, 0.1);
+  --sc-border-hover: rgba(255, 255, 255, 0.18);
+  --sc-text: #f5f5f5;
+  --sc-text-muted: rgba(245, 245, 245, 0.62);
+  --sc-text-faint: rgba(245, 245, 245, 0.46);
+  --sc-line: rgba(255, 255, 255, 0.12);
+  --sc-line-hover: rgba(255, 255, 255, 0.24);
+  --sc-shadow: 0 30px 90px -55px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --sc-shadow-hover: 0 40px 110px -60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --sc-gloss: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03) 38%, rgba(255,255,255,0.01) 60%, rgba(255,255,255,0.08));
+  --sc-sheen: rgba(255, 255, 255, 0.4);
+  --sc-ring: rgba(255, 255, 255, 0.05);
+  --sc-ambient: radial-gradient(ellipse at 18% 15%, rgba(255,255,255,0.08), transparent 28%), radial-gradient(ellipse at 78% 30%, rgba(255,255,255,0.04), transparent 34%), radial-gradient(ellipse at 72% 72%, rgba(126,108,255,0.1), transparent 30%);
+  --sc-fluid-a: rgba(255, 255, 255, 0.07);
+  --sc-fluid-b: rgba(126, 108, 255, 0.12);
+  --sc-fluid-c: rgba(255, 255, 255, 0.08);
+  --sc-preview-bg: rgba(255, 255, 255, 0.06);
+  --sc-preview-border: rgba(255, 255, 255, 0.12);
+  --sc-preview-inner: rgba(255, 255, 255, 0.1);
+  --sc-preview-img-bg: rgba(0, 0, 0, 0.24);
+  --sc-preview-overlay: linear-gradient(to top, rgba(0,0,0,0.3), transparent, rgba(255,255,255,0.08));
+  --sc-visual-overlay: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.08), transparent 34%), radial-gradient(ellipse at 72% 62%, rgba(132,104,255,0.1), transparent 30%), linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+  --sc-visual-blob-a: rgba(255, 255, 255, 0.08);
+  --sc-visual-blob-b: rgba(140, 118, 255, 0.12);
+  --sc-visual-shadow: rgba(0, 0, 0, 0.45);
+  --sc-pill-bg: rgba(255, 255, 255, 0.05);
+  --sc-pill-border: rgba(255, 255, 255, 0.12);
+  --sc-pill-text: rgba(245, 245, 245, 0.66);
 }
 
 [data-theme="dark"] .service-card {
