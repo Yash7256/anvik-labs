@@ -1,9 +1,9 @@
-import { useRef } from "react";
+import { useRef, type PointerEvent as ReactPointerEvent } from "react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
-import { createMaskedText, MOTION } from "@/lib/motion";
+import { createMaskedText, MOTION, useFinePointer } from "@/lib/motion";
 import { services as serviceData } from "@/data/services";
 
 type ServiceCardConfig = {
@@ -12,11 +12,11 @@ type ServiceCardConfig = {
   name: string;
   description: string;
   category: string;
-  image: string | null;
-  imageAlt: string;
-  imageLabel: string;
-  accent: string;
-  coordinate: string;
+  meta: string;
+  sculpture: "web" | "design" | "ai" | "care";
+  image?: string;
+  imageAlt?: string;
+  pills: string[];
 };
 
 const serviceCards: ServiceCardConfig[] = [
@@ -25,133 +25,199 @@ const serviceCards: ServiceCardConfig[] = [
     slug: serviceData[0].slug,
     name: serviceData[0].name,
     description: serviceData[0].heroSubline,
-    category: "Build / Ship",
-    image: null,
-    imageAlt: "Web development project visual placeholder",
-    imageLabel: "Web build visual",
-    accent: "Product systems",
-    coordinate: "48.8°N / 2.3°E",
+    category: "BUILD / SHIP",
+    meta: "PRODUCT SYSTEMS",
+    sculpture: "web",
+    image: "/assets/webdev.jpg",
+    imageAlt: "Web development visual",
+    pills: ["Frontend", "Backend", "Web Apps", "Dashboards"],
   },
   {
     index: "02",
     slug: serviceData[1].slug,
-    name: serviceData[1].name,
+    name: "Product Design",
     description: serviceData[1].heroSubline,
-    category: "Design / Systems",
-    image: null,
-    imageAlt: "Product design visual placeholder",
-    imageLabel: "Interface visual",
-    accent: "Figma to product",
-    coordinate: "System / 02",
+    category: "DESIGN / SYSTEMS",
+    meta: "INTERFACE CRAFT",
+    sculpture: "design",
+    image: "/assets/uiux.png",
+    imageAlt: "Product design visual",
+    pills: ["Product Design", "Design Systems", "Prototypes"],
   },
   {
     index: "03",
-    slug: serviceData[2].slug,
-    name: serviceData[2].name,
-    description: serviceData[2].heroSubline,
-    category: "AI / Automation",
-    image: null,
-    imageAlt: "AI solutions visual placeholder",
-    imageLabel: "AI workflow visual",
-    accent: "Practical AI",
-    coordinate: "Model / 03",
-  },
-  {
-    index: "04",
     slug: serviceData[3].slug,
-    name: serviceData[3].name,
+    name: "Maintenance & Support",
     description: serviceData[3].heroSubline,
-    category: "Care / Performance",
-    image: null,
-    imageAlt: "Website maintenance visual placeholder",
-    imageLabel: "Maintenance visual",
-    accent: "Live support",
-    coordinate: "Uptime / 04",
+    category: "CARE / PERFORMANCE",
+    meta: "LIVE SUPPORT",
+    sculpture: "care",
+    image: "/assets/wbemaintenance.webp",
+    imageAlt: "Website maintenance visual",
+    pills: ["Maintenance", "Performance", "Security", "Support"],
   },
 ];
 
-function ServiceVisual({ card, index }: { card: ServiceCardConfig; index: number }) {
+function ServiceSculpture({ variant }: { variant: ServiceCardConfig["sculpture"] }) {
+  const paths: Record<ServiceCardConfig["sculpture"], string> = {
+    web: "M88 34C132 18 186 18 232 38C278 58 314 98 302 136C290 174 238 196 186 206C134 216 74 202 58 168C42 134 44 50 88 34Z",
+    design: "M108 28C156 10 220 24 256 58C292 92 284 142 244 170C204 198 148 214 104 198C60 182 38 132 52 90C66 48 60 46 108 28Z",
+    ai: "M98 40C142 20 202 16 246 44C290 72 302 122 276 156C250 190 196 214 144 208C92 202 52 170 52 130C52 90 54 60 98 40Z",
+    care: "M92 44C136 24 190 20 236 46C282 72 298 114 280 150C262 186 214 210 160 210C106 210 62 190 52 154C42 118 48 64 92 44Z",
+  };
+  const inner: Record<ServiceCardConfig["sculpture"], string> = {
+    web: "M112 70C150 54 196 56 228 76C260 96 272 126 252 150C232 174 186 186 144 180C102 174 78 150 82 122C86 94 74 86 112 70Z",
+    design: "M128 66C164 48 214 56 236 82C258 108 248 140 220 156C192 172 150 178 120 164C90 150 84 122 96 98C108 74 92 84 128 66Z",
+    ai: "M120 74C156 58 200 60 228 82C256 104 258 134 236 154C214 174 172 184 134 176C96 168 80 142 88 116C96 90 84 90 120 74Z",
+    care: "M118 78C152 62 194 64 222 84C250 104 254 132 234 152C214 172 176 182 140 176C104 170 86 146 92 120C98 94 84 94 118 78Z",
+  };
+
+  return (
+    <svg
+      viewBox="0 0 320 240"
+      aria-hidden="true"
+      className="service-sculpture h-full w-full"
+      fill="none"
+    >
+      <defs>
+        <linearGradient id={`sculpture-fill-${variant}`} x1="60" y1="30" x2="280" y2="210" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="rgba(255,255,255,0.3)" />
+          <stop offset="0.35" stopColor="rgba(190,190,200,0.2)" />
+          <stop offset="0.68" stopColor="rgba(145,135,190,0.16)" />
+          <stop offset="1" stopColor="rgba(255,255,255,0.06)" />
+        </linearGradient>
+        <linearGradient id={`sculpture-stroke-${variant}`} x1="70" y1="40" x2="260" y2="200" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="rgba(255,255,255,0.55)" />
+          <stop offset="0.5" stopColor="rgba(200,200,210,0.34)" />
+          <stop offset="1" stopColor="rgba(255,255,255,0.12)" />
+        </linearGradient>
+      </defs>
+      <path d={paths[variant]} fill={`url(#sculpture-fill-${variant})`} />
+      <path d={paths[variant]} stroke={`url(#sculpture-stroke-${variant})`} strokeWidth="1.2" />
+      <path d={inner[variant]} stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
+      <path d="M72 148C120 112 176 104 246 128" stroke="rgba(255,255,255,0.2)" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M92 170C132 144 186 138 236 152" stroke="rgba(175,165,210,0.2)" strokeWidth="1" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ServiceVisual({ card }: { card: ServiceCardConfig }) {
   return (
     <div
       data-service-visual
-      className="service-card__visual relative overflow-hidden rounded-[6px] border border-border bg-background"
+      className="service-visual relative min-h-[18rem] overflow-hidden sm:min-h-[22rem] lg:min-h-[27rem]"
     >
-      <div className="relative aspect-[16/10] w-full sm:aspect-[16/9] lg:aspect-[5/4]">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{ background: "var(--sc-visual-overlay)" }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -right-8 top-8 h-40 w-40 rounded-full blur-2xl"
+        style={{ background: "radial-gradient(circle, var(--sc-visual-blob-a), transparent 68%)" }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-8 left-6 h-32 w-32 rounded-full blur-2xl"
+        style={{ background: "radial-gradient(circle, var(--sc-visual-blob-b), transparent 70%)" }}
+      />
+
+      <div className="service-visual__art absolute inset-[6%_4%_10%_8%] sm:inset-[8%_6%_10%_12%] lg:inset-[8%_2%_10%_10%]">
         {card.image ? (
-          <img
-            src={card.image}
-            alt={card.imageAlt}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <div className="absolute inset-0">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-[linear-gradient(180deg,rgba(23,23,23,0.015),rgba(23,23,23,0)),linear-gradient(90deg,rgba(23,23,23,0.045)_1px,transparent_1px),linear-gradient(rgba(23,23,23,0.045)_1px,transparent_1px)] bg-[size:auto,32px_32px,32px_32px]"
+          <div className="absolute inset-0 overflow-hidden rounded-[14px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)] shadow-[0_24px_60px_-40px_rgba(0,0,0,0.45)]">
+            <img
+              src={card.image}
+              alt={card.imageAlt ?? ""}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover opacity-90 saturate-[0.85] contrast-[1.02]"
             />
             <div
               aria-hidden="true"
-              className="absolute inset-x-6 top-6 border-t border-border/80"
+              className="absolute inset-0"
+              style={{ background: "var(--sc-preview-overlay)" }}
             />
             <div
               aria-hidden="true"
-              className="absolute bottom-6 left-6 top-6 border-l border-border/80"
+              className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent_35%,transparent_65%,rgba(0,0,0,0.12))] mix-blend-soft-light"
             />
-            <div
-              aria-hidden="true"
-              className={`absolute h-14 w-14 rounded-full border border-accent/35 ${index % 2 === 0 ? "right-6 top-6" : "left-10 top-10"}`}
-            />
-            <div
-              aria-hidden="true"
-              className="absolute right-6 top-6 font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
-            >
-              Image slot
-            </div>
-            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-              <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent-text">
-                {card.imageLabel}
-              </p>
-              <p className="mt-2 max-w-[22ch] font-display text-[20px] leading-[1.05] tracking-[-0.03em] text-foreground sm:text-[24px]">
-                Replace with your project visual.
-              </p>
-            </div>
           </div>
+        ) : (
+          <>
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 rounded-[14px] border border-[var(--sc-preview-border)] bg-[var(--sc-pill-bg)]"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 rounded-[14px] opacity-60 [background-image:linear-gradient(var(--sc-line)_1px,transparent_1px),linear-gradient(90deg,var(--sc-line)_1px,transparent_1px)] [background-size:28px_28px]"
+            />
+            <div aria-hidden="true" className="absolute left-3 top-3 h-3 w-3 border-l border-t border-[var(--sc-text-faint)]" />
+            <div aria-hidden="true" className="absolute right-3 top-3 h-3 w-3 border-r border-t border-[var(--sc-text-faint)]" />
+            <div aria-hidden="true" className="absolute bottom-3 left-3 h-3 w-3 border-b border-l border-[var(--sc-text-faint)]" />
+            <div aria-hidden="true" className="absolute bottom-3 right-3 h-3 w-3 border-b border-r border-[var(--sc-text-faint)]" />
+
+            <div className="absolute inset-[10%_8%_14%_8%] opacity-90 blur-[1px]">
+              <ServiceSculpture variant={card.sculpture} />
+            </div>
+            <div className="absolute inset-[10%_8%_14%_8%] mix-blend-screen">
+              <ServiceSculpture variant={card.sculpture} />
+            </div>
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-[16%] bottom-[12%] h-[18%] rounded-[100%] blur-2xl"
+              style={{ background: "var(--sc-visual-shadow)" }}
+            />
+          </>
         )}
       </div>
+
+
     </div>
   );
 }
 
 export default function Services() {
   const reduceMotion = useReducedMotion();
+  const finePointer = useFinePointer();
   const rootRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const copyRef = useRef<HTMLParagraphElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
+
+  const handleCardPointerMove = (event: ReactPointerEvent<HTMLElement>) => {
+    if (reduceMotion || !finePointer || event.pointerType !== "mouse") return;
+    const card = event.currentTarget;
+    const visual = card.querySelector<HTMLElement>("[data-service-visual]");
+    const art = card.querySelector<HTMLElement>(".service-visual__art");
+    if (!visual || !art) return;
+    const rect = visual.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    gsap.to(art, { x: x * 14, y: y * 10, duration: 0.7, ease: "power3.out", overwrite: "auto" });
+  };
+
+  const handleCardPointerLeave = (event: ReactPointerEvent<HTMLElement>) => {
+    const card = event.currentTarget;
+    const art = card.querySelector<HTMLElement>(".service-visual__art");
+    gsap.to(art, { x: 0, y: 0, duration: 0.8, ease: "power3.out", overwrite: "auto" });
+  };
 
   useGSAP(
     () => {
       if (reduceMotion) return;
       const heading = headingRef.current;
-      const copy = copyRef.current;
       const stack = stackRef.current;
-      if (!rootRef.current || !introRef.current || !heading || !copy || !stack) return;
+      if (!rootRef.current || !introRef.current || !heading || !stack) return;
 
-      const splits = [
-        createMaskedText(heading, "words"),
-        createMaskedText(copy, "words"),
-      ];
+      const splits = [createMaskedText(heading, "words")];
       const headingWords = splits[0].words;
-      const copyWords = splits[1].words;
       const cards = gsap.utils.toArray<HTMLElement>(
         stack.querySelectorAll("[data-service-card]"),
       );
 
       gsap.set(headingWords, { yPercent: 110, opacity: 0 });
-      gsap.set(copyWords, { yPercent: 90, opacity: 0 });
 
       gsap
         .timeline({
@@ -163,8 +229,7 @@ export default function Services() {
             scrub: 1,
           },
         })
-        .to(headingWords, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.04 }, 0)
-        .to(copyWords, { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.012 }, 0.2);
+        .to(headingWords, { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.04 }, 0);
 
       const mm = gsap.matchMedia();
       mm.add("(min-width: 1024px)", () => {
@@ -235,22 +300,11 @@ export default function Services() {
           <h2
             ref={headingRef}
             id="services-heading"
-            className="font-display text-[clamp(2.75rem,8vw,7rem)] font-extralight leading-[0.84] tracking-[-0.05em] text-foreground"
+            className="mt-[140px] font-display text-[clamp(2.75rem,8vw,7rem)] font-extralight leading-[0.84] tracking-[-0.05em] text-foreground sm:mt-[156px] lg:mt-[180px]"
           >
             SERVICES
           </h2>
-          <p
-            ref={copyRef}
-            className="mt-7 max-w-[34ch] text-[15px] leading-[1.75] text-text-secondary sm:text-[16px]"
-          >
-            Anvik combines creative thinking, product engineering, AI, and
-            technology to create useful products and systems for startups and
-            small businesses.
-          </p>
-          <div className="mt-10 hidden items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted lg:flex">
-            <span aria-hidden="true" className="h-px w-10 bg-accent/70" />
-            Scroll to explore
-          </div>
+
         </div>
 
         <div ref={stackRef} className="service-stack relative lg:pb-[22rem]">
@@ -258,48 +312,101 @@ export default function Services() {
             <article
               key={card.slug}
               data-service-card
-              className="service-card group/card relative mb-5 overflow-hidden rounded-[10px] border border-border bg-light-surface shadow-[0_24px_60px_-48px_rgba(23,23,23,0.45)] last:mb-0 lg:sticky lg:mb-0"
+              onPointerMove={handleCardPointerMove}
+              onPointerLeave={handleCardPointerLeave}
+              className="service-card group/card relative mb-6 overflow-hidden rounded-[20px] border border-[var(--sc-border)] bg-[var(--sc-bg)] text-[var(--sc-text)] shadow-[var(--sc-shadow)] backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-500 hover:border-[var(--sc-border-hover)] hover:bg-[var(--sc-bg-hover)] hover:shadow-[var(--sc-shadow-hover)] last:mb-0 lg:sticky lg:mb-0"
               style={{
-                top: `calc(var(--header-height) + 1rem + ${index} * clamp(4.2rem, 5vw, 4.9rem))`,
+                top: `calc(var(--header-height) + 1rem + ${index} * 8rem)`,
                 zIndex: index + 1,
                 marginBottom: index === serviceCards.length - 1 ? 0 : undefined,
               }}
             >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-80"
+                style={{ background: "var(--sc-gloss)" }}
+              />
+              <div
+                aria-hidden="true"
+                className="service-card__fluid service-card__fluid--a absolute -left-16 -top-20 h-56 w-56 rounded-full blur-3xl"
+              />
+              <div
+                aria-hidden="true"
+                className="service-card__fluid service-card__fluid--b absolute -bottom-20 right-[-10%] h-64 w-64 rounded-full blur-3xl"
+              />
+              <div
+                aria-hidden="true"
+                className="service-card__fluid service-card__fluid--c absolute left-[35%] top-[20%] h-44 w-44 rounded-full blur-2xl"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-90 transition-opacity duration-500 group-hover/card:opacity-100"
+                style={{ background: "var(--sc-ambient)" }}
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent"
+                style={{ backgroundImage: "linear-gradient(to right, transparent, var(--sc-sheen), transparent)" }}
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-[20px] ring-1 ring-inset ring-[var(--sc-ring)]"
+              />
+
               <Link
                 to={`/services/${card.slug}`}
-                className="group block p-5 sm:p-6 lg:min-h-[23rem] lg:p-7"
+                className="group relative block p-6 sm:p-7 lg:p-9 xl:p-10"
               >
-                <div className="flex min-h-[7.5rem] items-start justify-between gap-4 border-b border-border pb-4 sm:min-h-[8.5rem] sm:pb-5">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
-                      <span className="text-accent-text">{card.index}</span>
-                      <span aria-hidden="true" className="h-px w-6 bg-border" />
-                      <span>{card.category}</span>
-                    </div>
-                    <h3 className="mt-3 max-w-[11ch] font-display text-[clamp(1.85rem,4vw,3.35rem)] font-medium leading-[0.93] tracking-[-0.045em] text-foreground transition-colors duration-300 group-hover:text-accent-text">
-                      {card.name}
-                    </h3>
-                  </div>
-                  <div className="hidden pt-1 text-right sm:block">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">{card.accent}</p>
-                    <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted/80">{card.coordinate}</p>
-                  </div>
-                </div>
+                <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10 xl:gap-12">
+                  <div data-service-body className="relative z-10 flex min-w-0 flex-col">
+                    <div className="hidden" aria-hidden="true" />
 
-                <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-end lg:gap-6">
-                  <div data-service-body className="max-w-[34ch]">
-                    <p className="text-[14px] leading-[1.75] text-text-secondary sm:text-[15px]">
+                    <h3 className="mt-2 max-w-none font-sans text-[clamp(1.9rem,3.6vw,3.6rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-[var(--sc-text)] sm:mt-4 lg:whitespace-nowrap">
+                      {card.name.replace(/^Web\s+/i, "")}
+                    </h3>
+
+                    <div aria-hidden="true" className="mt-7 h-px w-full max-w-[28rem] bg-[var(--sc-line)]" />
+
+                    <p className="mt-7 max-w-[34ch] text-[15px] leading-[1.8] text-[var(--sc-text-muted)] sm:text-[16px]">
                       {card.description}
                     </p>
-                    <div className="mt-6 flex items-center gap-4">
-                      <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-muted transition-colors duration-300 group-hover:text-accent-text">
-                        <span>View service</span>
-                        <span aria-hidden="true">→</span>
-                      </span>
-                      <span aria-hidden="true" className="h-px flex-1 bg-border/80" />
+
+                    <div className="mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]" aria-label={`${card.name} capabilities`}>
+                      {reduceMotion ? (
+                        <ul className="flex flex-wrap gap-2">
+                          {card.pills.map((pill) => (
+                            <li
+                              key={pill}
+                              className="rounded-full border border-[var(--sc-pill-border)] bg-[var(--sc-pill-bg)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--sc-pill-text)]"
+                            >
+                              {pill}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div className="flex w-max animate-service-pill-marquee hover:[animation-play-state:paused]">
+                          {[0, 1].map((copy) => (
+                            <ul
+                              key={copy}
+                              aria-hidden={copy === 1}
+                              className="flex shrink-0 gap-2 pr-2"
+                            >
+                              {card.pills.map((pill) => (
+                                <li
+                                  key={`${copy}-${pill}`}
+                                  className="shrink-0 rounded-full border border-[var(--sc-pill-border)] bg-[var(--sc-pill-bg)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--sc-pill-text)]"
+                                >
+                                  {pill}
+                                </li>
+                              ))}
+                            </ul>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <ServiceVisual card={card} index={index} />
+
+                  <ServiceVisual card={card} />
                 </div>
               </Link>
             </article>
