@@ -828,7 +828,7 @@ select option {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  body:has(.global-cursor.is-active) [data-cursor]:not([data-cursor="project"]) {
+  body:has(.global-cursor.is-active) [data-cursor] {
     cursor: none;
   }
 }

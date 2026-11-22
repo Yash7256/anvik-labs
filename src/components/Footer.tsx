@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
+import ContactDialog from "@/components/ContactDialog";
 import { primaryCtaClass } from "@/lib/cta";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
@@ -18,6 +19,7 @@ const footerLinks = [
 ];
 
 export default function Footer() {
+  const [contactOpen, setContactOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
@@ -65,23 +67,20 @@ export default function Footer() {
               ref={taglineRef}
               className="max-w-[16ch] font-sans text-[clamp(2rem,5vw,4.5rem)] font-medium leading-[0.95] tracking-[-0.05em] text-foreground"
             >
-              <span data-footer-word className="inline-block">Where&nbsp;</span>
-              <span data-footer-word className="inline-block">ideas&nbsp;</span>
-              <span data-footer-word className="inline-block">become&nbsp;</span>
-              <span data-footer-word className="inline-block text-accent">
-                real products.
-              </span>
+              <span className="block">Where ideas become</span>
+              <span className="block text-accent">real products.</span>
             </p>
             <p className="mt-6 max-w-[42ch] text-[14px] leading-relaxed text-muted md:text-[15px]">
               We design, develop, and launch digital products for ambitious ideas.
             </p>
-            <Link
-              to="/contact"
+            <button
+              type="button"
               data-cursor="hello"
+              onClick={() => setContactOpen(true)}
               className={`mt-8 ${primaryCtaClass}`}
             >
               Start a conversation
-            </Link>
+            </button>
           </div>
 
           <div className="grid grid-cols-2 gap-x-8 gap-y-10">
@@ -146,6 +145,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <ContactDialog open={contactOpen} onClose={() => setContactOpen(false)} />
     </footer>
   );
 }

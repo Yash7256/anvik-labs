@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
+import ContactDialog from "@/components/ContactDialog";
 import { useMagnetic } from "@/lib/motion";
 import { site } from "@/lib/site";
 
@@ -33,12 +34,12 @@ function DiagonalArrow({ className = "" }: { className?: string }) {
 }
 
 function TalkCta({ onClick }: { onClick?: () => void }) {
-  const ctaRef = useMagnetic<HTMLAnchorElement>(0.18);
+  const ctaRef = useMagnetic<HTMLButtonElement>(0.18);
 
   return (
-    <Link
+    <button
       ref={ctaRef}
-      to="/contact"
+      type="button"
       onClick={onClick}
       data-cursor="talk"
       className="nav-cta group inline-flex h-11 items-center gap-4 rounded-full pl-6 pr-1 font-sans text-[15px] font-semibold tracking-[-0.01em] md:h-12 md:pl-7"
@@ -47,7 +48,7 @@ function TalkCta({ onClick }: { onClick?: () => void }) {
       <span className="nav-cta__arrow inline-flex h-9 w-9 items-center justify-center rounded-full">
         <DiagonalArrow className="h-4 w-4" />
       </span>
-    </Link>
+    </button>
   );
 }
 
@@ -59,6 +60,7 @@ function isActive(pathname: string, href: string) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const reduceMotion = useReducedMotion();
   const location = useLocation();
@@ -226,7 +228,7 @@ export default function Navbar() {
                 className="nav-line pointer-events-none absolute bottom-1 left-0 h-px bg-accent"
                 style={{ width: 1, opacity: 0 }}
               />
-              <TalkCta />
+              <TalkCta onClick={() => setContactOpen(true)} />
             </nav>
 
             <button
@@ -244,6 +246,7 @@ export default function Navbar() {
         </div>
       </header>
 
+      <ContactDialog open={contactOpen} onClose={() => setContactOpen(false)} />
       {mounted
         ? createPortal(
             <AnimatePresence>
@@ -316,7 +319,12 @@ export default function Navbar() {
 
                   <div className="mt-auto flex flex-col items-start gap-6 pb-4 pt-8">
                     <ThemeToggle />
-                    <TalkCta onClick={() => setOpen(false)} />
+                    <TalkCta
+                      onClick={() => {
+                        setOpen(false);
+                        setContactOpen(true);
+                      }}
+                    />
                     <div className="flex flex-col gap-1 text-[13px]">
                       <span className="font-sans font-medium text-foreground">
                         {site.studioTagline}

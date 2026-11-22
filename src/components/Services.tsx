@@ -355,6 +355,7 @@ export default function Services() {
 
               <Link
                 to={`/services/${card.slug}`}
+                data-cursor="service"
                 className="group relative block p-6 sm:p-7 lg:p-9 xl:p-10"
               >
                 <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-10 xl:gap-12">

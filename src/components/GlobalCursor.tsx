@@ -14,7 +14,8 @@ function getCursorState(target: HTMLElement): { state: CursorState | "native"; l
   }
 
   const explicit = target.closest<HTMLElement>("[data-cursor]")?.dataset.cursor;
-  if (explicit === "project") return { state: "native", label: "" };
+  if (explicit === "project") return { state: "design", label: "CASE STUDY ↗" };
+  if (explicit === "service") return { state: "design", label: "VIEW DETAILS ↗" };
   if (explicit === "talk") return { state: "talk", label: "talk" };
   if (explicit === "scroll") return { state: "scroll", label: "scroll" };
   if (explicit === "design") return { state: "design", label: "DESIGNER ✦" };
