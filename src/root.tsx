@@ -13,6 +13,7 @@ import Background from "@/components/Background";
 import ContactDialog from "@/components/ContactDialog";
 import GlobalCursor from "@/components/GlobalCursor";
 import MotionRuntime from "@/components/MotionRuntime";
+import PostHogAnalytics from "@/components/PostHogAnalytics";
 import {
   destroySmoothScroll,
   initSmoothScroll,
@@ -197,6 +198,7 @@ function ContactDialogController() {
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
+      <PostHogAnalytics />
       <MotionRuntime />
       <GlobalCursor />
       <SmoothScroll />

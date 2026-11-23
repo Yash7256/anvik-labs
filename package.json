@@ -17,6 +17,8 @@
     "isbot": "^5",
     "lenis": "^1.3.27",
     "mermaid": "^11.12.0",
+    "posthog-js": "^1.454.1",
+    "posthog-node": "^6.0.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-router": "^8.5.1",
