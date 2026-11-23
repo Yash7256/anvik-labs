@@ -5,6 +5,7 @@ import { journalPosts } from "./src/data/journal";
 export default {
   appDirectory: "src",
   ssr: true,
+  routeDiscovery: { mode: "initial" },
   prerender: [
     "/",
     "/works",
