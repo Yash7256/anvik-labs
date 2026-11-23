@@ -41,9 +41,8 @@ export default function Hero() {
       const splits = lineElements.map((line) => createMaskedText(line, "lines"));
       const lines = splits.flatMap((split) => split.lines);
 
-      gsap.set([eyebrowRef.current, copyRef.current, cueButtonRef.current], {
-        autoAlpha: 1,
-      });
+      const heroTargets = [eyebrowRef.current, copyRef.current, cueButtonRef.current].filter(Boolean);
+      if (heroTargets.length) gsap.set(heroTargets, { autoAlpha: 1 });
 
       const tl = gsap.timeline({ defaults: { ease: MOTION.ease } });
       tl.from(
@@ -77,21 +76,25 @@ export default function Hero() {
         );
 
       const drift = { duration: 12, repeat: -1, yoyo: true, ease: "sine.inOut" };
-      gsap.to(upperGlowRef.current, {
-        xPercent: -4,
-        yPercent: 5,
-        scale: 1.06,
-        ...drift,
-      });
-      gsap.to(lowerGlowRef.current, {
-        xPercent: 3,
-        yPercent: -5,
-        scale: 1.05,
-        duration: 15,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
+      if (upperGlowRef.current) {
+        gsap.to(upperGlowRef.current, {
+          xPercent: -4,
+          yPercent: 5,
+          scale: 1.06,
+          ...drift,
+        });
+      }
+      if (lowerGlowRef.current) {
+        gsap.to(lowerGlowRef.current, {
+          xPercent: 3,
+          yPercent: -5,
+          scale: 1.05,
+          duration: 15,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      }
 
       gsap
         .timeline({

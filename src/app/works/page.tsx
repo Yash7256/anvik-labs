@@ -58,6 +58,7 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
   };
 
   const onLeave = () => {
+    if (!imageRef.current) return;
     gsap.to(imageRef.current, {
       x: 0,
       y: 0,

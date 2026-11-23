@@ -43,7 +43,7 @@ export function loader() {
       .filter((post) => post.published)
       .map((post) => ({
         loc: url(`/journal/${post.slug}`),
-        lastmod: post.date,
+        lastmod: post.updatedDate ?? post.date,
         changefreq: "monthly" as const,
         priority: "0.7",
       })),

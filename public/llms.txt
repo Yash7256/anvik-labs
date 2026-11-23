@@ -11,6 +11,7 @@
 - [Home](https://anviklabs.site/): Independent technology studio overview, selected work, services, team, testimonials, and FAQs.
 - [Works](https://anviklabs.site/works): Selected client and independently developed digital product case studies.
 - [Journal](https://anviklabs.site/journal): Notes and insights on design, engineering, and digital craft.
+- [Production Readiness Architecture Audit](https://anviklabs.site/journal/production-readiness-architecture-audit): Checklist and lessons on auditing caching, pagination, security, observability, and reliability.
 - [Product Design](https://anviklabs.site/services/product-design): UI/UX design, product flows, design systems, and prototypes.
 - [Web Development](https://anviklabs.site/services/web-development): Fast, accessible websites and web apps built with modern frontend engineering.
 - [AI Solutions](https://anviklabs.site/services/ai-solutions): Practical AI integrations, LLM workflows, and chat experiences.

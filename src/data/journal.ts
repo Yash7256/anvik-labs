@@ -8,10 +8,15 @@ export type JournalContentBlock =
 export type JournalPost = {
   slug: string;
   title: string;
+  seoTitle?: string;
+  description: string;
   excerpt: string;
   date: string;
+  updatedDate?: string;
   readTime: string;
   category: string;
+  keywords?: string[];
+  quickAnswer?: string;
   coverImage?: string;
   coverAlt?: string;
   href?: string;
@@ -21,13 +26,26 @@ export type JournalPost = {
 
 export const journalPosts: JournalPost[] = [
   {
-    slug: "production-ready-architecture-audit",
+    slug: "production-readiness-architecture-audit",
     title: "I Built a Production-Ready Architecture. Then I Audited It.",
+    seoTitle: "Production Readiness Architecture Audit: Checklist & Lessons | Anvik Labs",
+    description:
+      "A practical production readiness architecture audit checklist covering caching, pagination, security, observability, and reliability lessons from a real Resources page.",
     excerpt:
       "Why implementing system design features is only half the job. A practical look at auditing a working Resources page for real production readiness.",
     date: "2026-11-24",
+    updatedDate: "2026-11-24",
     readTime: "8 min read",
     category: "Engineering",
+    keywords: [
+      "production readiness audit",
+      "system design audit",
+      "architecture audit checklist",
+      "web application reliability",
+      "caching and observability",
+    ],
+    quickAnswer:
+      "A production-ready architecture is not proven by features working on the happy path. It becomes trustworthy only after auditing failures, caching, pagination, security, observability, and deployment behavior with evidence.",
     content: [
       {
         type: "paragraph",
@@ -387,6 +405,7 @@ export const journalPosts: JournalPost[] = [
   {
     slug: "designing-products-that-feel-clear",
     title: "Designing products that feel clear",
+    description: "A practical look at how clarity in hierarchy, copy, and interaction design makes digital products easier to trust and use.",
     excerpt:
       "A practical look at how clarity in hierarchy, copy, and interaction design makes digital products easier to trust and use.",
     date: "2026-04-10",
@@ -397,6 +416,7 @@ export const journalPosts: JournalPost[] = [
   {
     slug: "building-fast-without-losing-craft",
     title: "Building fast without losing craft",
+    description: "How we balance speed, engineering quality, and visual polish when shipping modern web products for ambitious teams.",
     excerpt:
       "How we balance speed, engineering quality, and visual polish when shipping modern web products for ambitious teams.",
     date: "2026-04-18",
@@ -407,6 +427,7 @@ export const journalPosts: JournalPost[] = [
   {
     slug: "what-makes-a-website-feel-premium",
     title: "What makes a website feel premium",
+    description: "Premium is not just visuals. It’s performance, spacing, content confidence, motion restraint, and thoughtful details working together.",
     excerpt:
       "Premium is not just visuals. It’s performance, spacing, content confidence, motion restraint, and thoughtful details working together.",
     date: "2026-04-24",
@@ -424,4 +445,15 @@ export function getPublishedJournalPosts(): JournalPost[] {
 
 export function getJournalPost(slug: string): JournalPost | undefined {
   return journalPosts.find((post) => post.slug === slug && post.published);
+}
+
+export function getJournalPostText(post: JournalPost): string {
+  const parts: string[] = [post.title, post.description];
+  for (const block of post.content ?? []) {
+    if (block.type === "paragraph" || block.type === "heading") parts.push(block.text);
+    if (block.type === "list") parts.push(...block.items);
+    if (block.type === "table") parts.push(...block.headers, ...block.rows.flat());
+    if (block.type === "mermaid" && block.caption) parts.push(block.caption);
+  }
+  return parts.join("\n");
 }

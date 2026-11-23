@@ -39,6 +39,11 @@ export interface PageMetaOptions {
   imageHeight?: string | number;
   imageType?: string;
   robots?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  keywords?: string[];
 }
 
 export function createMeta(options: PageMetaOptions): MetaDescriptor[] {
@@ -85,20 +90,28 @@ export function createMeta(options: PageMetaOptions): MetaDescriptor[] {
     });
   }
 
+  const articleDescriptors: MetaDescriptor[] = options.type === "article" ? [
+    ...(options.publishedTime ? [{ property: "article:published_time", content: options.publishedTime }] : []),
+    ...(options.modifiedTime ? [{ property: "article:modified_time", content: options.modifiedTime }] : []),
+    ...(options.author ? [{ property: "article:author", content: options.author }] : []),
+  ] : [];
+
   return [
     { title },
     { name: "description", content: description },
     { name: "application-name", content: site.name },
-    { name: "author", content: site.name },
+    { name: "author", content: options.author ?? site.name },
+    ...(options.keywords?.length ? [{ name: "keywords", content: options.keywords.join(", ") }] : []),
     { name: "robots", content: options.robots ?? "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
     { tagName: "link", rel: "canonical", href: canonicalUrl },
     { property: "og:site_name", content: site.name },
     { property: "og:locale", content: site.locale },
-    { property: "og:type", content: "website" },
+    { property: "og:type", content: options.type ?? "website" },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
     { property: "og:url", content: canonicalUrl },
     ...imageDescriptors,
+    ...articleDescriptors,
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
