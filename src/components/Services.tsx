@@ -369,6 +369,11 @@ export default function Services() {
 
               <Link
                 to={`/services/${card.slug}`}
+                onClick={() => {
+                  void import("@/lib/posthog.client").then(({ default: posthog }) => {
+                    posthog.capture("service_detail_opened", { service_slug: card.slug });
+                  });
+                }}
                 data-cursor="service"
                 className="group relative block p-6 sm:p-7 lg:p-9 xl:p-10"
               >
