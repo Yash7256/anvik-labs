@@ -33,7 +33,7 @@ const workTypeLabel: Record<string, string> = {
 };
 
 function WorkCard({ project, index }: { project: Project; index: number }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() === true;
   const finePointer = useFinePointer();
   const cardRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -143,7 +143,7 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
 
 export default function WorksPage() {
   const [activeFilter, setActiveFilter] = useState<Filter>("all");
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() === true;
   const rootRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);

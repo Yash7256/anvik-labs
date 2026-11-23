@@ -181,11 +181,11 @@ export default function Navbar() {
               className="inline-flex w-fit items-center transition-opacity duration-200 hover:opacity-70"
             >
               <img
-                src="/logo.svg"
+                src="/assets/logo.svg"
                 alt="Anvik Labs"
-                width={1010}
-                height={118}
-                className="logo-mark h-6 w-auto md:h-7"
+                width={1500}
+                height={1500}
+                className="logo-mark h-9 w-auto md:h-11"
               />
             </Link>
 
@@ -271,11 +271,11 @@ export default function Navbar() {
                       className="inline-flex items-center"
                     >
                       <img
-                        src="/logo.svg"
+                        src="/assets/logo.svg"
                         alt="Anvik Labs"
                         width={1010}
                         height={118}
-                        className="logo-mark h-7 w-auto"
+                        className="logo-mark h-10 w-auto"
                       />
                     </Link>
                     <button

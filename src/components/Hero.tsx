@@ -360,9 +360,7 @@ export default function Hero() {
             ref={copyRef}
             className="max-w-[520px] text-center text-[16px] leading-[1.6] text-foreground md:text-[17px]"
           >
-            An independent technology studio designing and engineering digital
-            products, from client work to our own experiments. Based in India,
-            working with teams worldwide.
+            An independent technology studio making the internet a little more interesting. We design, build, experiment, and occasionally get carried away with ideas. Based in India, building for everywhere.
           </p>
 
           <button

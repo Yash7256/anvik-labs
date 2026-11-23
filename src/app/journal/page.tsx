@@ -71,17 +71,29 @@ export default function JournalPage() {
                   const className =
                     "group block rounded-[20px] border border-border bg-light-surface p-6 transition-[border-color,transform,background-color] duration-300 hover:-translate-y-1 hover:border-foreground/15 md:p-8";
 
-                  return post.href ? (
-                    <a
-                      key={post.slug}
-                      href={post.href}
-                      target={post.href.startsWith("http") ? "_blank" : undefined}
-                      rel={post.href.startsWith("http") ? "noreferrer" : undefined}
-                      className={className}
-                    >
-                      {content}
-                    </a>
-                  ) : (
+                  if (post.href) {
+                    return (
+                      <a
+                        key={post.slug}
+                        href={post.href}
+                        target={post.href.startsWith("http") ? "_blank" : undefined}
+                        rel={post.href.startsWith("http") ? "noreferrer" : undefined}
+                        className={className}
+                      >
+                        {content}
+                      </a>
+                    );
+                  }
+
+                  if (post.published) {
+                    return (
+                      <Link key={post.slug} to={`/journal/${post.slug}`} className={className}>
+                        {content}
+                      </Link>
+                    );
+                  }
+
+                  return (
                     <article key={post.slug} className={className}>
                       {content}
                     </article>

@@ -1,4 +1,5 @@
 import { projects } from "@/data/projects";
+import { journalPosts } from "@/data/journal";
 import { site } from "@/lib/site";
 
 const staticPaths = [
@@ -38,6 +39,14 @@ export function loader() {
       changefreq: "yearly" as const,
       priority: "0.6",
     })),
+    ...journalPosts
+      .filter((post) => post.published)
+      .map((post) => ({
+        loc: url(`/journal/${post.slug}`),
+        lastmod: post.date,
+        changefreq: "monthly" as const,
+        priority: "0.7",
+      })),
   ];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>

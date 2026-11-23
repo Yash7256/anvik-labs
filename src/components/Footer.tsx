@@ -122,13 +122,13 @@ export default function Footer() {
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <Link to="/" aria-label="Anvik Labs home" className="inline-flex">
               <img
-                src="/logo.svg"
+                src="/assets/logo.svg"
                 alt="Anvik Labs logo"
-                width={1010}
-                height={118}
+                width={1500}
+                height={1500}
                 loading="lazy"
                 decoding="async"
-                className="logo-mark h-8 w-auto md:h-10"
+                className="logo-mark h-11 w-auto md:h-14"
               />
             </Link>
 

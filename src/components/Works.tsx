@@ -18,7 +18,6 @@ export default function Works() {
   const introRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const leadRef = useRef<HTMLParagraphElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
 
   useGSAP(
@@ -26,21 +25,19 @@ export default function Works() {
       if (reduceMotion) return;
 
       const heading = headingRef.current;
-      const lead = leadRef.current;
       const body = bodyRef.current;
-      if (!introRef.current || !heading || !lead || !body) return;
+      if (!introRef.current || !heading || !body) return;
 
       const introSplits = [
         createMaskedText(heading, "chars"),
-        createMaskedText(lead, "words"),
         createMaskedText(body, "words"),
       ];
       const allSplits = [...introSplits];
-      const [headingParts, leadParts, bodyParts] = introSplits.map((split) =>
+      const [headingParts, bodyParts] = introSplits.map((split) =>
         split.chars.length ? split.chars : split.words,
       );
 
-      gsap.set([...headingParts, ...leadParts, ...bodyParts], {
+      gsap.set([...headingParts, ...bodyParts], {
         yPercent: 110,
         opacity: 0,
       });
@@ -56,8 +53,7 @@ export default function Works() {
           },
         })
         .to(headingParts, { yPercent: 0, opacity: 1, duration: 1, stagger: 0.045 }, 0)
-        .to(leadParts, { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.025 }, 0.2)
-        .to(bodyParts, { yPercent: 0, opacity: 1, duration: 0.7, stagger: 0.018 }, 0.34);
+        .to(bodyParts, { yPercent: 0, opacity: 1, duration: 0.75, stagger: 0.018 }, 0.2);
 
       const featuredCard = rootRef.current?.querySelector<HTMLElement>(
         '[data-project-card][data-project-variant="featured"]',
@@ -152,17 +148,10 @@ export default function Works() {
             <span className="sr-only">Selected client and independent digital product work</span>
           </h2>
           <p
-            ref={leadRef}
-            className="mt-8 font-display text-[clamp(1.15rem,2.4vw,1.75rem)] font-light tracking-[-0.02em] text-foreground md:mt-10"
-          >
-            Ideas made tangible. Products made useful.
-          </p>
-          <p
             ref={bodyRef}
-            className="mx-auto mt-4 max-w-[46ch] text-[14px] leading-[1.65] text-muted md:text-[15px]"
+            className="mx-auto mt-8 max-w-[46ch] text-[14px] leading-[1.65] text-muted md:mt-10 md:text-[15px]"
           >
-            Selected client projects and independently developed products,
-            designed and engineered with care.
+            From wild ideas to working things, a mix of client work and our own little experiments, brought to life with care.
           </p>
         </div>
 

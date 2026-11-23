@@ -78,8 +78,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="theme-color" content="#080808" media="(prefers-color-scheme: dark)" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <link rel="icon" href="/assets/favicon.ico" sizes="48x48" type="image/x-icon" />
-        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+        <link rel="preload" as="image" href="/assets/logo.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

@@ -1,5 +1,6 @@
 import type { Config } from "@react-router/dev/config";
 import { projects } from "./src/data/projects";
+import { journalPosts } from "./src/data/journal";
 
 export default {
   appDirectory: "src",
@@ -8,6 +9,7 @@ export default {
     "/",
     "/works",
     "/journal",
+    ...journalPosts.filter((p) => p.published).map((p) => `/journal/${p.slug}`),
     ...projects.map((project) => `/works/${project.id}`),
     "/aman-raj",
     "/contact",

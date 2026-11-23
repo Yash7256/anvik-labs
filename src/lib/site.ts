@@ -38,6 +38,7 @@ export interface PageMetaOptions {
   imageWidth?: string | number;
   imageHeight?: string | number;
   imageType?: string;
+  robots?: string;
 }
 
 export function createMeta(options: PageMetaOptions): MetaDescriptor[] {
@@ -89,7 +90,7 @@ export function createMeta(options: PageMetaOptions): MetaDescriptor[] {
     { name: "description", content: description },
     { name: "application-name", content: site.name },
     { name: "author", content: site.name },
-    { name: "robots", content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
+    { name: "robots", content: options.robots ?? "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
     { tagName: "link", rel: "canonical", href: canonicalUrl },
     { property: "og:site_name", content: site.name },
     { property: "og:locale", content: site.locale },

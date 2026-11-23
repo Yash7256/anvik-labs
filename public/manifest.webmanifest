@@ -27,15 +27,15 @@
       "purpose": "maskable"
     },
     {
-      "src": "/logo.svg",
+      "src": "/assets/logo.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/assets/favicon.ico",
-      "sizes": "48x48",
-      "type": "image/x-icon",
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
     }
   ]

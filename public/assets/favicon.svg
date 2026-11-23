@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="125 128 250 244"><metadata><?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?><x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="XMP Core 6.0.0"><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmpMM:DocumentID="xmp.did:cb9f5498-bb58-4572-8043-8c369e6bfb9b" xmpMM:InstanceID="xmp.iid:cb9f5498-bb58-4572-8043-8c369e6bfb9b" dcterms:provenance="https://cai-manifests.adobe.com/manifests/urn-c2pa-4c7c6f51-dbd3-4527-92a5-9caca44e78e0-adobe"> </rdf:Description></rdf:RDF></x:xmpmeta>
+<?xpacket end="w"?></metadata>
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f04400;
+      }
+    </style>
+  </defs>
+  <g id="Generative_Object_0_0_" data-name="Generative Object (0, 0)">
+    <g>
+      <path class="cls-1" d="M355.01,214.01v138h-69v-81.33c0-31.29,25.38-56.67,56.67-56.67H355.01Z"/>
+      <path class="cls-1" d="M355.01,148.01v63h-210c0-17.4,7.05-33.15,18.45-44.55,11.4-11.4,27.15-18.45,44.55-18.45H355.01Z"/>
+      <path class="cls-1" d="M283.01,273.95v78.06h-59.94c-43.11,0-78.06-34.95-78.06-78.06,0-16.56,6.72-31.53,17.55-42.39,10.83-10.86,25.83-17.55,42.39-17.55h18.12C256.16,214.01,283.01,240.83,283.01,273.95Z"/>
+    </g>
+  </g>
+</svg>
