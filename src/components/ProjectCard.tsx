@@ -235,6 +235,15 @@ export default function ProjectCard({
       <Link
         to={`/works/${project.id}`}
         aria-label={`${project.name} — view case study`}
+        onClick={() => {
+          void import("@/lib/posthog.client").then(({ default: posthog }) => {
+            posthog.capture("project_case_study_opened", {
+              project_id: project.id,
+              project_type: project.projectType,
+              card_variant: variant,
+            });
+          });
+        }}
         data-cursor="project"
         className="project-link group relative block rounded-[10px] outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >

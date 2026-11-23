@@ -13,6 +13,7 @@ import Background from "@/components/Background";
 import ContactDialog from "@/components/ContactDialog";
 import GlobalCursor from "@/components/GlobalCursor";
 import MotionRuntime from "@/components/MotionRuntime";
+import PostHogInit from "@/components/PostHogInit";
 import {
   destroySmoothScroll,
   initSmoothScroll,
@@ -186,7 +187,12 @@ function ContactDialogController() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onOpen = () => setOpen(true);
+    const onOpen = () => {
+      setOpen(true);
+      void import("@/lib/posthog.client").then(({ default: posthog }) => {
+        posthog.capture("contact_dialog_opened");
+      });
+    };
     window.addEventListener("contact:open", onOpen as EventListener);
     return () => window.removeEventListener("contact:open", onOpen as EventListener);
   }, []);
@@ -196,13 +202,15 @@ function ContactDialogController() {
 
 export default function App() {
   return (
-    <MotionConfig reducedMotion="user">
-      <MotionRuntime />
-      <GlobalCursor />
-      <SmoothScroll />
-      <ScrollToHash />
-      <ContactDialogController />
-      <AnimatedOutlet />
-    </MotionConfig>
+    <PostHogInit>
+      <MotionConfig reducedMotion="user">
+        <MotionRuntime />
+        <GlobalCursor />
+        <SmoothScroll />
+        <ScrollToHash />
+        <ContactDialogController />
+        <AnimatedOutlet />
+      </MotionConfig>
+    </PostHogInit>
   );
 }

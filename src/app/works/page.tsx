@@ -90,7 +90,20 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent" style={{ backgroundImage: "linear-gradient(to right, transparent, var(--sc-sheen), transparent)" }} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[24px] ring-1 ring-inset ring-[var(--sc-ring)]" />
 
-      <Link to={`/works/${project.id}`} data-cursor="project" className="relative z-10 block p-4 sm:p-5 lg:p-6">
+      <Link
+        to={`/works/${project.id}`}
+        onClick={() => {
+          void import("@/lib/posthog.client").then(({ default: posthog }) => {
+            posthog.capture("project_case_study_opened", {
+              project_id: project.id,
+              project_type: project.projectType,
+              card_variant: "directory",
+            });
+          });
+        }}
+        data-cursor="project"
+        className="relative z-10 block p-4 sm:p-5 lg:p-6"
+      >
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-center lg:gap-8">
           <div className="relative overflow-hidden rounded-[18px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)]">
             <div className="aspect-[16/10] overflow-hidden">
@@ -154,6 +167,13 @@ export default function WorksPage() {
       ? projects
       : projects.filter((project) => project.projectType === activeFilter);
 
+  const selectFilter = (filter: Filter) => {
+    setActiveFilter(filter);
+    void import("@/lib/posthog.client").then(({ default: posthog }) => {
+      posthog.capture("work_filter_selected", { filter: filter.toLowerCase().replaceAll(" ", "_") });
+    });
+  };
+
   useGSAP(
     () => {
       if (reduceMotion || !heroRef.current || !headingRef.current) return;
@@ -199,7 +219,7 @@ export default function WorksPage() {
                       key={filter.value}
                       type="button"
                       aria-pressed={active}
-                      onClick={() => setActiveFilter(filter.value)}
+                      onClick={() => selectFilter(filter.value)}
                       className={`rounded-full border px-4 py-2 font-sans text-[13px] font-medium transition-[border-color,background-color,color,transform] duration-200 ${
                         active
                           ? "border-accent bg-accent text-on-accent"

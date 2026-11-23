@@ -111,10 +111,37 @@ export default function ContactForm({
         throw new Error(responseMessage || "Submission failed.");
       }
 
+      void import("@/lib/posthog.client").then(({ default: posthog }) => {
+        posthog.capture("contact_form_submitted", {
+          service,
+          budget,
+          form_location: idPrefix,
+        });
+      });
+      void import("@/lib/posthog.logs.client").then(({ contactDeliveryLogger }) => {
+        if (pendingActivation) {
+          contactDeliveryLogger.warn("contact delivery requires activation", {
+            delivery_status: "pending_activation",
+            form_location: idPrefix,
+          });
+          return;
+        }
+
+        contactDeliveryLogger.info("contact delivery completed", {
+          delivery_status: "completed",
+          form_location: idPrefix,
+        });
+      });
       form.reset();
       setStatus("success");
       onSuccess?.();
     } catch {
+      void import("@/lib/posthog.logs.client").then(({ contactDeliveryLogger }) => {
+        contactDeliveryLogger.warn("contact delivery failed", {
+          delivery_status: "failed",
+          form_location: idPrefix,
+        });
+      });
       setStatus("error");
       setError(
         `Something went wrong while sending your message. Please try again or email us directly at ${site.email}.`,
