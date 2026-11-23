@@ -6,7 +6,7 @@ export const site = {
   title: "Product Design & Development Studio in India | Anvik Labs",
   studioTagline: "Independent technology studio",
   description:
-    "Anvik Labs is an independent product design and engineering studio in India. We design digital experiences, build web products, and explore practical AI solutions.",
+    "Anvik Labs is an independent product design and engineering studio in India building digital experiences, web products, and practical AI solutions.",
   url: "https://anviklabs.site",
   email: "anviklabs@gmail.com",
   areaServed: "Worldwide",

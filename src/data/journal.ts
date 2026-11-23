@@ -28,9 +28,9 @@ export const journalPosts: JournalPost[] = [
   {
     slug: "production-readiness-architecture-audit",
     title: "I Built a Production-Ready Architecture. Then I Audited It.",
-    seoTitle: "Production Readiness Architecture Audit: Checklist & Lessons | Anvik Labs",
+    seoTitle: "Production Readiness Architecture Audit | Anvik Labs",
     description:
-      "A practical production readiness architecture audit checklist covering caching, pagination, security, observability, and reliability lessons from a real Resources page.",
+      "A practical production readiness audit checklist covering caching, pagination, security, observability, and reliability lessons from a real project.",
     excerpt:
       "Why implementing system design features is only half the job. A practical look at auditing a working Resources page for real production readiness.",
     date: "2026-11-24",
