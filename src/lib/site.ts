@@ -3,24 +3,26 @@ import type { Project } from "@/data/projects";
 
 export const site = {
   name: "Anvik Labs",
-  title: "Anvik Labs | Product Design & Engineering",
-  studioTagline: "Product design & engineering studio",
+  title: "Product Design & Development Studio in India | Anvik Labs",
+  studioTagline: "Independent technology studio",
   description:
-    "Anvik Labs is a Product Design & Engineering Studio in India, helping startups and small businesses build clear interfaces, fast websites, and practical AI solutions.",
+    "Anvik Labs is an independent product design and engineering studio in India. We design digital experiences, build web products, and explore practical AI solutions.",
   url: "https://anviklabs.site",
   email: "anviklabs@gmail.com",
   areaServed: "Worldwide",
-  logo: "/assets/favicon.ico",
+  locale: "en_IN",
+  logo: "/logo-512.png",
   ogImage: "/og.png",
   ogImageWidth: "1200",
   ogImageHeight: "630",
   ogImageType: "image/png",
-  ogImageAlt: "Anvik Labs — Product design & engineering studio",
+  ogImageAlt: "Anvik Labs — independent product design and engineering studio",
   themeColor: "#f5f5f5",
   backgroundColor: "#f5f5f5",
   // Add verified Anvik Labs profiles here when official company accounts exist.
   // Individual team profiles live in `src/data/socials.json` and are not used here.
   sameAs: [] as string[],
+  // Present in project history; verify externally before treating as authoritative business fact.
   foundingDate: "2020-11-02",
 };
 
@@ -87,8 +89,10 @@ export function createMeta(options: PageMetaOptions): MetaDescriptor[] {
     { name: "description", content: description },
     { name: "application-name", content: site.name },
     { name: "author", content: site.name },
+    { name: "robots", content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
     { tagName: "link", rel: "canonical", href: canonicalUrl },
     { property: "og:site_name", content: site.name },
+    { property: "og:locale", content: site.locale },
     { property: "og:type", content: "website" },
     { property: "og:title", content: title },
     { property: "og:description", content: description },

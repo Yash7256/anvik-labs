@@ -137,7 +137,7 @@ export default function Works() {
       ref={rootRef}
       id="works"
       aria-labelledby="works-heading"
-      className="theme-transition relative isolate overflow-hidden bg-background py-24 md:py-36"
+      className="theme-transition relative isolate overflow-hidden bg-background py-20 md:py-28 lg:py-36"
     >
       <div aria-hidden="true" className="works-fade" />
 
@@ -146,9 +146,10 @@ export default function Works() {
           <h2
             ref={headingRef}
             id="works-heading"
-            className="font-display text-[clamp(4.5rem,16vw,15rem)] font-light leading-[0.8] tracking-[-0.06em] text-foreground"
+            className="font-display text-[clamp(4.5rem,14vw,12rem)] font-extralight leading-[0.8] tracking-[-0.06em] text-foreground"
           >
-            WORK
+            <span aria-hidden="true">WORK</span>
+            <span className="sr-only">Selected client and independent digital product work</span>
           </h2>
           <p
             ref={leadRef}
@@ -160,13 +161,13 @@ export default function Works() {
             ref={bodyRef}
             className="mx-auto mt-4 max-w-[46ch] text-[14px] leading-[1.65] text-muted md:text-[15px]"
           >
-            A selection of digital products and experiences we&apos;ve designed,
-            engineered, and brought to life.
+            Selected client projects and independently developed products,
+            designed and engineered with care.
           </p>
         </div>
 
         {featuredProject ? (
-          <div className="mx-auto mt-14 w-full max-w-[1180px] md:mt-20 md:w-[92%] lg:w-[84%]">
+          <div className="mx-auto mt-12 w-full max-w-[1040px] md:mt-16 md:w-[88%] lg:w-[78%]">
             <ProjectCard project={featuredProject} variant="featured" priority />
           </div>
         ) : null}
@@ -174,10 +175,10 @@ export default function Works() {
         <div
           ref={gridRef}
           data-project-grid
-          className="mx-auto mt-8 grid w-full max-w-[1180px] grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 md:gap-6"
+          className="mx-auto mt-6 grid w-full max-w-[1040px] grid-cols-1 gap-5 md:mt-8 md:grid-cols-2 md:gap-5"
         >
-          {gridProjects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} priority={index === 0} />
+          {gridProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </div>

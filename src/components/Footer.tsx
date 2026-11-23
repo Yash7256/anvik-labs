@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
-import ContactDialog from "@/components/ContactDialog";
+
 import { primaryCtaClass } from "@/lib/cta";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
@@ -15,11 +15,11 @@ const footerLinks = [
   { label: "Home", href: "/" },
   { label: "Works", href: "/works" },
   { label: "Services", href: "/#services" },
+  { label: "Journal", href: "/journal" },
   { label: "Contact", href: "/contact" },
 ];
 
 export default function Footer() {
-  const [contactOpen, setContactOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
@@ -71,16 +71,15 @@ export default function Footer() {
               <span className="block text-accent">real products.</span>
             </p>
             <p className="mt-6 max-w-[42ch] text-[14px] leading-relaxed text-muted md:text-[15px]">
-              We design, develop, and launch digital products for ambitious ideas.
+              We design and engineer digital products for clients, and build our own.
             </p>
-            <button
-              type="button"
+            <Link
+              to="/contact"
               data-cursor="hello"
-              onClick={() => setContactOpen(true)}
               className={`mt-8 ${primaryCtaClass}`}
             >
               Start a conversation
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-x-8 gap-y-10">
@@ -124,9 +123,11 @@ export default function Footer() {
             <Link to="/" aria-label="Anvik Labs home" className="inline-flex">
               <img
                 src="/logo.svg"
-                alt="Anvik Labs"
+                alt="Anvik Labs logo"
                 width={1010}
                 height={118}
+                loading="lazy"
+                decoding="async"
                 className="logo-mark h-8 w-auto md:h-10"
               />
             </Link>
@@ -145,7 +146,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <ContactDialog open={contactOpen} onClose={() => setContactOpen(false)} />
     </footer>
   );
 }

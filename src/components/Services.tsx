@@ -16,6 +16,8 @@ type ServiceCardConfig = {
   sculpture: "web" | "design" | "ai" | "care";
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   pills: string[];
 };
 
@@ -23,13 +25,15 @@ const serviceCards: ServiceCardConfig[] = [
   {
     index: "01",
     slug: serviceData[0].slug,
-    name: serviceData[0].name,
+    name: "Web Development",
     description: serviceData[0].heroSubline,
     category: "BUILD / SHIP",
     meta: "PRODUCT SYSTEMS",
     sculpture: "web",
     image: "/assets/webdev.jpg",
     imageAlt: "Web development visual",
+    imageWidth: 736,
+    imageHeight: 1308,
     pills: ["Frontend", "Backend", "Web Apps", "Dashboards"],
   },
   {
@@ -42,6 +46,8 @@ const serviceCards: ServiceCardConfig[] = [
     sculpture: "design",
     image: "/assets/uiux.png",
     imageAlt: "Product design visual",
+    imageWidth: 1152,
+    imageHeight: 2048,
     pills: ["Product Design", "Design Systems", "Prototypes"],
   },
   {
@@ -54,6 +60,8 @@ const serviceCards: ServiceCardConfig[] = [
     sculpture: "care",
     image: "/assets/wbemaintenance.webp",
     imageAlt: "Website maintenance visual",
+    imageWidth: 926,
+    imageHeight: 1698,
     pills: ["Maintenance", "Performance", "Security", "Support"],
   },
 ];
@@ -129,6 +137,8 @@ function ServiceVisual({ card }: { card: ServiceCardConfig }) {
             <img
               src={card.image}
               alt={card.imageAlt ?? ""}
+              width={card.imageWidth}
+              height={card.imageHeight}
               loading="lazy"
               decoding="async"
               className="h-full w-full object-cover opacity-90 saturate-[0.85] contrast-[1.02]"
@@ -300,10 +310,14 @@ export default function Services() {
           <h2
             ref={headingRef}
             id="services-heading"
-            className="mt-[140px] font-display text-[clamp(2.75rem,8vw,7rem)] font-extralight leading-[0.84] tracking-[-0.05em] text-foreground sm:mt-[156px] lg:mt-[180px]"
+            className="font-display text-[clamp(3rem,8.5vw,7.5rem)] font-extralight leading-[0.84] tracking-[-0.055em] text-foreground lg:pt-[8rem]"
           >
-            SERVICES
+            <span aria-hidden="true">SERVICES</span>
+            <span className="sr-only">Product design and engineering services</span>
           </h2>
+          <p className="mt-6 max-w-[32ch] text-[14px] leading-[1.7] text-muted md:text-[15px]">
+            Design, development, and ongoing support for digital products, for client projects and our own builds.
+          </p>
 
         </div>
 
@@ -363,7 +377,7 @@ export default function Services() {
                     <div className="hidden" aria-hidden="true" />
 
                     <h3 className="mt-2 max-w-none font-sans text-[clamp(1.9rem,3.6vw,3.6rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-[var(--sc-text)] sm:mt-4 lg:whitespace-nowrap">
-                      {card.name.replace(/^Web\s+/i, "")}
+                      {card.name}
                     </h3>
 
                     <div aria-hidden="true" className="mt-7 h-px w-full max-w-[28rem] bg-[var(--sc-line)]" />

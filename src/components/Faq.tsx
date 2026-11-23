@@ -11,37 +11,29 @@ type FaqItem = {
   a: string;
 };
 
-const faqData: FaqItem[] = [
+export const homeFaqData: FaqItem[] = [
   {
-    q: "What services do you offer?",
-    a: "We work across product design, design systems, web development, AI solutions and ongoing website care. Most engagements combine design and front-end engineering.",
+    q: "What does Anvik Labs do?",
+    a: "Anvik Labs is an independent product design and engineering studio in India. We design digital experiences, build web products, and explore practical AI solutions for clients, while also building our own independent products.",
   },
   {
-    q: "How does a project start?",
-    a: "It starts with a short conversation about the product, the people using it and the outcome you need. If the fit is right, we agree on scope, timing and the first milestone before any work begins.",
+    q: "What services does Anvik Labs offer?",
+    a: "We offer product design, web development, AI solutions, and website maintenance. Most work combines thoughtful design with careful engineering.",
   },
   {
-    q: "What is a typical turnaround?",
-    a: "A focused site or product slice usually takes two to four weeks. Larger product work runs in milestones over six to eight weeks. We agree on the first deliverable up front rather than promising a date for everything.",
+    q: "Do you work with clients outside India?",
+    a: "Yes. Anvik Labs is based in India and works with teams worldwide through video calls, chat, and email.",
   },
   {
-    q: "Can you work with an existing team?",
-    a: "Yes. We can join an existing product team, work alongside your designers or engineers, or take a defined slice of the product from brief to launch.",
-  },
-  {
-    q: "Do you handle both design and build?",
-    a: "Yes. The person designing the interface works with the person building it from day one. That removes the handoff gap where intent usually gets lost.",
-  },
-  {
-    q: "How do we communicate during a project?",
-    a: "We keep a shared written record, send regular progress notes and hold a weekly call. You will always know what is in progress, what is blocked and what comes next.",
+    q: "Do you build your own products?",
+    a: "Yes. Alongside client work, we build and experiment with independent products. That hands-on product work informs how we design and engineer for clients.",
   },
 ];
 
 export default function Faq({
-  items = faqData,
-  metaLabel = "Notes / 007",
-  metaTitle = "Clarifications",
+  items = homeFaqData,
+  metaLabel = "FAQ / 007",
+  metaTitle = "Common questions",
 }: {
   items?: FaqItem[];
   metaLabel?: string;
@@ -93,7 +85,7 @@ export default function Faq({
       ref={rootRef}
       id="faq"
       aria-labelledby="faq-heading"
-      className="px-4 pt-16 sm:px-[4vw] md:px-8 md:pt-24 lg:px-12"
+      className="py-20 md:py-28 lg:py-36"
     >
       <div className="mb-8 flex flex-wrap items-center justify-between gap-3 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
         <span className="text-muted">{metaLabel}</span>
@@ -104,7 +96,7 @@ export default function Faq({
         <h2
           ref={headingRef}
           id="faq-heading"
-          className="font-display text-[clamp(4.5rem,16vw,15rem)] font-extralight leading-[0.8] tracking-[-0.06em] text-foreground"
+          className="font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
         >
           Questions.
         </h2>
@@ -141,7 +133,7 @@ export default function Faq({
 
                 <span
                   aria-hidden="true"
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[2px] border border-black/15 font-mono text-[14px] transition-transform duration-200 ${
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[2px] border border-border font-mono text-[14px] transition-transform duration-200 ${
                     isOpen
                       ? "rotate-45 border-accent bg-accent text-on-accent"
                       : "text-muted"

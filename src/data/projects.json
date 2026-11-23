@@ -8,6 +8,8 @@
     "projectType": "Anvik Labs",
     "year": "2026",
     "coverImage": "/mockups/cybersec-toolkit.webp",
+    "coverImageWidth": 1672,
+    "coverImageHeight": 941,
     "coverAlt": "3D desktop monitor mockup displaying the CyberSec cybersecurity platform website with an AI-powered vulnerability scanning dashboard in a dark purple interface.",
    "designDecisions": [
   {
@@ -63,6 +65,8 @@
   "projectType": "Anvik Labs",
   "year": "2026",
   "coverImage": "/mockups/designersroom.webp",
+  "coverImageWidth": 1519,
+  "coverImageHeight": 1036,
   "coverAlt": "3D laptop mockup showcasing the Designer's Room platform with a guidebook roadmap page and community feed, in a clean modern interface.",
  "designDecisions": [
   {
@@ -108,6 +112,8 @@
     "projectType": "Anvik Labs",
     "year": "2026",
     "coverImage": "/mockups/notifyed.webp",
+    "coverImageWidth": 1672,
+    "coverImageHeight": 941,
     "coverAlt": "3D laptop mockup showcasing the Notifyed student grade notification platform website with automated email and WhatsApp alerts, featuring a clean cream and orange interface.",
   "developmentDecisions": [
   {
@@ -133,6 +139,8 @@
   "projectType": "Client Work",
   "year": "2026",
   "coverImage": "/mockups/sedativephysio.webp",
+  "coverImageWidth": 1448,
+  "coverImageHeight": 1086,
   "coverAlt": "Sedative Physio learning platform homepage showing courses, notes and 3D anatomy resources.",
   "designThinking": {
     "problem": "Students learn from random PDFs, YouTube and WhatsApp groups, with nothing in one place.",

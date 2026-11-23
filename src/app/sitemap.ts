@@ -2,14 +2,15 @@ import { projects } from "@/data/projects";
 import { site } from "@/lib/site";
 
 const staticPaths = [
-  { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/works", changefreq: "monthly", priority: "0.9" },
-  { path: "/aman-raj", changefreq: "monthly", priority: "0.7" },
-  { path: "/services/web-development", changefreq: "monthly", priority: "0.8" },
-  { path: "/services/product-design", changefreq: "monthly", priority: "0.8" },
-  { path: "/services/ai-solutions", changefreq: "monthly", priority: "0.8" },
-  { path: "/services/website-maintenance", changefreq: "monthly", priority: "0.8" },
-  { path: "/contact", changefreq: "yearly", priority: "0.6" },
+  { path: "/", changefreq: "weekly", priority: "1.0", lastmod: "2026-05-15" },
+  { path: "/works", changefreq: "monthly", priority: "0.9", lastmod: "2026-05-15" },
+  { path: "/journal", changefreq: "weekly", priority: "0.8", lastmod: "2026-05-15" },
+  { path: "/aman-raj", changefreq: "monthly", priority: "0.7", lastmod: "2026-05-15" },
+  { path: "/services/web-development", changefreq: "monthly", priority: "0.8", lastmod: "2026-05-15" },
+  { path: "/services/product-design", changefreq: "monthly", priority: "0.8", lastmod: "2026-05-15" },
+  { path: "/services/ai-solutions", changefreq: "monthly", priority: "0.8", lastmod: "2026-05-15" },
+  { path: "/services/website-maintenance", changefreq: "monthly", priority: "0.8", lastmod: "2026-05-15" },
+  { path: "/contact", changefreq: "yearly", priority: "0.6", lastmod: "2026-05-15" },
 ] as const;
 
 function escapeXml(value: string): string {
@@ -27,11 +28,13 @@ export function loader() {
   const entries = [
     ...staticPaths.map((entry) => ({
       loc: url(entry.path),
+      lastmod: entry.lastmod,
       changefreq: entry.changefreq,
       priority: entry.priority,
     })),
     ...projects.map((project) => ({
       loc: url(`/works/${project.id}`),
+      lastmod: `${project.year}-01-01`,
       changefreq: "yearly" as const,
       priority: "0.6",
     })),
@@ -43,7 +46,7 @@ ${entries
   .map(
     (entry) => `  <url>
     <loc>${escapeXml(entry.loc)}</loc>
-    <changefreq>${entry.changefreq}</changefreq>
+    ${entry.lastmod ? `<lastmod>${escapeXml(entry.lastmod)}</lastmod>\n    ` : ""}<changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority}</priority>
   </url>`,
   )

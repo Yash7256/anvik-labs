@@ -5,14 +5,14 @@ import { Link, useLocation } from "react-router";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
-import ContactDialog from "@/components/ContactDialog";
+
 import { useMagnetic } from "@/lib/motion";
 import { site } from "@/lib/site";
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Works", href: "/works" },
-  { label: "Services", href: "/#services" },
+  { label: "Journal", href: "/journal" },
   { label: "About", href: "/#about" },
 ];
 
@@ -55,12 +55,12 @@ function TalkCta({ onClick }: { onClick?: () => void }) {
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   if (href === "/works") return pathname.startsWith("/works");
+  if (href === "/journal") return pathname.startsWith("/journal");
   return false;
 }
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const reduceMotion = useReducedMotion();
   const location = useLocation();
@@ -228,7 +228,7 @@ export default function Navbar() {
                 className="nav-line pointer-events-none absolute bottom-1 left-0 h-px bg-accent"
                 style={{ width: 1, opacity: 0 }}
               />
-              <TalkCta onClick={() => setContactOpen(true)} />
+              <TalkCta onClick={() => window.dispatchEvent(new Event("contact:open"))} />
             </nav>
 
             <button
@@ -245,8 +245,6 @@ export default function Navbar() {
           </motion.div>
         </div>
       </header>
-
-      <ContactDialog open={contactOpen} onClose={() => setContactOpen(false)} />
       {mounted
         ? createPortal(
             <AnimatePresence>
@@ -322,7 +320,7 @@ export default function Navbar() {
                     <TalkCta
                       onClick={() => {
                         setOpen(false);
-                        setContactOpen(true);
+                        window.dispatchEvent(new Event("contact:open"));
                       }}
                     />
                     <div className="flex flex-col gap-1 text-[13px]">

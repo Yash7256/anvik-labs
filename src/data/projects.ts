@@ -22,6 +22,8 @@ export type Project = {
   projectType: string;
   year: string;
   coverImage: string;
+  coverImageWidth?: number;
+  coverImageHeight?: number;
   coverAlt: string;
   links?: ProjectLinks;
   designDecisions: ProjectDecision[];

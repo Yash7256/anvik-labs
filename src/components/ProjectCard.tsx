@@ -251,6 +251,8 @@ export default function ProjectCard({
             ref={imageRef}
             src={project.coverImage}
             alt={project.coverAlt}
+            width={project.coverImageWidth}
+            height={project.coverImageHeight}
             loading={priority ? "eager" : "lazy"}
             decoding="async"
             className="project-image h-full w-full object-cover object-center"
@@ -265,7 +267,7 @@ export default function ProjectCard({
               <div className="absolute inset-x-0 bottom-0 z-[2] flex flex-col gap-4 p-5 sm:p-7 md:flex-row md:items-end md:justify-between md:p-9 lg:p-11">
                 <h3
                   ref={titleRef}
-                  className="font-display text-[clamp(1.6rem,4.4vw,4rem)] font-light leading-[0.95] tracking-[-0.045em] text-white"
+                  className="font-display text-[clamp(1.4rem,3.8vw,3.25rem)] font-light leading-[0.95] tracking-[-0.045em] text-white"
                 >
                   {project.name}
                 </h3>
@@ -279,18 +281,13 @@ export default function ProjectCard({
             </>
           ) : null}
 
-          <span ref={followerRef} aria-hidden="true" className="project-follower">
-            <span className="project-follower__label">Case Study</span>
-          </span>
-          <span aria-hidden="true" className="project-tap">
-            <span className="project-tap__label">Case Study</span>
-          </span>
+
         </div>
 
         {!isFeatured ? (
           <div className="mt-4 flex items-start justify-between gap-4 px-0.5 md:mt-5">
             <div className="min-w-0">
-              <h3 className="font-display text-[19px] tracking-[-0.035em] text-foreground md:text-[22px]">
+              <h3 className="font-display text-[17px] tracking-[-0.035em] text-foreground md:text-[20px]">
                 {project.name}
               </h3>
               <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.1em] text-muted">

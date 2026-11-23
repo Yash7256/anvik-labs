@@ -5,6 +5,7 @@ export default [
   route("works", "app/works/page.tsx"),
   route("works/:slug", "app/works/[slug]/page.tsx"),
   route("aman-raj", "app/aman-raj/page.tsx"),
+  route("journal", "app/journal/page.tsx"),
   route("contact", "app/contact/page.tsx"),
   route("services/web-development", "app/services/web-development/page.tsx"),
   route("services/product-design", "app/services/product-design/page.tsx"),

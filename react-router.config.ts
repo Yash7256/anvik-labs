@@ -7,6 +7,7 @@ export default {
   prerender: [
     "/",
     "/works",
+    "/journal",
     ...projects.map((project) => `/works/${project.id}`),
     "/aman-raj",
     "/contact",

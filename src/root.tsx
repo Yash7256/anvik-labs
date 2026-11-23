@@ -10,6 +10,7 @@ import {
   type MetaFunction,
 } from "react-router";
 import Background from "@/components/Background";
+import ContactDialog from "@/components/ContactDialog";
 import GlobalCursor from "@/components/GlobalCursor";
 import MotionRuntime from "@/components/MotionRuntime";
 import {
@@ -28,7 +29,12 @@ const organizationJsonLd = {
   "@id": organizationId,
   name: site.name,
   url: site.url,
-  logo: `${site.url}${site.logo}`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${site.url}${site.logo}`,
+    width: 512,
+    height: 512,
+  },
   image: `${site.url}${site.ogImage}`,
   description: site.description,
   areaServed: site.areaServed,
@@ -51,7 +57,7 @@ const websiteJsonLd = {
   url: site.url,
   name: site.name,
   description: site.description,
-  inLanguage: "en",
+  inLanguage: "en-IN",
   publisher: { "@id": organizationId },
 };
 
@@ -68,10 +74,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
           name="google-site-verification"
           content="YKwDO53XArYWQP27b8PIS4l1ALXtKu3OeDreuFCzuN4"
         />
-        <meta name="theme-color" content={site.themeColor} />
+        <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#080808" media="(prefers-color-scheme: dark)" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="icon" href="/assets/favicon.ico" sizes="48x48" type="image/x-icon" />
+        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -172,6 +181,18 @@ function AnimatedOutlet() {
   );
 }
 
+function ContactDialogController() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener("contact:open", onOpen as EventListener);
+    return () => window.removeEventListener("contact:open", onOpen as EventListener);
+  }, []);
+
+  return <ContactDialog open={open} onClose={() => setOpen(false)} />;
+}
+
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
@@ -179,6 +200,7 @@ export default function App() {
       <GlobalCursor />
       <SmoothScroll />
       <ScrollToHash />
+      <ContactDialogController />
       <AnimatedOutlet />
     </MotionConfig>
   );

@@ -25,7 +25,7 @@ const fieldClass =
   "w-full rounded-xl border border-border bg-background/60 px-4 py-3.5 font-sans text-[15px] text-foreground placeholder:text-[15px] placeholder:text-muted/80 transition-[border-color,background-color,box-shadow] duration-200 focus:border-accent/50 focus:bg-background focus:outline-none focus:ring-2 focus:ring-accent/15";
 
 const selectClass =
-  "w-full cursor-pointer appearance-none rounded-xl border border-border bg-background/60 px-4 py-3.5 font-sans text-[15px] text-foreground transition-[border-color,background-color,box-shadow] duration-200 focus:border-accent/50 focus:bg-background focus:outline-none focus:ring-2 focus:ring-accent/15";
+  "w-full cursor-pointer appearance-none rounded-xl border border-border bg-background/60 px-4 py-3.5 pr-11 font-sans text-[15px] text-foreground transition-[border-color,background-color,box-shadow] duration-200 focus:border-accent/50 focus:bg-background focus:outline-none focus:ring-2 focus:ring-accent/15";
 
 const FORM_ENDPOINT = `https://formsubmit.co/ajax/${encodeURIComponent(site.email)}`;
 
@@ -205,18 +205,21 @@ export default function ContactForm({
                 >
                   Service
                 </label>
-                <select
-                  id={`${idPrefix}-service`}
-                  name="service"
-                  defaultValue="Product design"
-                  className={selectClass}
-                >
-                  {servicesOptions.map((service) => (
-                    <option key={service} value={service}>
-                      {service}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    id={`${idPrefix}-service`}
+                    name="service"
+                    defaultValue="Product design"
+                    className={selectClass}
+                  >
+                    {servicesOptions.map((service) => (
+                      <option key={service} value={service}>
+                        {service}
+                      </option>
+                    ))}
+                  </select>
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 6l4 4 4-4" /></svg>
+                </div>
               </div>
               <div>
                 <label
@@ -225,18 +228,21 @@ export default function ContactForm({
                 >
                   Estimated budget
                 </label>
-                <select
-                  id={`${idPrefix}-budget`}
-                  name="budget"
-                  defaultValue="Not sure yet"
-                  className={selectClass}
-                >
-                  {budgetOptions.map((budget) => (
-                    <option key={budget} value={budget}>
-                      {budget}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    id={`${idPrefix}-budget`}
+                    name="budget"
+                    defaultValue="Not sure yet"
+                    className={selectClass}
+                  >
+                    {budgetOptions.map((budget) => (
+                      <option key={budget} value={budget}>
+                        {budget}
+                      </option>
+                    ))}
+                  </select>
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 6l4 4 4-4" /></svg>
+                </div>
               </div>
             </div>
 

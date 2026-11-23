@@ -65,7 +65,6 @@ export default function Testimonials() {
   const hiddenRef = useRef(false);
   const resetTimerRef = useRef<number | undefined>(undefined);
 
-  const cards = [...testimonials, ...testimonials];
 
   useGSAP(
     () => {
@@ -207,15 +206,16 @@ export default function Testimonials() {
         ref={rootRef}
         id="testimonials"
         aria-labelledby="testimonials-heading"
-        className="py-16 md:py-24"
+        className="py-20 md:py-28 lg:py-36"
       >
         <div className="pb-8 md:pb-10">
           <h2
             ref={headingRef}
             id="testimonials-heading"
-            className="font-display text-[clamp(3rem,10vw,9rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
+            className="font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
           >
-            What people say.
+            <span aria-hidden="true">What people say.</span>
+            <span className="sr-only">Client testimonials</span>
           </h2>
         </div>
 
@@ -233,15 +233,16 @@ export default function Testimonials() {
       ref={rootRef}
       id="testimonials"
       aria-labelledby="testimonials-heading"
-      className="py-16 md:py-24"
+      className="py-20 md:py-28 lg:py-36"
     >
       <div className="pb-8 md:pb-10">
         <h2
           ref={headingRef}
           id="testimonials-heading"
-          className="font-display text-[clamp(3rem,10vw,9rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
+          className="font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
         >
-          What people say.
+          <span aria-hidden="true">What people say.</span>
+          <span className="sr-only">Client testimonials</span>
         </h2>
       </div>
 
@@ -263,19 +264,13 @@ export default function Testimonials() {
 
         <div ref={trackRef} className="flex w-max gap-5 py-2 md:gap-6">
           <div className="flex shrink-0 gap-5 md:gap-6">
-            {cards.map((item, index) => (
-              <TestimonialCard
-                key={`track-1-${item.id}-${index}`}
-                item={item}
-              />
+            {testimonials.map((item) => (
+              <TestimonialCard key={`track-1-${item.id}`} item={item} />
             ))}
           </div>
-          <div className="flex shrink-0 gap-5 md:gap-6" aria-hidden="true">
-            {cards.map((item, index) => (
-              <TestimonialCard
-                key={`track-2-${item.id}-${index}`}
-                item={item}
-              />
+          <div className="flex shrink-0 gap-5 md:gap-6" aria-hidden="true" inert>
+            {testimonials.map((item) => (
+              <TestimonialCard key={`track-2-${item.id}`} item={item} />
             ))}
           </div>
         </div>

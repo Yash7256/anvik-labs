@@ -1,14 +1,14 @@
 # Anvik Labs Design System
 
-This document describes the current implementation. It replaces the stale TITARVL/Framer specification.
+This document describes the current implementation. It is the source of truth for the portfolio's visual system.
 
 ## Principles
 
-- **Editorial, not decorative.** The site is built from type, whitespace, and restrained imagery. Avoid cards, glows, gradients, heavy shadows, glass effects, and generic SaaS layouts.
-- **Three voices.** Space Grotesk carries headings; Geist carries body copy, navigation, and controls; Geist Mono carries metadata, labels, counters, and short UI controls.
-- **One accent.** Orange is a punctuation mark, not a theme. Use it for active states, small labels, links, and quote emphasis only.
-- **Structure visible.** Numeric indices, typographic hierarchy, and generous spacing make the page feel like a working document. Divider rules are not used.
-- **Motion with restraint.** Animation clarifies a transition or adds tactility. It should not run constantly or compete with reading.
+- **Editorial base, premium exceptions.** The default language is type, whitespace, restrained imagery, and structural clarity. Most sections should avoid decorative SaaS clutter. The Services cards are an intentional premium exception: dark/glass treatment, controlled fluid layers, and richer depth are allowed there, but should not leak into every section.
+- **Three voices.** Space Grotesk carries display headings; Geist carries body copy, navigation, and controls; Geist Mono carries metadata, labels, counters, and short UI controls.
+- **One accent.** Orange is punctuation, not a theme. Use it for active states, small labels, links, focus/hover emphasis, and selected controls.
+- **Structure visible.** Clear hierarchy, spacing, and metadata make the page feel deliberate. Hairlines are quiet and token-driven.
+- **Motion with restraint.** Animation clarifies transition or adds tactility. It must respect `prefers-reduced-motion` and avoid constant decorative motion.
 
 ## Color
 

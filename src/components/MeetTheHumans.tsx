@@ -203,7 +203,7 @@ function PersonCard({
         className="relative overflow-hidden rounded-[12px] bg-light-surface ring-1 ring-border transition-[box-shadow,ring-color] duration-500 group-hover/profile:ring-foreground/20 group-focus-within/profile:ring-foreground/20"
       >
         <div
-          className="relative aspect-[4/5] w-full overflow-hidden bg-[#111111]"
+          className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-950"
           data-cursor={person.id === "harshita" ? "design" : "engineer"}
         >
           <motion.div
@@ -397,16 +397,20 @@ export default function MeetTheHumans() {
       ref={rootRef}
       id="about"
       aria-labelledby="humans-heading"
-      className="relative overflow-hidden py-20 md:py-28"
+      className="relative overflow-hidden py-20 md:py-28 lg:py-36"
     >
       <div className="pb-10 md:pb-14">
         <h2
           ref={headingRef}
           id="humans-heading"
-          className="font-display text-[clamp(3rem,10vw,9rem)] font-thin leading-[0.82] tracking-[-0.055em] text-foreground"
+          className="font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
         >
-          Meet the humans.
+          <span aria-hidden="true">Meet the humans.</span>
+          <span className="sr-only">About the Anvik Labs team</span>
         </h2>
+        <p className="mt-6 max-w-[42ch] text-[14px] leading-[1.7] text-muted md:text-[15px]">
+          A small independent studio where design and engineering work closely together.
+        </p>
       </div>
 
       <div className="mx-auto grid w-full max-w-[1180px] grid-cols-1 gap-10 md:gap-12 lg:grid-cols-2 lg:gap-10 xl:gap-14">

@@ -1,11 +1,22 @@
 # Anvik Labs
 
-> Anvik Labs is a product design and engineering studio in India, helping startups and small businesses build clear interfaces, fast websites, and practical AI solutions.
+> Anvik Labs is an independent product design and engineering studio in India. We design digital experiences, build web products, and explore practical AI solutions. Based in India, working with teams worldwide.
 
-- [Home](https://anviklabs.site/): Studio overview, services, team, and selected work.
-- [Works](https://anviklabs.site/works): Case studies across product design, identity, editorial, and web development.
-- [Product Design](https://anviklabs.site/services/product-design): UI/UX research, flows, Figma interfaces, and design systems.
-- [Web Development](https://anviklabs.site/services/web-development): Fast, accessible React and TypeScript websites and apps.
-- [AI Solutions](https://anviklabs.site/services/ai-solutions): LLM integrations, RAG search, and chatbot development.
-- [Website Maintenance](https://anviklabs.site/services/website-maintenance): Ongoing updates, bug fixes, content changes, and hosting support.
-- [Contact](https://anviklabs.site/contact): Start a project or ask a question.
+## What Anvik Labs does
+- Designs and engineers digital products for clients.
+- Builds and experiments with independent products.
+- Offers product design, web development, AI solutions, and website maintenance.
+
+## Key pages
+- [Home](https://anviklabs.site/): Independent technology studio overview, selected work, services, team, testimonials, and FAQs.
+- [Works](https://anviklabs.site/works): Selected client and independently developed digital product case studies.
+- [Journal](https://anviklabs.site/journal): Notes and insights on design, engineering, and digital craft.
+- [Product Design](https://anviklabs.site/services/product-design): UI/UX design, product flows, design systems, and prototypes.
+- [Web Development](https://anviklabs.site/services/web-development): Fast, accessible websites and web apps built with modern frontend engineering.
+- [AI Solutions](https://anviklabs.site/services/ai-solutions): Practical AI integrations, LLM workflows, and chat experiences.
+- [Website Maintenance](https://anviklabs.site/services/website-maintenance): Ongoing updates, performance, fixes, and support.
+- [Contact](https://anviklabs.site/contact): Start a project conversation with Anvik Labs.
+
+## Contact
+- Email: anviklabs@gmail.com
+- Website: https://anviklabs.site/

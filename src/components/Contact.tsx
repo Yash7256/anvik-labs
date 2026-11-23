@@ -48,7 +48,7 @@ export default function Contact() {
       ref={rootRef}
       id="contact"
       aria-labelledby="contact-heading"
-      className="pb-16 pt-10 md:pb-24 md:pt-14"
+      className="py-20 md:py-28 lg:py-36"
     >
       <div className="mb-8 flex flex-wrap items-center justify-between gap-3 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
         <span className="text-muted">Inquiry / 006</span>
@@ -59,7 +59,7 @@ export default function Contact() {
         <h1
           ref={headingRef}
           id="contact-heading"
-          className="font-display text-[clamp(4.5rem,16vw,15rem)] font-extralight leading-[0.8] tracking-[-0.06em] text-foreground"
+          className="font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
         >
           Start a project.
         </h1>
@@ -77,7 +77,7 @@ export default function Contact() {
             <a
               href={`mailto:${site.email}`}
                 data-cursor="email"
-                className="break-all font-sans text-[22px] font-medium text-foreground underline decoration-white/20 underline-offset-8 transition-colors hover:text-accent md:text-[28px]"
+                className="break-all font-sans text-[22px] font-medium text-foreground underline decoration-border underline-offset-8 transition-colors hover:text-accent md:text-[28px]"
             >
               {site.email}
             </a>
@@ -104,7 +104,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="border border-black/10 bg-black/[0.02] p-6 md:p-8 lg:col-span-7">
+        <div className="border border-border bg-light-surface p-6 md:p-8 lg:col-span-7">
           <ContactForm idPrefix="contact-page" />
         </div>
       </div>

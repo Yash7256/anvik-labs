@@ -345,10 +345,11 @@ export default function Hero() {
             id="hero-heading"
             className="text-center font-display text-[clamp(1.75rem,8.2vw,8.1rem)] leading-[0.95] tracking-[-0.045em] text-foreground [word-spacing:0.12em]"
           >
-            <span data-hero-line className="block whitespace-nowrap">
+            <span className="sr-only">Anvik Labs is an independent technology studio designing and engineering digital products.</span>
+            <span data-hero-line className="block whitespace-nowrap" aria-hidden="true">
               Curious By Design.
             </span>
-            <span data-hero-line className="block whitespace-nowrap text-foreground/92">
+            <span data-hero-line className="block whitespace-nowrap text-foreground/92" aria-hidden="true">
               Precise By Engineering.
             </span>
           </h1>
@@ -359,8 +360,9 @@ export default function Hero() {
             ref={copyRef}
             className="max-w-[520px] text-center text-[16px] leading-[1.6] text-foreground md:text-[17px]"
           >
-            AI changed what&apos;s possible. Great products still need taste,
-            judgment and engineering. We bring all three together.
+            An independent technology studio designing and engineering digital
+            products, from client work to our own experiments. Based in India,
+            working with teams worldwide.
           </p>
 
           <button
