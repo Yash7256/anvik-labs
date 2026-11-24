@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useRef, type PointerEvent as ReactPointerEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  type PointerEvent as ReactPointerEvent,
+  type RefObject,
+} from "react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
+import { useVideoPlayback } from "@/lib/useVideoPlayback";
 import type { Project } from "@/data/projects";
 
 type ProjectCardProps = {
@@ -47,7 +53,7 @@ export default function ProjectCard({
   const lightRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const pillRef = useRef<HTMLSpanElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
   const targetRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
   const frameRef = useRef(0);
@@ -55,6 +61,11 @@ export default function ProjectCard({
     x: (value: number) => void;
     y: (value: number) => void;
   } | null>(null);
+
+  useVideoPlayback(
+    imageRef as RefObject<HTMLVideoElement | null>,
+    Boolean(project.coverVideo) && !reduceMotion,
+  );
 
   useEffect(() => () => cancelAnimationFrame(frameRef.current), []);
 
@@ -247,16 +258,30 @@ export default function ProjectCard({
             isFeatured ? "project-media--featured" : "project-media--grid"
           }`}
         >
-          <img
-            ref={imageRef}
-            src={project.coverImage}
-            alt={project.coverAlt}
-            width={project.coverImageWidth}
-            height={project.coverImageHeight}
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
-            className="project-image h-full w-full object-cover object-center"
-          />
+          {project.coverVideo && !reduceMotion ? (
+            <video
+              ref={imageRef as React.RefObject<HTMLVideoElement>}
+              src={project.coverVideo}
+              poster={project.coverImage}
+              aria-label={project.coverAlt}
+              muted
+              loop
+              playsInline
+              preload={priority ? "metadata" : "none"}
+              className="project-image h-full w-full object-cover object-center"
+            />
+          ) : (
+            <img
+              ref={imageRef as React.RefObject<HTMLImageElement>}
+              src={project.coverImage}
+              alt={project.coverAlt}
+              width={project.coverImageWidth}
+              height={project.coverImageHeight}
+              loading={priority ? "eager" : "lazy"}
+              decoding="async"
+              className="project-image h-full w-full object-cover object-center"
+            />
+          )}
 
           <span ref={lightRef} aria-hidden="true" className="project-light" />
           <span aria-hidden="true" className="project-hover-shade" />

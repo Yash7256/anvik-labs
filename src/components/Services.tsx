@@ -1,9 +1,15 @@
-import { useRef, type PointerEvent as ReactPointerEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION, useFinePointer } from "@/lib/motion";
+import { useVideoPlayback } from "@/lib/useVideoPlayback";
 import { services as serviceData } from "@/data/services";
 
 type ServiceCardConfig = {
@@ -110,7 +116,10 @@ function ServiceSculpture({ variant }: { variant: ServiceCardConfig["sculpture"]
   );
 }
 
-function ServiceVisual({ card }: { card: ServiceCardConfig }) {
+function ServiceVisual({ card, reduceMotion }: { card: ServiceCardConfig; reduceMotion: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useVideoPlayback(videoRef, Boolean(card.video) && !reduceMotion);
+
   return (
     <div
       data-service-visual
@@ -137,13 +146,14 @@ function ServiceVisual({ card }: { card: ServiceCardConfig }) {
           <div className="absolute inset-0 overflow-hidden rounded-[14px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)] shadow-[0_24px_60px_-40px_rgba(0,0,0,0.45)]">
             {card.video ? (
               <video
+                ref={videoRef}
                 src={card.video}
+                poster={card.image}
                 aria-label={card.mediaAlt ?? ""}
                 width={card.imageWidth}
                 height={card.imageHeight}
-                autoPlay
                 muted
-                loop
+                loop={!reduceMotion}
                 playsInline
                 preload="metadata"
                 className="h-full w-full object-cover opacity-90 saturate-[0.85] contrast-[1.02]"
@@ -205,12 +215,43 @@ function ServiceVisual({ card }: { card: ServiceCardConfig }) {
 }
 
 export default function Services() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion() ?? false;
   const finePointer = useFinePointer();
   const rootRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
+  const [activeCards, setActiveCards] = useState<ReadonlySet<number>>(() => new Set());
+
+  useEffect(() => {
+    const cards = Array.from(
+      rootRef.current?.querySelectorAll<HTMLElement>("[data-service-card]") ?? [],
+    );
+    if (!cards.length || typeof IntersectionObserver === "undefined") return;
+
+    const indices = new WeakMap<Element, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setActiveCards((previous) => {
+          const next = new Set(previous);
+          for (const entry of entries) {
+            const index = indices.get(entry.target);
+            if (index === undefined) continue;
+            if (entry.isIntersecting) next.add(index);
+            else next.delete(index);
+          }
+          return next;
+        });
+      },
+      { rootMargin: "200px 0px", threshold: 0.01 },
+    );
+
+    cards.forEach((card, index) => {
+      indices.set(card, index);
+      observer.observe(card);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const handleCardPointerMove = (event: ReactPointerEvent<HTMLElement>) => {
     if (reduceMotion || !finePointer || event.pointerType !== "mouse") return;
@@ -342,6 +383,7 @@ export default function Services() {
             <article
               key={card.slug}
               data-service-card
+              data-active={activeCards.has(index) ? "true" : "false"}
               onPointerMove={handleCardPointerMove}
               onPointerLeave={handleCardPointerLeave}
               className="service-card group/card relative mb-6 overflow-hidden rounded-[20px] border border-[var(--sc-border)] bg-[var(--sc-bg)] text-[var(--sc-text)] shadow-[var(--sc-shadow)] backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-500 hover:border-[var(--sc-border-hover)] hover:bg-[var(--sc-bg-hover)] hover:shadow-[var(--sc-shadow-hover)] last:mb-0 lg:sticky lg:mb-0"
@@ -437,7 +479,7 @@ export default function Services() {
                     </div>
                   </div>
 
-                  <ServiceVisual card={card} />
+                  <ServiceVisual card={card} reduceMotion={reduceMotion} />
                 </div>
               </Link>
             </article>

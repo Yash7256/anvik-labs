@@ -1,5 +1,10 @@
 import type { MetaFunction } from "react-router";
-import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import {
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+  type RefObject,
+} from "react";
 import { Link } from "react-router";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
@@ -8,6 +13,7 @@ import Footer from "@/components/Footer";
 import { getProjectWorkType, projects, type Project } from "@/data/projects";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION, useFinePointer } from "@/lib/motion";
+import { useVideoPlayback } from "@/lib/useVideoPlayback";
 import { createMeta } from "@/lib/site";
 
 export const meta: MetaFunction = () =>
@@ -36,8 +42,14 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
   const reduceMotion = useReducedMotion() === true;
   const finePointer = useFinePointer();
   const cardRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const imageRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
+  const mediaRef = imageRef as unknown as React.RefObject<HTMLImageElement>;
   const workType = getProjectWorkType(project);
+
+  useVideoPlayback(
+    imageRef as RefObject<HTMLVideoElement | null>,
+    Boolean(project.coverVideo) && !reduceMotion,
+  );
 
   const onMove = (event: ReactPointerEvent<HTMLElement>) => {
     if (reduceMotion || !finePointer || event.pointerType !== "mouse") return;
@@ -94,14 +106,28 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-center lg:gap-8">
           <div className="relative overflow-hidden rounded-[18px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)]">
             <div className="aspect-[16/10] overflow-hidden">
-              <img
-                ref={imageRef}
-                src={project.coverImage}
-                alt={project.coverAlt}
-                loading={index < 2 ? "eager" : "lazy"}
-                decoding="async"
-                className="h-full w-full object-cover transition-[filter] duration-500 group-hover/card:saturate-[1.02]"
-              />
+              {project.coverVideo && !reduceMotion ? (
+                <video
+                  ref={imageRef as React.RefObject<HTMLVideoElement>}
+                  src={project.coverVideo}
+                  poster={project.coverImage}
+                  aria-label={project.coverAlt}
+                  muted
+                  loop
+                  playsInline
+                  preload={index < 2 ? "metadata" : "none"}
+                  className="h-full w-full object-cover transition-[filter] duration-500 group-hover/card:saturate-[1.02]"
+                />
+              ) : (
+                <img
+                  ref={imageRef as React.RefObject<HTMLImageElement>}
+                  src={project.coverImage}
+                  alt={project.coverAlt}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  decoding="async"
+                  className="h-full w-full object-cover transition-[filter] duration-500 group-hover/card:saturate-[1.02]"
+                />
+              )}
             </div>
             <div aria-hidden="true" className="absolute inset-0" style={{ background: "var(--sc-preview-overlay)" }} />
             <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),transparent_35%,transparent_70%,rgba(0,0,0,0.18))]" />

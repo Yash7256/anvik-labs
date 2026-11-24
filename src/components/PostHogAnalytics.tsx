@@ -20,6 +20,10 @@ export default function PostHogAnalytics() {
           person_profiles: "identified_only",
           capture_pageview: false,
           capture_pageleave: true,
+          autocapture: false,
+          capture_heatmaps: false,
+          disable_session_recording: true,
+          disable_surveys: true,
         });
         initialized = true;
       }

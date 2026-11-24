@@ -707,6 +707,9 @@ select option {
 .motion-word,
 .motion-char {
   display: inline-block;
+}
+
+.motion-line {
   will-change: transform;
 }
 
@@ -1303,6 +1306,116 @@ select option {
   animation-duration: 10s;
 }
 
+.service-card[data-active="false"] .service-card__fluid,
+.service-card[data-active="false"] .animate-service-pill-marquee {
+  animation-play-state: paused;
+}
+
+.project-marquee {
+  --marquee-fade-width: clamp(40px, 6vw, 96px);
+  position: relative;
+  overflow-x: clip;
+  overflow-y: hidden;
+  contain: layout paint;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--marquee-fade-width), #000 calc(100% - var(--marquee-fade-width)), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--marquee-fade-width), #000 calc(100% - var(--marquee-fade-width)), transparent 100%);
+}
+
+.project-marquee::before,
+.project-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: var(--marquee-fade-width);
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.project-marquee::before {
+  left: 0;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, transparent 100%);
+}
+
+.project-marquee::after {
+  right: 0;
+  -webkit-mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 0%, transparent 100%);
+}
+
+.project-marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  clip-path: inset(0 0);
+}
+
+.project-marquee__track--left {
+  animation: project-marquee-left 38s linear infinite;
+}
+
+.project-marquee__track--right {
+  animation: project-marquee-right 42s linear infinite;
+}
+
+.project-marquee:hover .project-marquee__track,
+.project-marquee:focus-within .project-marquee__track,
+.project-marquee[data-paused="true"] .project-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes project-marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes project-marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+
+.next-project__arrow {
+  transition: transform 200ms ease;
+}
+
+.group:hover .next-project__arrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-marquee {
+    overflow-x: auto;
+  }
+
+  .project-marquee--static {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .project-marquee--static::before,
+  .project-marquee--static::after {
+    display: none;
+  }
+
+  .project-marquee__track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .project-marquee__track > [aria-hidden="true"] {
+    display: none;
+  }
+
+  .next-project__arrow,
+  .group:hover .next-project__arrow {
+    transition: none;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1314,6 +1427,14 @@ select option {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .hero-ambient,
+  .motion-line,
+  .project-image,
+  .service-card__fluid,
+  .global-cursor {
+    will-change: auto;
   }
 
   .scroll-cue__dot {

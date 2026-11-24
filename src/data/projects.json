@@ -11,99 +11,97 @@
     "coverImageWidth": 1672,
     "coverImageHeight": 941,
     "coverAlt": "3D desktop monitor mockup displaying the CyberSec cybersecurity platform website with an AI-powered vulnerability scanning dashboard in a dark purple interface.",
-   "designDecisions": [
-  {
-    "title": "One workspace, every tool",
-    "description": "All security tools live in one unified workspace, eliminating constant tab-switching and keeping investigations connected."
-  },
-  {
-    "title": "Context beyond raw results",
-    "description": "Scan results are enriched with relevant context, helping analysts connect findings and understand potential security risks without manual investigation."
-  },
-  {
-    "title": "Consistency across complexity",
-    "description": "A shared interface across every tool reduces the learning curve and makes complex security workflows easier to navigate."
-  },
-  {
-    "title": "Reporting without repetition",
-    "description": "Automated reports turn scan findings into structured, actionable insights, removing the need to manually compile and write reports."
-  }
-],
+    "designDecisions": [
+      {
+        "title": "One workspace, every tool",
+        "description": "All security tools live in one unified workspace, eliminating constant tab-switching and keeping investigations connected."
+      },
+      {
+        "title": "Context beyond raw results",
+        "description": "Scan results are enriched with relevant context, helping analysts connect findings and understand potential security risks without manual investigation."
+      },
+      {
+        "title": "Consistency across complexity",
+        "description": "A shared interface across every tool reduces the learning curve and makes complex security workflows easier to navigate."
+      },
+      {
+        "title": "Reporting without repetition",
+        "description": "Automated reports turn scan findings into structured, actionable insights, removing the need to manually compile and write reports."
+      }
+    ],
     "developmentDecisions": [
-  {
-    "title": "Pure asyncio scan engine",
-    "description": "The scanner is built on asyncio instead of wrapping nmap. This removes an external dependency, keeps scans streamable, and gives full control over concurrency and output."
-  },
-  {
-    "title": "Adaptive speed, bounded impact",
-    "description": "AIMD concurrency and a token-bucket rate limiter tune scan speed to the target. Stealth, normal, and aggressive presets let users trade speed against noise."
-  },
-  {
-    "title": "Composable scan pipeline",
-    "description": "Port discovery, banner grabbing, CVE lookup, MITRE ATT&CK mapping, and AI analysis are separate stages, so each one can improve without reshaping the rest."
-  },
-  {
-    "title": "Live progress over SSE",
-    "description": "Scans stream results as they happen, and a worker heartbeat with a stale-scan reaper recovers interrupted jobs, so users always know what is running and what is ready to review."
-  },
-  {
-    "title": "AI that degrades gracefully",
-    "description": "Analysis runs through Groq, falls back to Gemini, then to rule-based logic. Reports still generate when a provider is down or no key is set."
-  },
-  {
-    "title": "Safe by default",
-    "description": "Private IP ranges are blocked, DNS rebinding protection is built in, scan endpoints require JWT, and the API is rate-limited, so the tool is hard to misuse."
-  }
+      {
+        "title": "Pure asyncio scan engine",
+        "description": "The scanner is built on asyncio instead of wrapping nmap. This removes an external dependency, keeps scans streamable, and gives full control over concurrency and output."
+      },
+      {
+        "title": "Adaptive speed, bounded impact",
+        "description": "AIMD concurrency and a token-bucket rate limiter tune scan speed to the target. Stealth, normal, and aggressive presets let users trade speed against noise."
+      },
+      {
+        "title": "Composable scan pipeline",
+        "description": "Port discovery, banner grabbing, CVE lookup, MITRE ATT&CK mapping, and AI analysis are separate stages, so each one can improve without reshaping the rest."
+      },
+      {
+        "title": "Live progress over SSE",
+        "description": "Scans stream results as they happen, and a worker heartbeat with a stale-scan reaper recovers interrupted jobs, so users always know what is running and what is ready to review."
+      },
+      {
+        "title": "AI that degrades gracefully",
+        "description": "Analysis runs through Groq, falls back to Gemini, then to rule-based logic. Reports still generate when a provider is down or no key is set."
+      },
+      {
+        "title": "Safe by default",
+        "description": "Private IP ranges are blocked, DNS rebinding protection is built in, scan endpoints require JWT, and the API is rate-limited, so the tool is hard to misuse."
+      }
     ]
   },
- {
-  "id": "designers-room",
-  "name": "Designer's Room",
-  "genre": "Community & learning platform",
-  "description": "A roadmap-driven learning and community platform for designers: follow structured guidebooks like UI/UX Designer, learn topic by topic, and share thoughts and experiences with other designers. Think roadmap.sh meets TryHackMe, built for design.",
-  "workType": "both",
-  "projectType": "Anvik Labs",
-  "year": "2026",
-  "coverImage": "/mockups/designersroom.webp",
-  "coverImageWidth": 1519,
-  "coverImageHeight": 1036,
-  "coverAlt": "3D laptop mockup showcasing the Designer's Room platform with a guidebook roadmap page and community feed, in a clean modern interface.",
- "designDecisions": [
   {
-    "title": "One workspace, every tool",
-    "description": "All security tools live in one place, eliminating tab-switching and keeping the entire investigation workflow connected."
+    "id": "designers-room",
+    "name": "Designer's Room",
+    "genre": "Community & learning platform",
+    "description": "A roadmap-driven learning and community platform for designers: follow structured guidebooks like UI/UX Designer, learn topic by topic, and share thoughts and experiences with other designers. Think roadmap.sh meets TryHackMe, built for design.",
+    "workType": "both",
+    "projectType": "Anvik Labs",
+    "year": "2026",
+    "coverImage": "/mockups/designersroom.webp",
+    "coverImageWidth": 1519,
+    "coverImageHeight": 1036,
+    "coverAlt": "3D laptop mockup showcasing the Designer's Room platform with a guidebook roadmap page and community feed, in a clean modern interface.",
+    "designDecisions": [
+      {
+        "title": "One workspace, every tool",
+        "description": "All security tools live in one place, eliminating tab-switching and keeping the entire investigation workflow connected."
+      },
+      {
+        "title": "Context before complexity",
+        "description": "Scan results are enriched with relevant context, helping analysts connect findings and understand security risks without manually correlating data."
+      },
+      {
+        "title": "Consistency across tools",
+        "description": "A unified interface and familiar interaction patterns across every tool reduce the learning curve and make complex investigations easier to navigate."
+      },
+      {
+        "title": "Insights, not manual reports",
+        "description": "Automated reporting transforms raw scan results into structured, actionable insights, removing repetitive report writing and saving analysts time."
+      }
+    ],
+    "developmentDecisions": [
+      {
+        "title": "Content as structured data",
+        "description": "Roadmaps, stages, checkpoints, topics, and progress are separate models. Topic bodies live in their own document table, and progress is keyed per user and topic. A view layer merges them, so the same system can support multiple guidebooks."
+      },
+      {
+        "title": "Useful state at every step",
+        "description": "Each topic is done, in-progress, not-started, or locked. The states differ by shape and label, not just color: a check, a dot, an empty ring, and a dimmed ring with a 'Needs: Stage N' pill, plus aria-labels and Review/Start actions."
+      },
+      {
+        "title": "Community kept separate from the learning path",
+        "description": "Community is its own area, entered from the roadmap's completion card ('Share your progress'). Learning flow stays focused on topics and progress, and the community layer is built separately instead of cluttering topic pages."
+      }
+    ]
   },
   {
-    "title": "Context before complexity",
-    "description": "Scan results are enriched with relevant context, helping analysts connect findings and understand security risks without manually correlating data."
-  },
-  {
-    "title": "Consistency across tools",
-    "description": "A unified interface and familiar interaction patterns across every tool reduce the learning curve and make complex investigations easier to navigate."
-  },
-  {
-    "title": "Insights, not manual reports",
-    "description": "Automated reporting transforms raw scan results into structured, actionable insights, removing repetitive report writing and saving analysts time."
-  }
-],
-"developmentDecisions": [
-  {
-    "title": "Content as structured data",
-    "description": "Roadmaps, stages, checkpoints, topics, and progress are separate models. Topic bodies live in their own document table, and progress is keyed per user and topic. A view layer merges them, so the same system can support multiple guidebooks."
-  },
-  {
-    "title": "Useful state at every step",
-    "description": "Each topic is done, in-progress, not-started, or locked. The states differ by shape and label, not just color: a check, a dot, an empty ring, and a dimmed ring with a 'Needs: Stage N' pill, plus aria-labels and Review/Start actions."
-  },
-  {
-    "title": "Community kept separate from the learning path",
-    "description": "Community is its own area, entered from the roadmap's completion card ('Share your progress'). Learning flow stays focused on topics and progress, and the community layer is built separately instead of cluttering topic pages."
-  }
-]
-
-},
-{
-
     "id": "notify-ed",
     "name": "Notify-ED",
     "genre": "Communication automation platform",
@@ -115,87 +113,105 @@
     "coverImageWidth": 1672,
     "coverImageHeight": 941,
     "coverAlt": "3D laptop mockup showcasing the Notifyed student grade notification platform website with automated email and WhatsApp alerts, featuring a clean cream and orange interface.",
-  "developmentDecisions": [
-  {
-    "title": "One mark, many channels",
-    "description": "A single marks submission fans out to email and in-app alerts in parallel, so one channel failing never blocks the others. Providers stay swappable (SMTP or webhook for email, WATI or webhook for WhatsApp), with channel-specific message formatting."
-  },
-  {
-    "title": "Validate at the boundary",
-    "description": "Roster upload checks file type and required columns, normalizes cells, and upserts on enrollment number so re-uploads don't duplicate students. Marks are range-checked in the API and enforced again by database constraints before anything is sent."
-  },
-  {
-    "title": "Delivery you can audit",
-    "description": "Each email attempt is logged with channel, status, error message and timestamp, linked back to the mark. Failed sends can be retried from the history view, which updates the same log record."
-  }
-]
-  },
-{
-  "id": "sedative-physio",
-  "name": "Sedative Physio",
-  "genre": "Education platform",
-  "description": "A one-stop learning platform for physiotherapy students: courses, notes and interactive 3D anatomy models in one place, with a free public library and paid courses.",
-  "workType": "design + development",
-  "projectType": "Client Work",
-  "year": "2026",
-  "coverImage": "/mockups/sedativephysio.webp",
-  "coverImageWidth": 1448,
-  "coverImageHeight": 1086,
-  "coverAlt": "Sedative Physio learning platform homepage showing courses, notes and 3D anatomy resources.",
-  "designThinking": {
-    "problem": "Students learn from random PDFs, YouTube and WhatsApp groups, with nothing in one place.",
-    "coreChallenge": "Fit six resource types on one public homepage without scaring a first-timer, and make the paid area feel like a clear next step.",
-    "goals": [
-      "Conversion",
-      "Fewer drop-offs",
-      "Traffic",
-      "Easy to learn",
-      "Scalable",
-      "Not overwhelming"
-    ],
-    "research": "Competitive analysis of physio and ed-tech platforms, plus case studies of similar problems.",
-    "process": "Collected resources, studied what worked and what didn't, picked a premium palette, and decided what belongs on the homepage versus other pages."
-  },
-  "designDecisions": [
-    {
-      "title": "Two-part structure",
-      "description": "A public site for free resources and courses, plus a paid area unlocked after purchase, so the free side earns trust and the paid side feels like a natural next step."
-    },
-    {
-      "title": "A free taste",
-      "description": "A few complimentary 3D models let people see the value before paying."
-    },
-    {
-      "title": "Homepage restraint",
-      "description": "Only the essentials live on the homepage. Everything else gets its own page, so a first-timer is never overwhelmed."
-    },
-    {
-      "title": "Trust and hierarchy",
-      "description": "Clearer hierarchy and trust signals reduce drop-off between landing and checkout."
-    }
-  ],
-  "illustrativeRevenue": {
-    "note": "Illustrative only, not a forecast.",
-    "assumptions": "5,000 visitors a month, courses priced ₹1,000–5,000, 1–3% conversion.",
-    "scenarios": [
-      { "label": "Low", "monthly": "₹50,000", "basis": "1% conversion at ₹1,000" },
-      { "label": "Mid", "monthly": "₹3,00,000", "basis": "3% conversion at ₹2,000" },
-      { "label": "High", "monthly": "₹7,50,000", "basis": "3% conversion at ₹5,000" }
+    "developmentDecisions": [
+      {
+        "title": "One mark, many channels",
+        "description": "A single marks submission fans out to email and in-app alerts in parallel, so one channel failing never blocks the others. Providers stay swappable (SMTP or webhook for email, WATI or webhook for WhatsApp), with channel-specific message formatting."
+      },
+      {
+        "title": "Validate at the boundary",
+        "description": "Roster upload checks file type and required columns, normalizes cells, and upserts on enrollment number so re-uploads don't duplicate students. Marks are range-checked in the API and enforced again by database constraints before anything is sent."
+      },
+      {
+        "title": "Delivery you can audit",
+        "description": "Each email attempt is logged with channel, status, error message and timestamp, linked back to the mark. Failed sends can be retried from the history view, which updates the same log record."
+      }
     ]
   },
-  "developmentDecisions": [
-    {
-      "title": "The server owns the money",
-      "description": "The client sends only course IDs. Prices are recalculated server-side, payment signatures are verified with a timing-safe HMAC, and order status plus enrollments change in one transaction. Verification and the Razorpay webhook are both idempotent, so a closed tab or a retried webhook can't double-enroll or leave a paid order unfulfilled."
+  {
+    "id": "sedative-physio",
+    "name": "Sedative Physio",
+    "genre": "EdTech · Healthcare Education",
+    "description": "An end-to-end design and development of a physiotherapy learning platform, built to make discovering, enrolling and learning feel effortless. And yes, turn a few more visitors into students along the way.",
+    "workType": "design + development",
+    "projectType": "Original Product Design",
+    "year": "2026",
+    "coverImage": "/sedativephysio/1.png",
+    "coverAlt": "Sedative Physio educational platform homepage interface",
+    "designThinking": {
+      "problem": "Physiotherapy students were jumping between scattered resources, hunting for courses, and piecing their learning together. There had to be a better way to bring it all under one roof.",
+      "audience": "Physiotherapy students at different stages of their learning journey, from discovering courses to accessing advanced clinical resources.",
+      "coreChallenge": "Bringing fragmented educational resources into one ecosystem without overwhelming students or complicating their learning experience.",
+      "goals": [
+        "CENTRALISED LEARNING",
+        "EASY COURSE DISCOVERY",
+        "SEAMLESS LEARNING",
+        "CROSS-DEVICE CONSISTENCY",
+        "SCALABLE DESIGN SYSTEM"
+      ],
+      "research": "01. User Research\n- New visitors: Clarity, reassurance and easy discovery.\n- Returning students: Quick access to courses, lectures and materials.\n\nKey Insight: Separate course discovery from the learning experience.\n\n02. Design Process\n- Product & IA: Understand offerings and structure the platform.\n- UX Planning: Simplify navigation and user journeys.\n- Interface Design: Create consistent, high-fidelity interfaces.\n- Responsive Design: Optimise experiences across devices.\n- Design System: Build reusable components for future growth.",
+      "intro": "One connected learning experience that makes course discovery easier and learning more accessible across devices.",
+      "designGoal": "Create an organised, accessible learning environment that helps newcomers discover educational opportunities while allowing enrolled students to continue learning seamlessly."
     },
-    {
-      "title": "Clerk owns identity, the app owns domain data",
-      "description": "Credentials and sessions live in Clerk, and the database keeps only the learner profile, orders and enrollments. Profiles sync through signed webhooks, with just-in-time provisioning as a fallback for local sign-ins. Orders are scoped by user ID rather than email, and deleted users are soft-tombstoned so purchase history survives."
+    "designDecisions": [
+      {
+        "title": "Two experiences, one platform",
+        "description": "We split the experience into two parts: a public-facing website for discovering courses and getting started, and a dedicated student space for everything that comes after enrollment. Different needs, different spaces, one connected ecosystem."
+      },
+      {
+        "title": "All kinds of learning, under one roof",
+        "description": "Recorded lectures, live classes, webinars, clinical resources, MCQs and even 3D anatomy models. Rather than sending students on a tour of different platforms, we brought everything together in one organised learning environment."
+      },
+      {
+        "title": "Making course discovery less of a treasure hunt",
+        "description": "We gave courses, content categories and key information the attention they deserved. Focused homepage sections and clearer content hierarchy helped visitors understand what was available without having to dig around."
+      },
+      {
+        "title": "Pick up right where you left off",
+        "description": "Returning students shouldn't have to find their way around all over again. We kept navigation familiar and learning materials within easy reach, making it simpler to jump back into a course or revisit a lecture."
+      },
+      {
+        "title": "Learning doesn't stay on one screen",
+        "description": "The experience was designed with desktop, tablet and mobile in mind from the beginning. Because students should be able to access their learning materials wherever they happen to be."
+      },
+      {
+        "title": "Built to grow, not just to launch",
+        "description": "We created reusable components, consistent typography and shared visual patterns to keep the experience feeling like one product. It also gives the platform room to grow without reinventing the wheel every time something new gets added."
+      }
+    ],
+    "developmentDecisions": [
+      {
+        "title": "Development in progress",
+        "description": "Developer is still arguing with the code."
+      }
+    ],
+    "coverVideo": "/sedativephysio/video-mockup.mp4",
+    "overview": {
+      "role": "",
+      "deliverables": [],
+      "technology": [],
+      "services": []
     },
-    {
-      "title": "Heavy assets stay off the API",
-      "description": "Note PDFs sit in Cloudflare R2 behind 5-minute presigned URLs, 3D anatomy models are served from jsDelivr, and images are converted to WebP at build time or on demand. API responses are no-store by default, and public routes opt in to CDN caching with ETags."
+    "illustrativeRevenue": {
+      "note": "Illustrative only, not a forecast.",
+      "assumptions": "5,000 visitors a month, courses priced ₹1,000–5,000, 1–3% conversion.",
+      "scenarios": [
+        {
+          "label": "Low",
+          "monthly": "₹50,000",
+          "basis": "1% conversion at ₹1,000"
+        },
+        {
+          "label": "Mid",
+          "monthly": "₹3,00,000",
+          "basis": "3% conversion at ₹2,000"
+        },
+        {
+          "label": "High",
+          "monthly": "₹7,50,000",
+          "basis": "3% conversion at ₹5,000"
+        }
+      ]
     }
-  ]
-}
+  }
 ]

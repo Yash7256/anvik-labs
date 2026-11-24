@@ -202,9 +202,9 @@ export function getVisualQuality(): VisualQuality {
     width < 768 || (memory !== undefined && memory <= 4) || cores <= 4;
 
   return {
-    dpr: Math.min(window.devicePixelRatio || 1, constrained ? 1.35 : 1.75),
-    particleCount: constrained ? 1400 : 4200,
-    fluidSize: constrained ? 128 : 256,
+    dpr: Math.min(window.devicePixelRatio || 1, constrained ? 1.25 : 1.5),
+    particleCount: constrained ? 1200 : 3200,
+    fluidSize: constrained ? 128 : 192,
     topographic: true,
   };
 }

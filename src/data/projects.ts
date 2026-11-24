@@ -5,12 +5,57 @@ export type ProjectWorkType = "design" | "development" | "both";
 export type ProjectDecision = {
   title: string;
   description: string;
+  why?: string;
+  outcome?: string;
 };
 
 export type ProjectLinks = {
   behance?: string;
   live?: string;
   github?: string;
+};
+
+export type ProjectDesignThinking = {
+  intro?: string;
+  problem: string;
+  audience?: string;
+  coreChallenge: string;
+  designGoal?: string;
+  goals: string[];
+  research: string;
+};
+
+export type ProjectRevenueScenario = {
+  label: string;
+  monthly: string;
+  basis: string;
+};
+
+export type ProjectIllustrativeRevenue = {
+  note: string;
+  assumptions: string;
+  scenarios: ProjectRevenueScenario[];
+};
+
+export type ProjectOutcome = {
+  title: string;
+  description: string;
+};
+
+export type ProjectOverview = {
+  role?: string;
+  deliverables?: string[];
+  technology?: string[];
+  services?: string[];
+};
+
+export type ProjectImage = {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+  detail?: string;
 };
 
 export type Project = {
@@ -22,10 +67,16 @@ export type Project = {
   projectType: string;
   year: string;
   coverImage: string;
+  coverVideo?: string;
   coverImageWidth?: number;
   coverImageHeight?: number;
   coverAlt: string;
+  gallery?: ProjectImage[];
   links?: ProjectLinks;
+  overview?: ProjectOverview;
+  designThinking?: ProjectDesignThinking;
+  illustrativeRevenue?: ProjectIllustrativeRevenue;
+  outcomes?: ProjectOutcome[];
   designDecisions: ProjectDecision[];
   developmentDecisions: ProjectDecision[];
 };

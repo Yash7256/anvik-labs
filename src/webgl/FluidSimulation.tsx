@@ -126,6 +126,7 @@ export default function FluidSimulation() {
   const size = useThree((state) => state.size);
   const quality = useMemo(() => getVisualQuality(), []);
   const indexRef = useRef(0);
+  const accumulatorRef = useRef(0);
 
   const targets = useMemo(() => {
     const make = () => {
@@ -211,12 +212,18 @@ export default function FluidSimulation() {
   }, [gl, material, scene, targets]);
 
   useFrame((state, delta) => {
+    accumulatorRef.current += Math.min(delta, 1 / 20);
+    if (accumulatorRef.current < 1 / 60) return;
+
+    const step = Math.min(accumulatorRef.current, 1 / 20);
+    accumulatorRef.current = 0;
+
     const read = targets[indexRef.current];
     const write = targets[1 - indexRef.current];
 
     material.uniforms.uPrev.value = read.texture;
     material.uniforms.uTime.value = state.clock.elapsedTime;
-    material.uniforms.uDelta.value = delta;
+    material.uniforms.uDelta.value = step;
     material.uniforms.uPointer.value.set(
       visualState.pointer.x,
       visualState.pointer.y,

@@ -152,20 +152,42 @@ export default function Hero() {
     const button = cueButtonRef.current;
     if (!button) return;
 
-    const updateCuePosition = () => {
+    let frame = 0;
+    let inView = true;
+
+    const measure = () => {
+      frame = 0;
       const rect = button.getBoundingClientRect();
       if (rect.width === 0 || rect.height === 0) return;
       visualState.cue.x = (rect.left + rect.width / 2) / window.innerWidth;
       visualState.cue.y = (rect.top + rect.height / 2) / window.innerHeight;
     };
 
-    updateCuePosition();
-    window.addEventListener("resize", updateCuePosition);
-    window.addEventListener("scroll", updateCuePosition, { passive: true });
+    const schedule = () => {
+      if (inView && !frame) frame = window.requestAnimationFrame(measure);
+    };
+
+    const observer =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            ([entry]) => {
+              inView = entry.isIntersecting;
+              if (inView) schedule();
+            },
+            { threshold: 0 },
+          )
+        : null;
+
+    observer?.observe(rootRef.current ?? button);
+    measure();
+    window.addEventListener("resize", schedule);
+    window.addEventListener("scroll", schedule, { passive: true });
 
     return () => {
-      window.removeEventListener("resize", updateCuePosition);
-      window.removeEventListener("scroll", updateCuePosition);
+      observer?.disconnect();
+      window.removeEventListener("resize", schedule);
+      window.removeEventListener("scroll", schedule);
+      if (frame) window.cancelAnimationFrame(frame);
       visualState.cue.active = false;
       visualState.cue.targetStrength = 0;
     };

@@ -127,12 +127,22 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 
 - Framer Motion handles navigation presence, portrait reveals and pointer parallax, accordions, and reduced-motion detection in components that need it.
 - GSAP + ScrollTrigger handle homepage entrances, service-row reveals, cover and portrait parallax, the testimonial marquee, and the footer tagline reveal.
+- The Sedative Physio case study adds masked heading reveals, a clip/scale cover entrance, scrubbed gallery parallax, staggered decision rows and goal pills, and a subtle next-project arrow nudge. Its two CSS marquee rows pause on hover, keyboard focus, offscreen, and hidden-tab states; reduced motion renders one static, horizontally scrollable sequence per row and skips the GSAP motion.
 - Lenis provides site-wide smooth scrolling, driven by GSAP's ticker. Hash navigation and back-to-top use Lenis with a header offset; native CSS smooth scrolling stays off to avoid double easing.
 - Prefer opacity, small translate, scale, and mask transitions. Avoid long loops, scroll-jacking, elastic easing, and animating layout-driving properties.
 - The hero project strip opts out of Lenis with `data-lenis-prevent` so its native horizontal snap scrolling keeps working.
 - The mobile hero marquee loops one duplicated set of project names with a 12s linear CSS animation; reduced-motion users see the static set.
 - Route changes fade in only after hydration, so prerendered HTML stays visible without JavaScript. Works filtering, contact status changes, and scroll progress hairlines use short, reduced-motion-aware transitions.
 - Respect `prefers-reduced-motion`. Lenis honors it natively, Framer Motion is configured with `reducedMotion="user"`, GSAP blocks are skipped in reduced motion, testimonials become a static grid, and the global stylesheet shortens CSS transitions.
+
+## Scroll performance
+
+- The target is 120 Hz scroll headroom on capable displays; the browser and display still set the actual refresh rate. Frame work stays on transform/opacity/mask properties, with `will-change` limited to elements that actually animate.
+- ScrollTrigger coalesces callbacks and ignores mobile URL-bar resize churn. Lenis drives native scrolling from the same GSAP ticker, avoiding a second scroll loop.
+- Layout reads are cached or rAF-coalesced. WebGL receives scroll state from ScrollTrigger instead of its own layout-reading listener, and the hero cue is measured only while the hero is visible.
+- Decorative videos play only when near the viewport and pause on hidden tabs. Service-card fluid and pill loops pause offscreen; the Sedative marquees and testimonial marquee already pause offscreen.
+- Analytics stays pageview/pageleave-only: session recording, heatmaps, autocapture, and surveys are disabled so third-party work does not compete with scroll frames.
+- WebGL quality is capped for high-refresh headroom (1.5 DPR, 3200 particles, 192px fluid simulation on full-size screens), and the fluid solve is capped at 60 Hz while the canvas remains responsive.
 
 ## Content and provenance
 

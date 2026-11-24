@@ -1,47 +1,48 @@
+import { ScrollTrigger } from "@/lib/gsap";
 import { setScrollTarget } from "./state";
 
 export function initScrollController() {
-  let frame = 0;
-  let lastY = window.scrollY;
-  let lastTime = performance.now();
+  let end = Math.max(1, window.innerHeight * 0.6);
 
-  const measure = () => {
-    frame = 0;
-    const now = performance.now();
-    const y = window.scrollY;
-    const elapsed = Math.max(16, now - lastTime) / 1000;
-    const velocity =
-      ((y - lastY) / elapsed / Math.max(1, window.innerHeight)) * 0.35;
-
-    lastY = y;
-    lastTime = now;
-
+  const measureBounds = () => {
     const works = document.getElementById("works");
     const hero = document.getElementById("hero");
-    if (!works || !hero) return;
+    if (!works || !hero) {
+      end = Math.max(1, window.innerHeight * 0.6);
+      return;
+    }
 
+    const y = window.scrollY;
     const worksTop = works.getBoundingClientRect().top + y;
     const heroBottom = hero.getBoundingClientRect().bottom + y;
-    const end = Math.max(
+    end = Math.max(
       1,
       Math.min(worksTop, heroBottom) - window.innerHeight * 0.4,
     );
-
-    setScrollTarget(y / end, velocity);
   };
 
-  const onScroll = () => {
-    if (!frame) frame = window.requestAnimationFrame(measure);
+  const trigger = ScrollTrigger.create({
+    start: 0,
+    end: "max",
+    onUpdate: (self) => {
+      const velocity =
+        (self.getVelocity() / Math.max(1, window.innerHeight)) * 0.35;
+      setScrollTarget(window.scrollY / end, velocity);
+    },
+  });
+
+  const refresh = () => {
+    measureBounds();
+    setScrollTarget(window.scrollY / end, 0);
   };
 
-  measure();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
+  measureBounds();
+  setScrollTarget(window.scrollY / end, 0);
+  ScrollTrigger.addEventListener("refresh", refresh);
 
   return () => {
-    window.removeEventListener("scroll", onScroll);
-    window.removeEventListener("resize", onScroll);
-    if (frame) window.cancelAnimationFrame(frame);
+    ScrollTrigger.removeEventListener("refresh", refresh);
+    trigger.kill();
     setScrollTarget(0, 0);
   };
 }

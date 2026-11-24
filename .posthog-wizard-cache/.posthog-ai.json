@@ -1,0 +1,5 @@
+{
+  "provider": "manual-capture",
+  "package": "posthog-node",
+  "otel_init_file": "src/lib/ai-observability.server.ts"
+}
