@@ -2,6 +2,7 @@
   "name": "portfolio-new",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://anviklabs.site",
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build && node scripts/postbuild.mjs",

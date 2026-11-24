@@ -444,7 +444,7 @@ export default function Services() {
                       {card.description}
                     </p>
 
-                    <div className="mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]" aria-label={`${card.name} capabilities`}>
+                    <div className="mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]" role="group" aria-label={`${card.name} capabilities`}>
                       {reduceMotion ? (
                         <ul className="flex flex-wrap gap-2">
                           {card.pills.map((pill) => (

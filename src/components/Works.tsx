@@ -30,7 +30,7 @@ export default function Works() {
 
       const introSplits = [
         createMaskedText(heading, "chars"),
-        createMaskedText(body, "words"),
+        createMaskedText(body, "words", "none"),
       ];
       const allSplits = [...introSplits];
       const [headingParts, bodyParts] = introSplits.map((split) =>

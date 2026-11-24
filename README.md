@@ -1,5 +1,7 @@
 # Anvik Labs
 
+**Live site:** [anviklabs.site](https://anviklabs.site)
+
 Portfolio and studio site for Anvik Labs, a product design and engineering studio. The site is a type-led React Router application with a small set of editorial routes: home, selected work, project detail, services, and contact. A light/dark theme toggle in the header persists the visitor's choice in local storage.
 
 ## Stack

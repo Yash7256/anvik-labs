@@ -1,7 +1,8 @@
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
-import { Link, redirect, useLoaderData } from "react-router";
+import { isRouteErrorResponse, Link, redirect, useLoaderData, useRouteError } from "react-router";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import NotFoundPage from "@/components/NotFoundPage";
 import JsonLd from "@/components/JsonLd";
 import Mermaid from "@/components/Mermaid";
 import { getJournalPost, getJournalPostText, type JournalContentBlock } from "@/data/journal";
@@ -47,6 +48,19 @@ export const meta: MetaFunction<typeof loader> = (args) => {
     keywords: post.keywords,
   });
 };
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  return (
+    <NotFoundPage
+      title={
+        isRouteErrorResponse(error) && error.status === 404
+          ? "Journal post not found"
+          : "Something went wrong"
+      }
+    />
+  );
+}
 
 function formatDate(date: string) {
   return new Intl.DateTimeFormat("en-US", {

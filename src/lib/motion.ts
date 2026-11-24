@@ -82,6 +82,7 @@ export function useMagnetic<T extends HTMLElement>(strength = 0.16) {
 export function createMaskedText(
   element: HTMLElement,
   type: "lines" | "words" | "chars" = "words",
+  aria: "auto" | "hidden" | "none" = "auto",
 ) {
   return SplitText.create(element, {
     type,
@@ -89,7 +90,7 @@ export function createMaskedText(
     linesClass: "motion-line",
     wordsClass: "motion-word",
     charsClass: "motion-char",
-    aria: "auto",
+    aria,
     autoSplit: false,
     reduceWhiteSpace: true,
   });

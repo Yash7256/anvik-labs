@@ -48,7 +48,6 @@ const organizationJsonLd = {
     availableLanguage: ["en"],
   },
   ...(site.sameAs.length > 0 ? { sameAs: site.sameAs } : {}),
-  ...(site.foundingDate ? { foundingDate: site.foundingDate } : {}),
 };
 
 const websiteJsonLd = {

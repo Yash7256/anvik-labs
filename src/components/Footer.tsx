@@ -28,7 +28,7 @@ export default function Footer() {
     () => {
       if (reduceMotion || !taglineRef.current) return;
 
-      const split = createMaskedText(taglineRef.current, "words");
+      const split = createMaskedText(taglineRef.current, "words", "none");
       gsap.set(split.words, { yPercent: 110, opacity: 0 });
 
       gsap.to(split.words, {

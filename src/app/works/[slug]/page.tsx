@@ -1,13 +1,14 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
-import { Link, useParams, type LoaderFunctionArgs, type MetaFunction } from "react-router";
+import { isRouteErrorResponse, Link, useParams, useRouteError, type LoaderFunctionArgs, type MetaFunction } from "react-router";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
 import { useVideoPlayback } from "@/lib/useVideoPlayback";
 import Image from "@/components/Img";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import NotFoundPage from "@/components/NotFoundPage";
 import JsonLd from "@/components/JsonLd";
 import Reveal from "@/components/Reveal";
 import {
@@ -222,6 +223,19 @@ export const meta: MetaFunction = ({ params }) => {
     imageAlt: project.coverAlt,
   });
 };
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  return (
+    <NotFoundPage
+      title={
+        isRouteErrorResponse(error) && error.status === 404
+          ? "Work not found"
+          : "Something went wrong"
+      }
+    />
+  );
+}
 
 function DecisionSection({ id, label, intro, items, variant = "default", animateHeading = false }: {
   id: string;

@@ -19,11 +19,11 @@ export const site = {
   ogImageAlt: "Anvik Labs — independent product design and engineering studio",
   themeColor: "#f5f5f5",
   backgroundColor: "#f5f5f5",
-  // Add verified Anvik Labs profiles here when official company accounts exist.
-  // Individual team profiles live in `src/data/socials.json` and are not used here.
-  sameAs: [] as string[],
-  // Present in project history; verify externally before treating as authoritative business fact.
-  foundingDate: "2020-11-02",
+  // Official company profiles only; individual team profiles live in `src/data/socials.json`.
+  sameAs: [
+    "https://www.linkedin.com/company/anviklabs",
+    "https://www.instagram.com/anviklabs/",
+  ] as string[],
 };
 
 export const organizationId = `${site.url}/#organization`;
