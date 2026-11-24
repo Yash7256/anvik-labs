@@ -17,6 +17,7 @@ import {
   getProjectWorkType,
   projects,
   type ProjectDecision,
+  type ProjectEmbed,
   type ProjectImpact,
   type ProjectOutcome,
 } from "@/data/projects";
@@ -344,6 +345,44 @@ function DecisionSection({ id, label, intro, items, variant = "default", animate
                 </article>
               ))}
             </div>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function EmbedSection({ embeds, note }: { embeds: ProjectEmbed[]; note?: string }) {
+  return (
+    <section id="component-embeds" aria-labelledby="component-embeds-heading" className="py-16 md:py-24">
+      <Reveal>
+        <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
+          <div>
+            <h2 id="component-embeds-heading" data-case-heading="" className="mt-4 max-w-[14ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Component embeds</h2>
+          </div>
+          <div>
+            {note && <p className="max-w-[55ch] text-[15px] leading-relaxed text-muted">{note}</p>}
+            {embeds.length ? (
+              <div className="mt-8 space-y-6">
+                {embeds.map((embed) => (
+                  <figure key={embed.url} className="overflow-hidden rounded-[6px] border border-border bg-light-surface">
+                    <iframe
+                      src={embed.url}
+                      title={embed.title}
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className="block h-[min(70vh,520px)] w-full border-0"
+                    />
+                    <figcaption className={`${mono} flex flex-wrap items-baseline justify-between gap-3 border-t border-border px-4 py-3 text-muted`}>
+                      <a href={embed.url} target="_blank" rel="noreferrer" className="transition-colors hover:text-foreground focus-visible:text-foreground">
+                        {embed.title} [ &rarr; ]
+                      </a>
+                      {embed.description && <span>{embed.description}</span>}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            ) : null}
           </div>
         </div>
       </Reveal>
@@ -757,6 +796,9 @@ export default function WorkPage() {
             variant={section.variant}
           />
         ))}
+        {project.embeds?.length || project.embedsNote ? (
+          <EmbedSection embeds={project.embeds ?? []} note={project.embedsNote} />
+        ) : null}
         {isSedative && (
           <section className="-mx-8 py-12 sm:-mx-[8vw] md:-mx-[9vw] lg:-mx-[10vw] xl:-mx-[11vw] md:py-16" aria-label="Sedative Physio interface showcase">
             <MarqueeRow basePath="sedativephysio" label="Sedative Physio" images={SEDATIVE_MARQUEE_IMAGES.slice(0, 4)} direction="left" />

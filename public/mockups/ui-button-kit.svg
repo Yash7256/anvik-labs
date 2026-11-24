@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">UI Button Kit component sheet</title>
+  <desc id="desc">An editorial sheet showing six button variants: primary, secondary, tertiary, destructive, disabled, and loading.</desc>
+  <rect width="1200" height="675" fill="#f5f5f5"/>
+  <g font-family="Geist Mono, ui-monospace, monospace" font-size="14" letter-spacing="2" fill="#656565">
+    <text x="64" y="72">UI BUTTON KIT</text>
+    <text x="64" y="104">BUTTON STATES / VARIANTS</text>
+  </g>
+  <path d="M64 132H1136" stroke="#d4d4d4" stroke-width="1"/>
+
+  <g font-family="Geist Mono, ui-monospace, monospace" font-size="12" letter-spacing="1.5" fill="#656565">
+    <text x="64" y="180">01 / PRIMARY</text>
+    <text x="470" y="180">02 / SECONDARY</text>
+    <text x="876" y="180">03 / TERTIARY</text>
+    <text x="64" y="360">04 / DESTRUCTIVE</text>
+    <text x="470" y="360">05 / DISABLED</text>
+    <text x="876" y="360">06 / LOADING</text>
+  </g>
+
+  <rect x="64" y="200" width="260" height="64" rx="6" fill="#ff5a0a"/>
+  <text x="194" y="239" text-anchor="middle" font-family="Geist, sans-serif" font-size="20" font-weight="600" fill="#0d0d0d">Continue</text>
+
+  <rect x="470" y="200" width="260" height="64" rx="6" fill="none" stroke="#171717" stroke-width="1.5"/>
+  <text x="600" y="239" text-anchor="middle" font-family="Geist, sans-serif" font-size="20" font-weight="500" fill="#171717">Continue</text>
+
+  <text x="876" y="239" font-family="Geist, sans-serif" font-size="20" font-weight="500" fill="#171717">Continue</text>
+  <path d="M876 248H964" stroke="#171717" stroke-width="1.5"/>
+
+  <rect x="64" y="380" width="260" height="64" rx="6" fill="#171717"/>
+  <text x="194" y="419" text-anchor="middle" font-family="Geist, sans-serif" font-size="20" font-weight="600" fill="#f5f5f5">Delete</text>
+
+  <rect x="470" y="380" width="260" height="64" rx="6" fill="#e6e6e6"/>
+  <text x="600" y="419" text-anchor="middle" font-family="Geist, sans-serif" font-size="20" font-weight="500" fill="#656565">Continue</text>
+
+  <rect x="876" y="380" width="260" height="64" rx="6" fill="none" stroke="#171717" stroke-width="1.5"/>
+  <circle cx="912" cy="412" r="10" fill="none" stroke="#ff5a0a" stroke-width="3" stroke-dasharray="44 18"/>
+  <text x="982" y="419" text-anchor="middle" font-family="Geist, sans-serif" font-size="20" font-weight="500" fill="#171717">Saving</text>
+
+  <path d="M64 520H1136" stroke="#d4d4d4" stroke-width="1"/>
+  <text x="64" y="560" font-family="Geist Mono, ui-monospace, monospace" font-size="12" letter-spacing="2" fill="#656565">COMPONENT STUDY — 2026</text>
+</svg>

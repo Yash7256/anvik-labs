@@ -78,6 +78,12 @@ export type ProjectImage = {
   detail?: string;
 };
 
+export type ProjectEmbed = {
+  title: string;
+  url: string;
+  description?: string;
+};
+
 export type Project = {
   id: string;
   name: string;
@@ -92,6 +98,8 @@ export type Project = {
   coverImageHeight?: number;
   coverAlt: string;
   gallery?: ProjectImage[];
+  embeds?: ProjectEmbed[];
+  embedsNote?: string;
   links?: ProjectLinks;
   overview?: ProjectOverview;
   designThinking?: ProjectDesignThinking;
