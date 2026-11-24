@@ -11,6 +11,7 @@
     "coverImageWidth": 1672,
     "coverImageHeight": 941,
     "coverAlt": "3D desktop monitor mockup displaying the CyberSec cybersecurity platform website with an AI-powered vulnerability scanning dashboard in a dark purple interface.",
+    "coverVideo": "/cybersec-toolkit/cover.mp4",
     "designThinking": {
       "intro": "We designed CyberSec Toolkit as a unified security workspace, bringing six essential capabilities together. The challenge was to simplify the experience, not the security information itself.",
       "problem": "Security professionals rarely get everything they need from a single tool. A typical investigation means juggling port scanners, DNS lookups, SSL analyzers, WHOIS services, vulnerability databases and threat intelligence platforms. Findings then need to be collected, analysed and turned into reports through a lot of manual work.",
