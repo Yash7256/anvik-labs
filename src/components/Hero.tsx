@@ -383,9 +383,9 @@ export default function Hero() {
         <div className="hero-bottom mx-auto flex w-full flex-col items-center">
           <p
             ref={copyRef}
-            className="hero-copy max-w-[520px] text-center text-[16px] leading-[1.6] text-foreground md:text-[17px]"
+            className="hero-copy max-w-[520px] text-center text-[16px] leading-[1.6] text-foreground [text-wrap:balance] md:text-[17px]"
           >
-            Anvik Labs is an independent product design and engineering studio based in India, working with teams worldwide. We design digital experiences, build web products, explore practical AI, and occasionally get carried away with ideas.
+            Anvik Labs is an independent product design and engineering studio in India, building digital products for teams worldwide.
           </p>
 
           <button
