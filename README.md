@@ -92,6 +92,7 @@ public/
 - Respect `prefers-reduced-motion` for animated content. The hero WebGL layer is skipped for reduced-motion visitors and when WebGL is unavailable; a static CSS ambience is shown instead.
 - Above-the-fold styling is inlined from `src/app/critical.css`; the full stylesheet is loaded asynchronously after first paint.
 - The three used typefaces are self-hosted in `public/fonts` with their OFL licences, so no third-party font stylesheet blocks rendering.
+- Project mockups ship 320/380/480/640/768/800/1024/1440 WebP variants; grid video posters use the 380px variant so they match their displayed size.
 - The WebGL scene and Lenis smooth scrolling load only after user interaction, or after a short idle delay for WebGL, so their bundles stay out of the initial render path.
 - The current design system is documented in [`design.md`](./design.md).
 - The frontend audit and its remaining risks are in [`docs/frontend-ai-slop-audit.md`](./docs/frontend-ai-slop-audit.md).
@@ -99,6 +100,8 @@ public/
 ## Deployment
 
 The app builds to `build/client` as prerendered static HTML and can be deployed to any static host. React Router runs in SPA mode because Vercel's React Router preset does not support React Router 8. Vercel is configured with the `Other` framework preset, `build/client` as the output directory, clean URLs, and a static `404.html` so unknown paths return a real `404` instead of invoking a server function. Known legacy URLs, the `www` host, and trailing-slash variants are redirected to canonical URLs with `301` in `vercel.json`; set the host to serve `404.html` for unmatched paths. If a domain-level `www` redirect is also configured in Vercel's Domains settings, remove it so the `vercel.json` host rule can return `301` instead of Vercel's default `307`.
+
+Cloudflare Web Analytics and Email Address Obfuscation inject `beacon.min.js` and `email-decode.min.js` into HTML at the edge. Disable both in the Cloudflare dashboard rather than setting `Cache-Control: no-transform`, which would remove HTML compression. Do not add the beacon to the CSP allowlist after the dashboard change.
 
 ### Search engine verification
 

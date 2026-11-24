@@ -49,7 +49,7 @@ export default function ProjectCard({
   const isFeatured = variant === "featured";
   const coverSrcSet = imageSrcSet(project.coverImage, MOCKUP_WIDTHS);
   const coverPoster = project.coverVideo
-    ? imageVariant(project.coverImage, 640)
+    ? imageVariant(project.coverImage, isFeatured ? 640 : 380)
     : project.coverImage;
 
   const rootRef = useRef<HTMLElement>(null);

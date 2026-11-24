@@ -1,6 +1,6 @@
 const RASTER_EXTENSION = /\.(webp|png|jpe?g)$/i;
 
-export const MOCKUP_WIDTHS = [640, 1024, 1440] as const;
+export const MOCKUP_WIDTHS = [320, 380, 480, 640, 768, 800, 1024, 1440] as const;
 export const SCREEN_WIDTHS = [480, 768, 1200] as const;
 
 export function imageSrcSet(
