@@ -354,9 +354,9 @@ export default function Hero() {
 
       <div
         ref={contentRef}
-        className="relative flex flex-1 flex-col justify-between px-4 pb-[6svh] pt-[11svh] sm:px-[4vw] md:pb-[7svh] md:pt-[12svh] lg:px-[5vw] xl:px-[6vw]"
+        className="hero-content relative flex flex-1 flex-col justify-between px-4 pb-[6svh] pt-[11svh] sm:px-[4vw] md:pb-[7svh] md:pt-[12svh] lg:px-[5vw] xl:px-[6vw]"
       >
-        <div className="flex flex-col items-center">
+        <div className="hero-heading-wrap flex flex-col items-center">
           <p
             ref={eyebrowRef}
             className="hero-eyebrow mb-6 inline-flex items-center gap-3 font-mono text-[12px] uppercase tracking-[0.16em] text-muted md:mb-8"
@@ -380,10 +380,10 @@ export default function Hero() {
           </h1>
         </div>
 
-        <div className="mx-auto flex w-full flex-col items-center">
+        <div className="hero-bottom mx-auto flex w-full flex-col items-center">
           <p
             ref={copyRef}
-            className="max-w-[520px] text-center text-[16px] leading-[1.6] text-foreground md:text-[17px]"
+            className="hero-copy max-w-[520px] text-center text-[16px] leading-[1.6] text-foreground md:text-[17px]"
           >
             Anvik Labs is an independent product design and engineering studio based in India, working with teams worldwide. We design digital experiences, build web products, explore practical AI, and occasionally get carried away with ideas.
           </p>

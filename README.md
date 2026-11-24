@@ -90,6 +90,8 @@ public/
 - Avoid decorative gradients, heavy shadows, oversized radii, and generic card grids.
 - Use semantic landmarks, one `h1` per page, visible focus states, labelled form controls, and alt text for meaningful images.
 - Respect `prefers-reduced-motion` for animated content. The hero WebGL layer is skipped for reduced-motion visitors and when WebGL is unavailable; a static CSS ambience is shown instead.
+- Above-the-fold styling is inlined from `src/app/critical.css`; the full stylesheet is loaded asynchronously after first paint.
+- The three used typefaces are self-hosted in `public/fonts` with their OFL licences, so no third-party font stylesheet blocks rendering.
 - The current design system is documented in [`design.md`](./design.md).
 - The frontend audit and its remaining risks are in [`docs/frontend-ai-slop-audit.md`](./docs/frontend-ai-slop-audit.md).
 

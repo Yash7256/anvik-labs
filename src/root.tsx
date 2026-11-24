@@ -22,9 +22,11 @@ import {
 } from "@/lib/smooth-scroll";
 import { createMeta, organizationId, site, websiteId } from "@/lib/site";
 import { searchVerification } from "@/lib/search-verification";
-import "./app/globals.css";
+import criticalCss from "./app/critical.css?inline";
+import globalCssUrl from "./app/globals.css?url";
 
 const themeInitScript = `try{var t=localStorage.getItem("anvik-theme");if(t!=="light"&&t!=="dark")t="light";var r=document.documentElement;r.dataset.theme=t;r.style.colorScheme=t;}catch(e){document.documentElement.dataset.theme="light";}`;
+const asyncCssScript = `(()=>{var l=document.createElement("link");l.rel="stylesheet";l.href=${JSON.stringify(globalCssUrl)};l.media="print";l.onload=function(){this.media="all";this.onload=null};document.head.appendChild(l);})()`;
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -121,11 +123,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap"
+        <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
+        {["geist-latin", "space-grotesk-latin", "geist-mono-latin"].map((font) => (
+          <link
+            key={font}
+            rel="preload"
+            href={`/fonts/${font}.woff2`}
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+        ))}
+        <link rel="preload" href={globalCssUrl} as="style" />
+        <script dangerouslySetInnerHTML={{ __html: asyncCssScript }} />
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<link rel="stylesheet" href="${globalCssUrl}" />`,
+          }}
         />
         <script
           type="application/ld+json"
@@ -143,7 +157,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           Skip to content
         </a>
         <Background />
-        <div className="w-full flex flex-1 flex-col px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
+        <div className="site-shell w-full flex flex-1 flex-col px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
           {children}
         </div>
         <ScrollRestoration />

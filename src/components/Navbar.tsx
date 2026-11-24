@@ -164,8 +164,8 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background">
-        <div className="px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
+      <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-border bg-background">
+        <div className="site-header__inner px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -173,12 +173,12 @@ export default function Navbar() {
               duration: reduceMotion ? 0 : 0.6,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="grid h-[var(--header-height)] grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]"
+            className="site-header__bar grid h-[var(--header-height)] grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]"
           >
             <Link
               to="/"
               aria-label="Anvik Labs home"
-              className="inline-flex w-fit items-center transition-opacity duration-200 hover:opacity-70"
+              className="site-logo inline-flex w-fit items-center transition-opacity duration-200 hover:opacity-70"
             >
               <img
                 src="/assets/logo.svg"
@@ -196,7 +196,7 @@ export default function Navbar() {
             <nav
               ref={navRef}
               aria-label="Primary navigation"
-              className="relative hidden items-center justify-end gap-8 md:flex lg:gap-10"
+              className="site-nav relative hidden items-center justify-end gap-8 md:flex lg:gap-10"
               onPointerLeave={resetNavLine}
               onBlurCapture={(event) => {
                 if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
