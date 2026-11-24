@@ -15,6 +15,7 @@ import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION, useFinePointer } from "@/lib/motion";
 import { useVideoPlayback } from "@/lib/useVideoPlayback";
 import { createMeta } from "@/lib/site";
+import { imageSrcSet, imageVariant } from "@/lib/images";
 
 export const meta: MetaFunction = () =>
   createMeta({
@@ -110,7 +111,7 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
                 <video
                   ref={imageRef as React.RefObject<HTMLVideoElement>}
                   src={project.coverVideo}
-                  poster={project.coverImage}
+                  poster={imageVariant(project.coverImage, 640)}
                   aria-label={project.coverAlt}
                   muted
                   loop
@@ -122,6 +123,8 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
                 <img
                   ref={imageRef as React.RefObject<HTMLImageElement>}
                   src={project.coverImage}
+                  srcSet={imageSrcSet(project.coverImage)}
+                  sizes="(min-width: 1024px) 52vw, (min-width: 640px) 60vw, 100vw"
                   alt={project.coverAlt}
                   loading={index < 2 ? "eager" : "lazy"}
                   decoding="async"

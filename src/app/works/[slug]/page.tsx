@@ -21,6 +21,7 @@ import {
 } from "@/data/projects";
 import { createMeta, createWorkDescription, site } from "@/lib/site";
 import { createBreadcrumbJsonLd, createWorkJsonLd } from "@/lib/schema";
+import { imageSrcSet, imageVariant, SCREEN_WIDTHS } from "@/lib/images";
 
 export function loader({ params }: LoaderFunctionArgs) {
   if (!getProject(params.slug ?? "")) throw new Response("Work not found", { status: 404 });
@@ -87,7 +88,9 @@ function MarqueeRow({ images, direction }: { images: readonly MarqueeImage[]; di
   const renderImages = (duplicate: boolean) => sequence.map((image, index) => (
     <img
       key={`${direction}-${duplicate ? "copy" : "original"}-${index}-${image.file}`}
-      src={`/sedativephysio/${image.file}`}
+      src={imageVariant(`/sedativephysio/${image.file}`, 480)}
+      srcSet={imageSrcSet(`/sedativephysio/${image.file}`, SCREEN_WIDTHS)}
+      sizes="(max-width: 640px) 150px, 300px"
       alt={duplicate || index >= images.length ? "" : image.alt}
       width={image.width}
       height={image.height}
@@ -478,7 +481,7 @@ export default function WorkPage() {
                   ref={coverVideoRef}
                   data-case-cover-media=""
                   src={project.coverVideo}
-                  poster={project.coverImage}
+                  poster={imageVariant(project.coverImage, 640)}
                   aria-label={project.coverAlt}
                   muted
                   loop
@@ -487,7 +490,15 @@ export default function WorkPage() {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <Image data-case-cover-media="" src={project.coverImage} alt={project.coverAlt} fill className="object-cover" />
+                <Image
+                  data-case-cover-media=""
+                  src={project.coverImage}
+                  srcSet={imageSrcSet(project.coverImage)}
+                  sizes="(min-width: 1024px) 75vw, 100vw"
+                  alt={project.coverAlt}
+                  fill
+                  className="object-cover"
+                />
               )}
             </div>
             <figcaption className={`${mono} mt-3 flex items-baseline justify-between gap-4 text-muted`}><span>{project.name} / {project.year}</span><span>{WORK_TYPE_LABEL[workType]}</span></figcaption>
@@ -579,16 +590,16 @@ export default function WorkPage() {
           <Reveal>
             <div className="grid items-start gap-4 md:grid-cols-4 md:gap-6">
               <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface">
-                <img data-case-parallax="" src="/sedativephysio/1.png" alt="Sedative Physio homepage interface" width={2880} height={3174} loading="lazy" decoding="async" className="block h-auto w-full" />
+                <img data-case-parallax="" src={imageVariant("/sedativephysio/1.png", 768)} srcSet={imageSrcSet("/sedativephysio/1.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio homepage interface" width={2880} height={3174} loading="lazy" decoding="async" className="block h-auto w-full" />
               </figure>
               <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface md:mt-8 lg:mt-12">
-                <img data-case-parallax="" src="/sedativephysio/2.png" alt="Sedative Physio platform interface" width={1518} height={1036} loading="lazy" decoding="async" className="block h-auto w-full" />
+                <img data-case-parallax="" src={imageVariant("/sedativephysio/2.png", 768)} srcSet={imageSrcSet("/sedativephysio/2.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio platform interface" width={1518} height={1036} loading="lazy" decoding="async" className="block h-auto w-full" />
               </figure>
               <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface aspect-[2880/3174]">
-                <img data-case-parallax="" src="/sedativephysio/12.png" alt="Sedative Physio platform interface" width={2880} height={2858} loading="lazy" decoding="async" className="block h-full w-full object-cover" />
+                <img data-case-parallax="" src={imageVariant("/sedativephysio/12.png", 768)} srcSet={imageSrcSet("/sedativephysio/12.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio platform interface" width={2880} height={2858} loading="lazy" decoding="async" className="block h-full w-full object-cover" />
               </figure>
               <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface md:mt-8 lg:mt-12">
-                <img data-case-parallax="" src="/sedativephysio/6.png" alt="Sedative Physio learning interface" width={3080} height={2310} loading="lazy" decoding="async" className="block h-auto w-full" />
+                <img data-case-parallax="" src={imageVariant("/sedativephysio/6.png", 768)} srcSet={imageSrcSet("/sedativephysio/6.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio learning interface" width={3080} height={2310} loading="lazy" decoding="async" className="block h-auto w-full" />
               </figure>
             </div>
           </Reveal>

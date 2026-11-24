@@ -136,8 +136,10 @@
     "workType": "design + development",
     "projectType": "Client Work",
     "year": "2026",
-    "coverImage": "/sedativephysio/1.png",
-    "coverAlt": "Sedative Physio educational platform homepage interface",
+    "coverImage": "/mockups/sedativephysio.webp",
+    "coverImageWidth": 1448,
+    "coverImageHeight": 1086,
+    "coverAlt": "3D desktop mockup displaying the Sedative Physio educational platform",
     "designThinking": {
       "problem": "Physiotherapy students were jumping between scattered resources, hunting for courses, and piecing their learning together. There had to be a better way to bring it all under one roof.",
       "audience": "Physiotherapy students at different stages of their learning journey, from discovering courses to accessing advanced clinical resources.",

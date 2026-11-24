@@ -13,6 +13,7 @@ import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
 import { useVideoPlayback } from "@/lib/useVideoPlayback";
 import type { Project } from "@/data/projects";
+import { imageSrcSet, imageVariant, MOCKUP_WIDTHS } from "@/lib/images";
 
 type ProjectCardProps = {
   project: Project;
@@ -46,6 +47,10 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const reduceMotion = useReducedMotion();
   const isFeatured = variant === "featured";
+  const coverSrcSet = imageSrcSet(project.coverImage, MOCKUP_WIDTHS);
+  const coverPoster = project.coverVideo
+    ? imageVariant(project.coverImage, 640)
+    : project.coverImage;
 
   const rootRef = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
@@ -262,7 +267,7 @@ export default function ProjectCard({
             <video
               ref={imageRef as React.RefObject<HTMLVideoElement>}
               src={project.coverVideo}
-              poster={project.coverImage}
+              poster={coverPoster}
               aria-label={project.coverAlt}
               muted
               loop
@@ -274,6 +279,12 @@ export default function ProjectCard({
             <img
               ref={imageRef as React.RefObject<HTMLImageElement>}
               src={project.coverImage}
+              srcSet={coverSrcSet}
+              sizes={
+                isFeatured
+                  ? "(min-width: 1024px) 70vw, 100vw"
+                  : "(min-width: 1024px) 50vw, (min-width: 640px) 60vw, 100vw"
+              }
               alt={project.coverAlt}
               width={project.coverImageWidth}
               height={project.coverImageHeight}
