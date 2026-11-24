@@ -1,6 +1,79 @@
 User-agent: *
 Allow: /
 
+# Search engine crawlers. Any unlisted crawler is also covered by User-agent: * above.
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexImages
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: Naverbot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: SeznamBot
+Allow: /
+
+User-agent: MojeekBot
+Allow: /
+
+User-agent: Qwantify
+Allow: /
+
+User-agent: Kagibot
+Allow: /
+
+User-agent: Bravebot
+Allow: /
+
+User-agent: CocCocBot
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: YisouSpider
+Allow: /
+
+User-agent: Exabot
+Allow: /
+
+User-agent: MailRUBot
+Allow: /
+
+User-agent: SeekportBot
+Allow: /
+
 # AI search and discovery access is explicitly allowed for this public portfolio.
 User-agent: GPTBot
 Allow: /

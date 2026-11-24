@@ -96,3 +96,16 @@ public/
 ## Deployment
 
 The app builds to `build/client` as prerendered static HTML and can be deployed to any static host. React Router runs in SPA mode because Vercel's React Router preset does not support React Router 8. Vercel is configured with the `Other` framework preset, `build/client` as the output directory, clean URLs, and a static `404.html` so unknown paths return a real `404` instead of invoking a server function. Known legacy URLs, the `www` host, and trailing-slash variants are redirected to canonical URLs with `301` in `vercel.json`; set the host to serve `404.html` for unmatched paths. If a domain-level `www` redirect is also configured in Vercel's Domains settings, remove it so the `vercel.json` host rule can return `301` instead of Vercel's default `307`.
+
+### Search engine verification
+
+Google's public verification token is stored in `src/lib/search-verification.ts`. Tokens for other engines are optional and render only when the matching build-time environment variable is set in Vercel:
+
+- `VITE_GOOGLE_SITE_VERIFICATION`
+- `VITE_BING_SITE_VERIFICATION`
+- `VITE_YANDEX_SITE_VERIFICATION`
+- `VITE_BAIDU_SITE_VERIFICATION`
+- `VITE_NAVER_SITE_VERIFICATION`
+- `VITE_PINTEREST_SITE_VERIFICATION`
+
+Set those in Vercel and redeploy. Empty values render no tag.

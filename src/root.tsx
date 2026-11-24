@@ -21,6 +21,7 @@ import {
   scrollToElement,
 } from "@/lib/smooth-scroll";
 import { createMeta, organizationId, site, websiteId } from "@/lib/site";
+import { searchVerification } from "@/lib/search-verification";
 import "./app/globals.css";
 
 const themeInitScript = `try{var t=localStorage.getItem("anvik-theme");if(t!=="light"&&t!=="dark")t="light";var r=document.documentElement;r.dataset.theme=t;r.style.colorScheme=t;}catch(e){document.documentElement.dataset.theme="light";}`;
@@ -53,6 +54,18 @@ const organizationJsonLd = {
     areaServed: site.areaServed,
     availableLanguage: ["en"],
   },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Anvik Labs services",
+    itemListElement: services.map((service) => ({
+      "@type": "Service",
+      name: service.name,
+      serviceType: service.serviceType,
+      description: service.description,
+      url: `${site.url}/services/${service.slug}`,
+      areaServed: site.areaServed,
+    })),
+  },
   ...(site.sameAs.length > 0 ? { sameAs: site.sameAs } : {}),
 };
 
@@ -76,10 +89,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="google-site-verification"
-          content="YKwDO53XArYWQP27b8PIS4l1ALXtKu3OeDreuFCzuN4"
-        />
+        {searchVerification.google ? (
+          <meta name="google-site-verification" content={searchVerification.google} />
+        ) : null}
+        {searchVerification.bing ? (
+          <meta name="msvalidate.01" content={searchVerification.bing} />
+        ) : null}
+        {searchVerification.yandex ? (
+          <meta name="yandex-verification" content={searchVerification.yandex} />
+        ) : null}
+        {searchVerification.baidu ? (
+          <meta name="baidu-site-verification" content={searchVerification.baidu} />
+        ) : null}
+        {searchVerification.naver ? (
+          <meta name="naver-site-verification" content={searchVerification.naver} />
+        ) : null}
+        {searchVerification.pinterest ? (
+          <meta name="p:domain_verify" content={searchVerification.pinterest} />
+        ) : null}
         <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#080808" media="(prefers-color-scheme: dark)" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
