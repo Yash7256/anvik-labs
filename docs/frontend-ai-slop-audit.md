@@ -30,7 +30,7 @@ The findings below record an earlier state. The current implementation differs i
 - The CyberSec Toolkit case study now carries its own research, solution, UX/visual approach, final outcome, and clearly labelled estimated impact copy. Non-Sedative case studies no longer inherit Sedative Physio interface imagery.
 - Headless checks confirm the CyberSec Toolkit route has one `h1`, no horizontal overflow, no console errors, and no Sedative image references at desktop, mobile, or reduced-motion widths.
 - CyberSec Toolkit no longer shows Development decisions. Its interface screenshots now use the same compressed WebP grid and offscreen-paused marquee treatment as Sedative Physio, without the Aman/Harshita cutouts. CyberSec image URLs are versioned to avoid a stale edge-cache 404.
-- The UI Components filter now contains UI Button Kit, with eight lazily loaded Figma Community embeds and a provenance note that leaves authorship and licensing with their creators.
+- The UI Components filter now contains UI Button Kit, with eight lazily loaded Figma Community embeds and direct fallback links; authorship and licensing remain with their creators.
 
 ## Findings and resolutions
 

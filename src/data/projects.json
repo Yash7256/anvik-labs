@@ -333,7 +333,6 @@
     "coverImage": "/mockups/ui-button-kit.svg",
     "coverAlt": "Component sheet showing six button variants: primary, secondary, tertiary, destructive, disabled, and loading.",
     "showChallenge": false,
-    "embedsNote": "Interactive Figma Community files embedded below. If an embed does not load, use its direct link; authorship and licensing remain with their creators.",
     "embeds": [
       {
         "title": "Figma component 01",
