@@ -29,6 +29,7 @@ const filters = [
   { value: "all", label: "All work" },
   { value: "Anvik Labs", label: "Studio" },
   { value: "Client Work", label: "Client" },
+  { value: "UI Components", label: "UI Components" },
 ] as const;
 
 type Filter = (typeof filters)[number]["value"];
@@ -246,11 +247,17 @@ export default function WorksPage() {
             </div>
 
             <div className="mt-10 space-y-6 md:mt-14 md:space-y-8">
-              <AnimatePresence initial={false} mode="popLayout">
-                {filteredProjects.map((project, index) => (
-                  <WorkCard key={project.id} project={project} index={index} />
-                ))}
-              </AnimatePresence>
+              {filteredProjects.length ? (
+                <AnimatePresence initial={false} mode="popLayout">
+                  {filteredProjects.map((project, index) => (
+                    <WorkCard key={project.id} project={project} index={index} />
+                  ))}
+                </AnimatePresence>
+              ) : (
+                <p className="border-t border-border pt-6 text-[15px] leading-relaxed text-muted">
+                  No projects in this category yet.
+                </p>
+              )}
             </div>
           </div>
         </section>
