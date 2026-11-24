@@ -1,6 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "react-router",
+  "framework": null,
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": "build/client",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -38,6 +43,21 @@
     {
       "source": "/work/",
       "destination": "/works",
+      "statusCode": 301
+    },
+    {
+      "source": "/works/arcane-studio",
+      "destination": "/works",
+      "statusCode": 301
+    },
+    {
+      "source": "/works/big-baby-tape-magazine",
+      "destination": "/works",
+      "statusCode": 301
+    },
+    {
+      "source": "/journal/production-ready-architecture-audit",
+      "destination": "/journal/production-readiness-architecture-audit",
       "statusCode": 301
     }
   ]
