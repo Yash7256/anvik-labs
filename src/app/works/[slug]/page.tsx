@@ -258,12 +258,7 @@ function DecisionSection({ id, label, intro, items, variant = "default", animate
                 >
                   {technical ? (
                     <>
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <h3 className="mt-2 font-sans text-[18px] font-medium leading-tight text-foreground">{item.title}</h3>
-                        </div>
-                        <span aria-hidden="true" className="mt-1 h-2 w-2 rounded-full bg-accent/80" />
-                      </div>
+                      <h3 className="font-sans text-[18px] font-medium leading-tight text-foreground">{item.title}</h3>
                       <p className="mt-4 max-w-[62ch] text-[15px] leading-relaxed text-muted">{item.description}</p>
                       {(item.why || item.outcome) && (
                         <dl className="mt-5 grid gap-4 border-t border-border/80 pt-4 sm:grid-cols-2">
