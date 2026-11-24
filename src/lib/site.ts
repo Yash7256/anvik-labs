@@ -23,6 +23,8 @@ export const site = {
   sameAs: [
     "https://www.linkedin.com/company/anviklabs",
     "https://www.instagram.com/anviklabs/",
+    "https://www.threads.com/@anviklabs",
+    "https://github.com/Yash7256/anvik-labs",
   ] as string[],
 };
 

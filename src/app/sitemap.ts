@@ -1,9 +1,10 @@
 import { projects } from "@/data/projects";
 import { journalPosts } from "@/data/journal";
+import { buildDate } from "@/lib/build-date";
 import { site } from "@/lib/site";
 
 // Refresh lastmod at build time so the sitemap never advertises a stale date.
-const generatedLastmod = new Date().toISOString().slice(0, 10);
+const generatedLastmod = buildDate;
 
 const staticPaths = [
   { path: "/", changefreq: "weekly", priority: "1.0", lastmod: generatedLastmod },

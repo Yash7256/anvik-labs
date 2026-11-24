@@ -373,7 +373,7 @@ export default function Services() {
             <span className="sr-only">Product design and engineering services</span>
           </h2>
           <p className="mt-6 max-w-[32ch] text-[14px] leading-[1.7] text-muted md:text-[15px]">
-            We design it, build it, break it, fix it, and stick around to keep making it better. Whether it's a client's idea or one of our own, we're in it for the long run.
+            We design it, build it, break it, fix it, and stick around to keep making it better. From product design and web development to practical AI solutions and website maintenance, we're in it for the long run.
           </p>
 
         </div>

@@ -11,6 +11,7 @@ import {
 } from "react-router";
 import Background from "@/components/Background";
 import ContactDialog from "@/components/ContactDialog";
+import { services } from "@/data/services";
 import GlobalCursor from "@/components/GlobalCursor";
 import MotionRuntime from "@/components/MotionRuntime";
 import PostHogAnalytics from "@/components/PostHogAnalytics";
@@ -38,6 +39,7 @@ const organizationJsonLd = {
   },
   image: `${site.url}${site.ogImage}`,
   description: site.description,
+  knowsAbout: services.map((service) => service.name),
   areaServed: site.areaServed,
   email: site.email,
   contactPoint: {
@@ -78,6 +80,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="theme-color" content="#080808" media="(prefers-color-scheme: dark)" />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link rel="manifest" href="/manifest.webmanifest" />
+        <link
+          rel="alternate"
+          type="text/plain"
+          href={`${site.url}/llms.txt`}
+          title="Anvik Labs LLM overview"
+        />
         <link rel="preload" as="image" href="/assets/logo.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="48x48" />
         <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />

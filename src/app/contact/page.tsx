@@ -19,7 +19,7 @@ export default function ContactPage() {
       <Navbar />
       <main id="main-content" className="flex flex-1 flex-col pt-24 md:pt-28">
         <Contact />
-        <Faq items={homeFaqData} metaLabel="FAQ / 007" metaTitle="Common questions" />
+        <Faq items={homeFaqData} metaLabel="FAQ / 007" metaTitle="Common questions about Anvik Labs" />
       </main>
       <Footer />
     </>

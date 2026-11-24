@@ -9,6 +9,7 @@ import Faq, { homeFaqData } from "@/components/Faq";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import { projects } from "@/data/projects";
+import { buildDate } from "@/lib/build-date";
 import { createMeta, organizationId, site, websiteId } from "@/lib/site";
 
 export const meta: MetaFunction = () =>
@@ -25,6 +26,7 @@ const homeWebPageJsonLd = {
   url: `${site.url}/`,
   name: "Anvik Labs — Product Design & Development Studio in India",
   description: site.description,
+  dateModified: buildDate,
   inLanguage: "en-IN",
   isPartOf: { "@id": websiteId },
   about: { "@id": organizationId },
@@ -73,7 +75,7 @@ export default function Home() {
         <Services />
         <MeetTheHumans />
         <Testimonials />
-        <Faq items={homeFaqData} metaLabel="FAQ / 007" metaTitle="Common questions" />
+        <Faq items={homeFaqData} metaLabel="FAQ / 007" metaTitle="Common questions about Anvik Labs" />
       </main>
       <Footer />
     </>

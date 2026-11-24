@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
 
@@ -33,7 +33,7 @@ export const homeFaqData: FaqItem[] = [
 export default function Faq({
   items = homeFaqData,
   metaLabel = "FAQ / 007",
-  metaTitle = "Common questions",
+  metaTitle = "Common questions about Anvik Labs",
 }: {
   items?: FaqItem[];
   metaLabel?: string;
@@ -96,6 +96,7 @@ export default function Faq({
         <h2
           ref={headingRef}
           id="faq-heading"
+          aria-label="Common questions about Anvik Labs"
           className="font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
         >
           Questions.
@@ -143,24 +144,21 @@ export default function Faq({
                 </span>
               </button>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    id={panelId}
-                    role="region"
-                    aria-labelledby={buttonId}
-                    initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                    animate={reduceMotion ? { height: "auto", opacity: 1 } : { height: "auto", opacity: 1 }}
-                    exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                    transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <p className="max-w-3xl pb-2 pl-12 pr-4 pt-3 font-sans text-[14px] leading-relaxed text-muted md:pl-16 md:text-[15px]">
-                      {item.a}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <motion.div
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                aria-hidden={!isOpen}
+                initial={false}
+                animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="overflow-hidden"
+                style={{ pointerEvents: isOpen ? "auto" : "none" }}
+              >
+                <p className="max-w-3xl pb-2 pl-12 pr-4 pt-3 font-sans text-[14px] leading-relaxed text-muted md:pl-16 md:text-[15px]">
+                  {item.a}
+                </p>
+              </motion.div>
             </div>
           );
         })}
