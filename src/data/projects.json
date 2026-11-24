@@ -332,39 +332,7 @@
     "year": "2026",
     "coverImage": "/mockups/ui-button-kit.svg",
     "coverAlt": "Component sheet showing six button variants: primary, secondary, tertiary, destructive, disabled, and loading.",
-    "designThinking": {
-      "intro": "A small reference kit for a component that appears on almost every screen: the button.",
-      "problem": "Buttons drift when each screen treats them as a one-off. Slightly different padding, focus rings, and loading states add up to an interface that feels less deliberate.",
-      "audience": "Designers and engineers building product interfaces.",
-      "coreChallenge": "How might we make one button system clear enough to reuse without slowing teams down?",
-      "designGoal": "Consistent, accessible, easy to apply.",
-      "goals": [
-        "VARIANT HIERARCHY",
-        "PREDICTABLE STATES",
-        "ACCESSIBLE FOCUS",
-        "SHARED SIZING",
-        "REUSABLE PATTERNS"
-      ],
-      "research": "01. Variants\n- Primary for the main action.\n- Secondary for supporting actions.\n- Tertiary for quiet, low-emphasis actions.\n- Destructive for irreversible actions.\n\n02. States\n- Default, hover, focus, pressed, disabled and loading.\n\n03. Sizing\n- Small, medium and large densities for different layouts.\n\nKey Insight: Most button inconsistency comes from missing states, not missing styles."
-    },
-    "designDecisions": [
-      {
-        "title": "Variant hierarchy",
-        "description": "Primary, secondary, tertiary and destructive buttons each have a clear role, so emphasis is decided before styling begins."
-      },
-      {
-        "title": "States before decoration",
-        "description": "Default, hover, focus, pressed, disabled and loading states are defined together, keeping interaction behaviour explicit."
-      },
-      {
-        "title": "Shared sizing scale",
-        "description": "Small, medium and large sizes share padding and height rules, so buttons align predictably across layouts."
-      },
-      {
-        "title": "Accessible by default",
-        "description": "Visible focus rings, sufficient contrast and text labels are treated as part of the component, not optional extras."
-      }
-    ],
+    "showChallenge": false,
     "embedsNote": "Interactive Figma Community files embedded below. If an embed does not load, use its direct link; authorship and licensing remain with their creators.",
     "embeds": [
       {

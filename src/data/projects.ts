@@ -97,6 +97,7 @@ export type Project = {
   coverImageWidth?: number;
   coverImageHeight?: number;
   coverAlt: string;
+  showChallenge?: boolean;
   gallery?: ProjectImage[];
   embeds?: ProjectEmbed[];
   embedsNote?: string;
@@ -109,7 +110,7 @@ export type Project = {
   outcomesLabel?: string;
   outcomes?: ProjectOutcome[];
   impact?: ProjectImpact;
-  designDecisions: ProjectDecision[];
+  designDecisions?: ProjectDecision[];
   developmentDecisions?: ProjectDecision[];
 };
 

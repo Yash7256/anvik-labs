@@ -663,6 +663,7 @@ export default function WorkPage() {
           </section>
         ) : null}
 
+        {project.showChallenge !== false && (
         <section className="py-12 md:py-16 lg:py-20" aria-labelledby="challenge-heading">
           <Reveal>
             <div className="mx-auto max-w-6xl">
@@ -702,6 +703,7 @@ export default function WorkPage() {
             </div>
           </Reveal>
         </section>
+        )}
 
         {isSedative && (
           <section className="py-8 md:py-12" aria-label="Project visuals">
@@ -785,7 +787,9 @@ export default function WorkPage() {
           </section>
         )}
 
-        {showDesign && <DecisionSection id="design-decisions" label="Design decisions" intro={project.designThinking?.intro} items={project.designDecisions} animateHeading />}
+        {showDesign && project.designDecisions?.length ? (
+          <DecisionSection id="design-decisions" label="Design decisions" intro={project.designThinking?.intro} items={project.designDecisions} animateHeading />
+        ) : null}
         {project.caseSections?.map((section) => (
           <DecisionSection
             key={section.id}
