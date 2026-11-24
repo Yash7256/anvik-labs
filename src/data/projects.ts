@@ -42,6 +42,26 @@ export type ProjectOutcome = {
   description: string;
 };
 
+export type ProjectCaseSection = {
+  id: string;
+  label: string;
+  intro?: string;
+  items: ProjectDecision[];
+  variant?: "default" | "technical";
+};
+
+export type ProjectImpactMetric = {
+  label: string;
+  value: string;
+  basis: string;
+};
+
+export type ProjectImpact = {
+  note: string;
+  assumptions?: string;
+  metrics: ProjectImpactMetric[];
+};
+
 export type ProjectOverview = {
   role?: string;
   deliverables?: string[];
@@ -75,8 +95,12 @@ export type Project = {
   links?: ProjectLinks;
   overview?: ProjectOverview;
   designThinking?: ProjectDesignThinking;
+  caseSections?: ProjectCaseSection[];
   illustrativeRevenue?: ProjectIllustrativeRevenue;
+  outcomesIntro?: string;
+  outcomesLabel?: string;
   outcomes?: ProjectOutcome[];
+  impact?: ProjectImpact;
   designDecisions: ProjectDecision[];
   developmentDecisions: ProjectDecision[];
 };

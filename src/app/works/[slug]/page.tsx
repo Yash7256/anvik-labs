@@ -17,6 +17,7 @@ import {
   getProjectWorkType,
   projects,
   type ProjectDecision,
+  type ProjectImpact,
   type ProjectOutcome,
 } from "@/data/projects";
 import { createMeta, createWorkDescription, site } from "@/lib/site";
@@ -309,21 +310,56 @@ function DecisionSection({ id, label, intro, items, variant = "default", animate
   );
 }
 
-function OutcomesSection({ items }: { items: ProjectOutcome[] }) {
+function OutcomesSection({ items, intro, label = "Project outcomes" }: {
+  items: ProjectOutcome[];
+  intro?: string;
+  label?: string;
+}) {
   return (
     <section className="py-16 md:py-24" aria-labelledby="outcomes-heading">
       <Reveal>
         <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
           <div>
-            <h2 id="outcomes-heading" className="mt-4 max-w-[8ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Project outcomes</h2>
+            <h2 id="outcomes-heading" className="mt-4 max-w-[8ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">{label}</h2>
           </div>
           <div>
-            <p className="max-w-[55ch] text-[15px] leading-relaxed text-muted">The delivered work focused on creating a clear, usable, and scalable digital product foundation for Sedative Physio.</p>
+            <p className="max-w-[55ch] text-[15px] leading-relaxed text-muted">
+              {intro ?? "The delivered work focused on creating a clear, usable, and scalable digital product foundation for Sedative Physio."}
+            </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {items.map((item, i) => (
+              {items.map((item) => (
                 <article key={item.title} className="border border-border p-5">
                   <h3 className="mt-3 font-sans text-[20px] font-medium leading-tight tracking-[-0.02em] text-foreground">{item.title}</h3>
                   <p className="mt-3 text-[14px] leading-relaxed text-muted">{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function ImpactSection({ impact }: { impact: ProjectImpact }) {
+  return (
+    <section className="py-16 md:py-24" aria-labelledby="impact-heading">
+      <Reveal>
+        <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
+          <div>
+            <h2 id="impact-heading" data-case-heading="" className="mt-4 max-w-[14ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Expected impact</h2>
+          </div>
+          <div>
+            <p className="max-w-[55ch] text-[15px] leading-relaxed text-muted">{impact.note}</p>
+            {impact.assumptions && (
+              <p className="mt-3 max-w-[55ch] text-[13px] leading-relaxed text-muted">{impact.assumptions}</p>
+            )}
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {impact.metrics.map((metric) => (
+                <article key={metric.label} className="border-t border-border pt-4">
+                  <p className={`${mono} text-muted`}>{metric.label}</p>
+                  <p className="mt-2 font-sans text-[1.5rem] font-medium tracking-[-0.03em] text-foreground">{metric.value}</p>
+                  <p className="mt-2 text-[13px] leading-relaxed text-muted">{metric.basis}</p>
                 </article>
               ))}
             </div>
@@ -586,24 +622,26 @@ export default function WorkPage() {
           </Reveal>
         </section>
 
-        <section className="py-8 md:py-12" aria-label="Project visuals">
-          <Reveal>
-            <div className="grid items-start gap-4 md:grid-cols-4 md:gap-6">
-              <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface">
-                <img data-case-parallax="" src={imageVariant("/sedativephysio/1.png", 768)} srcSet={imageSrcSet("/sedativephysio/1.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio homepage interface" width={2880} height={3174} loading="lazy" decoding="async" className="block h-auto w-full" />
-              </figure>
-              <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface md:mt-8 lg:mt-12">
-                <img data-case-parallax="" src={imageVariant("/sedativephysio/2.png", 768)} srcSet={imageSrcSet("/sedativephysio/2.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio platform interface" width={1518} height={1036} loading="lazy" decoding="async" className="block h-auto w-full" />
-              </figure>
-              <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface aspect-[2880/3174]">
-                <img data-case-parallax="" src={imageVariant("/sedativephysio/12.png", 768)} srcSet={imageSrcSet("/sedativephysio/12.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio platform interface" width={2880} height={2858} loading="lazy" decoding="async" className="block h-full w-full object-cover" />
-              </figure>
-              <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface md:mt-8 lg:mt-12">
-                <img data-case-parallax="" src={imageVariant("/sedativephysio/6.png", 768)} srcSet={imageSrcSet("/sedativephysio/6.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio learning interface" width={3080} height={2310} loading="lazy" decoding="async" className="block h-auto w-full" />
-              </figure>
-            </div>
-          </Reveal>
-        </section>
+        {isSedative && (
+          <section className="py-8 md:py-12" aria-label="Project visuals">
+            <Reveal>
+              <div className="grid items-start gap-4 md:grid-cols-4 md:gap-6">
+                <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface">
+                  <img data-case-parallax="" src={imageVariant("/sedativephysio/1.png", 768)} srcSet={imageSrcSet("/sedativephysio/1.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio homepage interface" width={2880} height={3174} loading="lazy" decoding="async" className="block h-auto w-full" />
+                </figure>
+                <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface md:mt-8 lg:mt-12">
+                  <img data-case-parallax="" src={imageVariant("/sedativephysio/2.png", 768)} srcSet={imageSrcSet("/sedativephysio/2.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio platform interface" width={1518} height={1036} loading="lazy" decoding="async" className="block h-auto w-full" />
+                </figure>
+                <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface aspect-[2880/3174]">
+                  <img data-case-parallax="" src={imageVariant("/sedativephysio/12.png", 768)} srcSet={imageSrcSet("/sedativephysio/12.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio platform interface" width={2880} height={2858} loading="lazy" decoding="async" className="block h-full w-full object-cover" />
+                </figure>
+                <figure className="overflow-hidden rounded-[6px] border border-border bg-light-surface md:mt-8 lg:mt-12">
+                  <img data-case-parallax="" src={imageVariant("/sedativephysio/6.png", 768)} srcSet={imageSrcSet("/sedativephysio/6.png", SCREEN_WIDTHS)} sizes="(min-width: 768px) 25vw, 100vw" alt="Sedative Physio learning interface" width={3080} height={2310} loading="lazy" decoding="async" className="block h-auto w-full" />
+                </figure>
+              </div>
+            </Reveal>
+          </section>
+        )}
 
         {project.designThinking && (
           <section className="py-14 md:py-20" aria-labelledby="design-thinking-heading">
@@ -638,8 +676,18 @@ export default function WorkPage() {
           </section>
         )}
 
-        {showDesign && <DecisionSection id="design-decisions" label="Design decisions" intro="A few important decisions shaped how the platform came together. The goal was to keep things clear, make learning easier to access and build around how physiotherapy students actually learn." items={project.designDecisions} animateHeading />}
-        {project.id === "sedative-physio" && (
+        {showDesign && <DecisionSection id="design-decisions" label="Design decisions" intro={project.designThinking?.intro} items={project.designDecisions} animateHeading />}
+        {project.caseSections?.map((section) => (
+          <DecisionSection
+            key={section.id}
+            id={section.id}
+            label={section.label}
+            intro={section.intro}
+            items={section.items}
+            variant={section.variant}
+          />
+        ))}
+        {isSedative && (
           <section className="-mx-8 py-12 sm:-mx-[8vw] md:-mx-[9vw] lg:-mx-[10vw] xl:-mx-[11vw] md:py-16" aria-label="Sedative Physio interface showcase">
             <MarqueeRow images={MARQUEE_IMAGES.slice(0, 4)} direction="left" />
             <div className="mt-3 md:mt-4">
@@ -649,12 +697,16 @@ export default function WorkPage() {
         )}
         {showDevelopment && <DecisionSection id="development-decisions" label="Development decisions" items={project.developmentDecisions} variant="technical" />}
 
-        {project.outcomes?.length ? <OutcomesSection items={project.outcomes} /> : project.illustrativeRevenue ? (
-          <section className="py-16 md:py-24" aria-labelledby="impact-heading">
+        {project.outcomes?.length ? (
+          <OutcomesSection items={project.outcomes} intro={project.outcomesIntro} label={project.outcomesLabel} />
+        ) : null}
+        {project.impact ? <ImpactSection impact={project.impact} /> : null}
+        {project.illustrativeRevenue ? (
+          <section className="py-16 md:py-24" aria-labelledby="illustrative-impact-heading">
             <Reveal>
               <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
                 <div>
-                  <h2 id="impact-heading" data-case-heading="" className="mt-4 max-w-[14ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Illustrative impact</h2>
+                  <h2 id="illustrative-impact-heading" data-case-heading="" className="mt-4 max-w-[14ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Illustrative impact</h2>
                 </div>
                 <div>
                   <p className="max-w-[55ch] text-[15px] leading-relaxed text-muted">{project.illustrativeRevenue.note} {project.illustrativeRevenue.assumptions}</p>

@@ -27,6 +27,8 @@ The findings below record an earlier state. The current implementation differs i
 - WebGL, Lenis smooth scrolling, and service video media now load only after a deliberate user interaction. Programmatic scrolling and timed audits no longer fetch the WebGL bundle or the service MP4 files.
 - Service video posters are compressed WebP files, and reduced-motion layouts use stable markup toggled by CSS so prerendered HTML hydrates cleanly.
 - Typecheck, lint, and build pass. Headless checks at 1440px and 390px confirm no horizontal overflow, no console errors, intact hero/work spacing, and no initial WebGL, Lenis, or MP4 requests.
+- The CyberSec Toolkit case study now carries its own research, solution, UX/visual approach, final outcome, and clearly labelled estimated impact copy. Non-Sedative case studies no longer inherit Sedative Physio interface imagery.
+- Headless checks confirm the CyberSec Toolkit route has one `h1`, no horizontal overflow, no console errors, and no Sedative image references at desktop, mobile, or reduced-motion widths.
 
 ## Findings and resolutions
 

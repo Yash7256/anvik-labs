@@ -2,8 +2,8 @@
   {
     "id": "cybersec-toolkit",
     "name": "CyberSec Toolkit",
-    "genre": "AI-powered security SaaS",
-    "description": "Async network security platform with port scanning, live CVE lookup, MITRE ATT&CK mapping, and AI-powered analysis, streamed in real time.",
+    "genre": "Product Design · SaaS · Cybersecurity · Dashboard Design · UX Research",
+    "description": "A unified security workspace bringing scanning tools, vulnerability intelligence, threat analysis and automated reporting into one place, so investigations stay connected.",
     "workType": "both",
     "projectType": "Anvik Labs",
     "year": "2026",
@@ -11,22 +11,106 @@
     "coverImageWidth": 1672,
     "coverImageHeight": 941,
     "coverAlt": "3D desktop monitor mockup displaying the CyberSec cybersecurity platform website with an AI-powered vulnerability scanning dashboard in a dark purple interface.",
+    "designThinking": {
+      "intro": "We designed CyberSec Toolkit as a unified security workspace, bringing six essential capabilities together. The challenge was to simplify the experience, not the security information itself.",
+      "problem": "Security professionals rarely get everything they need from a single tool. A typical investigation means juggling port scanners, DNS lookups, SSL analyzers, WHOIS services, vulnerability databases and threat intelligence platforms. Findings then need to be collected, analysed and turned into reports through a lot of manual work.",
+      "audience": "Security analysts, penetration testers, security engineers, developers and cybersecurity students.",
+      "coreChallenge": "How might we bring the entire security investigation workflow into one intuitive workspace without hiding the technical details that security professionals actually need?",
+      "designGoal": "Simplify the experience, not the security information itself.",
+      "goals": [
+        "ONE WORKSPACE",
+        "PREDICTABLE NAVIGATION",
+        "STRUCTURED FINDINGS",
+        "CLEAR SEVERITY INDICATORS",
+        "AI-ASSISTED ANALYSIS",
+        "AUTOMATED REPORTING"
+      ],
+      "research": "01. Who we studied\n- Security analysts and penetration testers.\n- Security engineers and developers.\n- Cybersecurity students learning the workflow.\n\n02. Tools we explored\n- Shodan and Censys.\n- VirusTotal and SecurityTrails.\n- Nmap and Zenmap.\n\n03. Recurring friction\n- Security workflows spread across disconnected tools.\n- Too much time spent jumping between platforms.\n- Findings collected and analysed manually.\n- Security data without a clear structure.\n- Reports that take almost as long as the investigation itself.\n\nKey Insight: The problem wasn't that there weren't enough tools. There were too many, and none of them really talked to each other."
+    },
     "designDecisions": [
       {
-        "title": "One workspace, every tool",
-        "description": "All security tools live in one unified workspace, eliminating constant tab-switching and keeping investigations connected."
+        "title": "Port Scanning",
+        "description": "Discover open ports, exposed services and potential entry points across target systems."
       },
       {
-        "title": "Context beyond raw results",
-        "description": "Scan results are enriched with relevant context, helping analysts connect findings and understand potential security risks without manual investigation."
+        "title": "DNS & WHOIS Analysis",
+        "description": "Get domain records, ownership details and network information without opening another tool."
       },
       {
-        "title": "Consistency across complexity",
-        "description": "A shared interface across every tool reduces the learning curve and makes complex security workflows easier to navigate."
+        "title": "SSL/TLS Inspection",
+        "description": "Inspect certificates, configurations and potential security weaknesses."
       },
       {
-        "title": "Reporting without repetition",
-        "description": "Automated reports turn scan findings into structured, actionable insights, removing the need to manually compile and write reports."
+        "title": "Web & HTTP Analysis",
+        "description": "Examine web applications, HTTP headers and common security misconfigurations."
+      },
+      {
+        "title": "Vulnerability Intelligence",
+        "description": "Connect scan findings with known CVEs and enrich results with relevant threat intelligence."
+      },
+      {
+        "title": "AI-Powered Insights & Reporting",
+        "description": "Turn technical findings into easier-to-understand insights and generate structured reports in multiple formats."
+      }
+    ],
+    "caseSections": [
+      {
+        "id": "ux-approach",
+        "label": "UX approach",
+        "intro": "The focus wasn't just putting multiple tools on one screen. It was making the entire investigation process feel connected.",
+        "items": [
+          {
+            "title": "One workspace",
+            "description": "A central dashboard to access security tools and investigation workflows."
+          },
+          {
+            "title": "Predictable navigation",
+            "description": "Consistent patterns across different security modules."
+          },
+          {
+            "title": "Structured findings",
+            "description": "Scan results organised into readable, actionable data."
+          },
+          {
+            "title": "Clear severity indicators",
+            "description": "Making critical vulnerabilities easier to spot."
+          },
+          {
+            "title": "AI-assisted analysis",
+            "description": "Helping users understand technical findings without digging through endless output."
+          },
+          {
+            "title": "Automated reporting",
+            "description": "Turning investigation results into structured reports with less repetitive work."
+          }
+        ]
+      },
+      {
+        "id": "visual-design",
+        "label": "Visual design",
+        "intro": "We went with a dark, technical SaaS aesthetic, paired with purple and indigo accents to give the platform its own identity. The interface needed to handle plenty of technical information without feeling overwhelming. The goal was simple: make a complex security workspace feel organised, not intimidating.",
+        "items": [
+          {
+            "title": "Strong information hierarchy",
+            "description": "A clear reading order for data-heavy screens."
+          },
+          {
+            "title": "Dense, uncluttered layouts",
+            "description": "Dashboard views that hold plenty of technical information without unnecessary clutter."
+          },
+          {
+            "title": "Consistent components",
+            "description": "A shared component language across every security module."
+          },
+          {
+            "title": "Readable visualisations",
+            "description": "Complex security data presented in a form that is easier to scan and understand."
+          },
+          {
+            "title": "Cohesive visual language",
+            "description": "A dark, technical palette with purple and indigo accents carried throughout the platform."
+          }
+        ]
       }
     ],
     "developmentDecisions": [
@@ -54,7 +138,54 @@
         "title": "Safe by default",
         "description": "Private IP ranges are blocked, DNS rebinding protection is built in, scan endpoints require JWT, and the API is rate-limited, so the tool is hard to misuse."
       }
-    ]
+    ],
+    "outcomesIntro": "CyberSec Toolkit is now an actively deployed cybersecurity platform, bringing multiple security investigation capabilities into one workspace. Less tab-hopping. More connected security intelligence.",
+    "outcomesLabel": "Final outcome",
+    "outcomes": [
+      {
+        "title": "Connected investigations",
+        "description": "Users can run scans, explore findings, access AI-powered insights and generate reports without constantly jumping between disconnected tools."
+      },
+      {
+        "title": "Less tab-hopping",
+        "description": "One workspace keeps port scanning, DNS and WHOIS analysis, SSL and TLS inspection, web and HTTP analysis, vulnerability intelligence and reporting together."
+      },
+      {
+        "title": "Structured reporting",
+        "description": "Findings move from raw scan output into readable insights and structured reports, with less repetitive manual work."
+      }
+    ],
+    "impact": {
+      "note": "Based on workflow analysis and estimated improvements. These figures represent estimated impact ranges, not independently measured post-launch results.",
+      "assumptions": "Targets for the platform, not verified outcome data.",
+      "metrics": [
+        {
+          "label": "Investigation time",
+          "value": "20–35%",
+          "basis": "reduction in investigation completion time"
+        },
+        {
+          "label": "Tool switching",
+          "value": "30–40%",
+          "basis": "reduction in switching between disconnected tools"
+        },
+        {
+          "label": "Manual reporting",
+          "value": "40–80%",
+          "basis": "reduction in manual reporting effort"
+        },
+        {
+          "label": "Cognitive load",
+          "value": "25–30%",
+          "basis": "reduction in analyst cognitive load"
+        },
+        {
+          "label": "Interpretation time",
+          "value": "20–30%",
+          "basis": "less time spent interpreting findings"
+        }
+      ]
+    }
   },
   {
     "id": "designers-room",
