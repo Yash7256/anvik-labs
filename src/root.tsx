@@ -17,7 +17,7 @@ import MotionRuntime from "@/components/MotionRuntime";
 import PostHogAnalytics from "@/components/PostHogAnalytics";
 import {
   destroySmoothScroll,
-  initSmoothScroll,
+  listenForSmoothScroll,
   scrollToElement,
 } from "@/lib/smooth-scroll";
 import { createMeta, organizationId, site, websiteId } from "@/lib/site";
@@ -169,8 +169,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 function SmoothScroll() {
   useEffect(() => {
-    initSmoothScroll();
-    return destroySmoothScroll;
+    const stopListening = listenForSmoothScroll();
+    return () => {
+      stopListening();
+      destroySmoothScroll();
+    };
   }, []);
 
   return null;
