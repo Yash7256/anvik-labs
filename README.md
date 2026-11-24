@@ -95,4 +95,4 @@ public/
 
 ## Deployment
 
-The app builds to `build/client` as prerendered static HTML and can be deployed to any static host. React Router runs in SPA mode because Vercel's React Router preset does not support React Router 8. Vercel is configured with the `Other` framework preset, `build/client` as the output directory, clean URLs, and a static `404.html` so unknown paths return a real `404` instead of invoking a server function. Known legacy URLs are redirected in `vercel.json`; set the host to serve `404.html` for unmatched paths.
+The app builds to `build/client` as prerendered static HTML and can be deployed to any static host. React Router runs in SPA mode because Vercel's React Router preset does not support React Router 8. Vercel is configured with the `Other` framework preset, `build/client` as the output directory, clean URLs, and a static `404.html` so unknown paths return a real `404` instead of invoking a server function. Known legacy URLs, the `www` host, and trailing-slash variants are redirected to canonical URLs with `301` in `vercel.json`; set the host to serve `404.html` for unmatched paths.

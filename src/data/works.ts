@@ -76,36 +76,6 @@ export const works: Work[] = [
     ],
   },
   {
-    index: "002",
-    slug: "arcane-studio",
-    name: "ARCANE STUDIO",
-    year: "2024",
-    category: "IDENTITY / ART DIRECTION / WEB",
-    services: ["Brand Identity", "Art Direction", "Web Development"],
-    summary:
-      "A restrained identity for an architecture practice working between built form and atmosphere.",
-    intro:
-      "Arcane Studio works slowly, and the identity needed to reflect that pace. We built a visual language from proportion, shadow and a deliberately limited palette.",
-    body: [
-      "The mark is drawn from the geometry of a threshold, a line that separates one condition from another. It scales from a drawing stamp to a full-bleed title without losing its balance.",
-      "The site pairs large architectural imagery with small, precise metadata. Navigation stays out of the way so the work can be read at its own scale.",
-    ],
-    hero: mockup(
-      ARCANE,
-      "Arcane Studio website displayed on a laptop in a dim interior.",
-    ),
-    gallery: [
-      mockup(
-        AURORA,
-        "Arcane Studio brand materials arranged on a mossy surface.",
-      ),
-      mockup(
-        MACBOOK,
-        "Arcane Studio project index shown on a laptop screen.",
-      ),
-    ],
-  },
-  {
     index: "003",
     slug: "solara",
     name: "SOLARA",
@@ -192,36 +162,6 @@ export const works: Work[] = [
       mockup(
         AURORA,
         "Rowan Keats website displayed on a laptop outdoors.",
-      ),
-    ],
-  },
-  {
-    index: "006",
-    slug: "big-baby-tape-magazine",
-    name: "BIG BABY TAPE® MAGAZINE",
-    year: "2024",
-    category: "EDITORIAL / TYPE / WEB",
-    services: ["Editorial Design", "Typography", "Web Design"],
-    summary:
-      "A music publication with a fast, physical layout and a typographic system built to be broken.",
-    intro:
-      "Big Baby Tape is printed quickly and read loudly. The design uses a rigid underlying grid, then lets headlines, captions and crops collide on top of it.",
-    body: [
-      "Type is the main material. A condensed display face handles covers and section openers, while a small mono face keeps credits and track lists in order.",
-      "The digital edition keeps the same density, using horizontal sections and abrupt scale changes to preserve the feeling of flipping through a physical issue.",
-    ],
-    hero: mockup(
-      MACBOOK,
-      "Big Baby Tape magazine website shown on a laptop with a bold editorial layout.",
-    ),
-    gallery: [
-      mockup(
-        EDIFIER,
-        "Big Baby Tape magazine spread with large display typography.",
-      ),
-      mockup(
-        ARCANE,
-        "Big Baby Tape issue covers arranged on a table.",
       ),
     ],
   },
