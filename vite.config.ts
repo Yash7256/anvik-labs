@@ -75,6 +75,9 @@ function staticPreviewRouting(): Plugin {
 
 export default defineConfig({
   appType: "custom",
+  build: {
+    sourcemap: true,
+  },
   plugins: [staticPreviewRouting(), reactRouter(), tailwindcss()],
   resolve: {
     alias: {

@@ -92,6 +92,7 @@ public/
 - Respect `prefers-reduced-motion` for animated content. The hero WebGL layer is skipped for reduced-motion visitors and when WebGL is unavailable; a static CSS ambience is shown instead.
 - Above-the-fold styling is inlined from `src/app/critical.css`; the full stylesheet is loaded asynchronously after first paint.
 - The three used typefaces are self-hosted in `public/fonts` with their OFL licences, so no third-party font stylesheet blocks rendering.
+- The WebGL scene and Lenis smooth scrolling load only after user interaction, or after a short idle delay for WebGL, so their bundles stay out of the initial render path.
 - The current design system is documented in [`design.md`](./design.md).
 - The frontend audit and its remaining risks are in [`docs/frontend-ai-slop-audit.md`](./docs/frontend-ai-slop-audit.md).
 
@@ -101,7 +102,7 @@ The app builds to `build/client` as prerendered static HTML and can be deployed 
 
 ### Search engine verification
 
-Google's public verification token is stored in `src/lib/search-verification.ts`. Tokens for other engines are optional and render only when the matching build-time environment variable is set in Vercel:
+Google's and Bing's public verification tokens are stored in `src/lib/search-verification.ts`. Tokens for other engines are optional and render only when the matching build-time environment variable is set in Vercel:
 
 - `VITE_GOOGLE_SITE_VERIFICATION`
 - `VITE_BING_SITE_VERIFICATION`
@@ -110,4 +111,4 @@ Google's public verification token is stored in `src/lib/search-verification.ts`
 - `VITE_NAVER_SITE_VERIFICATION`
 - `VITE_PINTEREST_SITE_VERIFICATION`
 
-Set those in Vercel and redeploy. Empty values render no tag.
+Set overrides in Vercel and redeploy. For engines without a public default, an empty value renders no tag.

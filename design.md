@@ -144,6 +144,10 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 - Analytics stays pageview/pageleave-only: session recording, heatmaps, autocapture, and surveys are disabled so third-party work does not compete with scroll frames.
 - WebGL quality is capped for high-refresh headroom (1.5 DPR, 3200 particles, 192px fluid simulation on full-size screens), and the fluid solve is capped at 60 Hz while the canvas remains responsive.
 
+## Build output
+
+- Production client bundles ship public source maps (`build.sourcemap: true`). Browsers do not fetch them during normal visits; DevTools and Lighthouse do. Keep secrets out of client code because maps expose source text.
+
 ## Content and provenance
 
 - `src/data/works.ts` and `src/data/testimonials.json` are the content sources.

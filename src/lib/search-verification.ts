@@ -4,7 +4,9 @@ export const searchVerification = {
   google:
     import.meta.env.VITE_GOOGLE_SITE_VERIFICATION ??
     "YKwDO53XArYWQP27b8PIS4l1ALXtKu3OeDreuFCzuN4",
-  bing: import.meta.env.VITE_BING_SITE_VERIFICATION ?? "",
+  bing:
+    import.meta.env.VITE_BING_SITE_VERIFICATION ??
+    "38233F7162E03B978E8CC43BA7A725FB",
   yandex: import.meta.env.VITE_YANDEX_SITE_VERIFICATION ?? "",
   baidu: import.meta.env.VITE_BAIDU_SITE_VERIFICATION ?? "",
   naver: import.meta.env.VITE_NAVER_SITE_VERIFICATION ?? "",
