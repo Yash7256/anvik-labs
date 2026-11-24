@@ -240,7 +240,7 @@ function DecisionSection({ id, label, intro, items, variant = "default", animate
             <h2
               id={`${id}-heading`}
               data-case-heading={animateHeading ? "" : undefined}
-              className="mt-4 max-w-[8ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]"
+              className="mt-4 max-w-[14ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]"
             >
               {label}
             </h2>
@@ -531,7 +531,7 @@ export default function WorkPage() {
             <div className="mx-auto max-w-6xl">
               <div className="grid gap-6 md:grid-cols-12 md:gap-x-8 lg:gap-x-10">
                 <div className="md:col-span-4 lg:col-span-4">
-                  <h2 id="challenge-heading" data-case-heading="" className="max-w-[6.5ch] font-sans text-[clamp(2.5rem,6vw,4rem)] font-light leading-[0.92] tracking-[-0.045em] text-foreground">
+                  <h2 id="challenge-heading" data-case-heading="" className="max-w-[12ch] font-sans text-[clamp(2.5rem,6vw,4rem)] font-light leading-[0.92] tracking-[-0.045em] text-foreground">
                     The Challenge
                   </h2>
                 </div>
@@ -590,7 +590,7 @@ export default function WorkPage() {
             <Reveal>
               <div className="grid gap-6 md:grid-cols-12 md:gap-x-10 lg:gap-x-12">
                 <div className="md:col-span-3 lg:col-span-3">
-                  <h2 id="design-thinking-heading" data-case-heading="" className="max-w-[7ch] font-sans text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Design thinking</h2>
+                  <h2 id="design-thinking-heading" data-case-heading="" className="max-w-[12ch] font-sans text-[clamp(2.5rem,5vw,4.5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Design thinking</h2>
                 </div>
                 <div className="md:col-span-9 lg:col-span-9">
                   <div className="grid gap-8 md:grid-cols-2 md:gap-x-10">
@@ -634,7 +634,7 @@ export default function WorkPage() {
             <Reveal>
               <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
                 <div>
-                  <h2 id="impact-heading" data-case-heading="" className="mt-4 max-w-[8ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Illustrative impact</h2>
+                  <h2 id="impact-heading" data-case-heading="" className="mt-4 max-w-[14ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Illustrative impact</h2>
                 </div>
                 <div>
                   <p className="max-w-[55ch] text-[15px] leading-relaxed text-muted">{project.illustrativeRevenue.note} {project.illustrativeRevenue.assumptions}</p>

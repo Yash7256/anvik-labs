@@ -713,11 +713,20 @@ select option {
   will-change: transform;
 }
 
-#hero-heading .motion-line-mask,
-#hero-heading .motion-word-mask,
-#hero-heading .motion-char-mask {
-  padding-bottom: 0.14em;
-  margin-bottom: -0.14em;
+.motion-line-mask,
+.motion-word-mask,
+.motion-char-mask {
+  padding-top: 0.12em;
+  margin-top: -0.12em;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+[data-case-heading] .motion-line-mask,
+[data-case-heading] .motion-word-mask,
+[data-case-heading] .motion-char-mask {
+  width: max-content;
+  max-width: none;
 }
 
 .global-cursor {
