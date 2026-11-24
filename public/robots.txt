@@ -50,4 +50,57 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+# Additional verified AI search and answer engines. Any unlisted crawler is still
+# covered by the User-agent: * rule above.
+User-agent: GoogleOther
+Allow: /
+
+User-agent: meta-webindexer
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Amzn-SearchBot
+Allow: /
+
+User-agent: Amzn-User
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: MistralAI-Index
+Allow: /
+
+User-agent: MistralAI-Training
+Allow: /
+
+User-agent: ExaSearchBot
+Allow: /
+
+User-agent: ExaUser
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Diffbot-User
+Allow: /
+
+User-agent: ProRataInc
+Allow: /
+
 Sitemap: https://anviklabs.site/sitemap.xml
