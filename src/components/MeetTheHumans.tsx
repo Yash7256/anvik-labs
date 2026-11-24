@@ -190,10 +190,14 @@ function PersonCard({
     <motion.article
       ref={articleRef}
       aria-labelledby={`${person.id}-name`}
-      initial={reduceMotion ? undefined : { opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: person.delay }}
+      transition={{
+        duration: reduceMotion ? 0 : 0.8,
+        ease: [0.22, 1, 0.36, 1],
+        delay: reduceMotion ? 0 : person.delay,
+      }}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
       className="group/profile relative min-w-0"
@@ -208,7 +212,7 @@ function PersonCard({
         >
           <motion.div
             className="absolute inset-0"
-            style={reduceMotion ? undefined : { x: imageX, y: imageY }}
+            style={{ x: imageX, y: imageY }}
           >
             <div
               data-human-image
@@ -238,33 +242,21 @@ function PersonCard({
               className="pointer-events-none absolute inset-0 z-[2] opacity-0 transition-opacity duration-500 group-hover/profile:opacity-100 group-focus-within/profile:opacity-100"
             >
               <span
-                className={`absolute left-[16%] top-[20%] text-accent ${
-                  reduceMotion
-                    ? ""
-                    : "transition-transform duration-500 ease-out group-hover/profile:-translate-y-1.5 group-hover/profile:rotate-12 group-focus-within/profile:-translate-y-1.5 group-focus-within/profile:rotate-12"
-                }`}
+                className="absolute left-[16%] top-[20%] text-accent transition-transform duration-500 ease-out group-hover/profile:-translate-y-1.5 group-hover/profile:rotate-12 group-focus-within/profile:-translate-y-1.5 group-focus-within/profile:rotate-12"
               >
                 <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current drop-shadow-sm">
                   <path d="M12 1.5l2.4 6.1 6.1 2.4-6.1 2.4-2.4 6.1-2.4-6.1L3.5 10l6.1-2.4L12 1.5z" />
                 </svg>
               </span>
               <span
-                className={`absolute right-[18%] top-[28%] text-white/90 ${
-                  reduceMotion
-                    ? ""
-                    : "transition-transform duration-500 delay-75 ease-out group-hover/profile:-translate-y-1 group-hover/profile:-rotate-12 group-focus-within/profile:-translate-y-1 group-focus-within/profile:-rotate-12"
-                }`}
+                className="absolute right-[18%] top-[28%] text-white/90 transition-transform duration-500 delay-75 ease-out group-hover/profile:-translate-y-1 group-hover/profile:-rotate-12 group-focus-within/profile:-translate-y-1 group-focus-within/profile:-rotate-12"
               >
                 <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current">
                   <path d="M12 2l1.7 4.3L18 8l-4.3 1.7L12 14l-1.7-4.3L6 8l4.3-1.7L12 2z" />
                 </svg>
               </span>
               <span
-                className={`absolute right-[24%] bottom-[24%] text-accent/90 ${
-                  reduceMotion
-                    ? ""
-                    : "transition-transform duration-500 delay-100 ease-out group-hover/profile:translate-y-[-2px] group-hover/profile:scale-110 group-focus-within/profile:translate-y-[-2px] group-focus-within/profile:scale-110"
-                }`}
+                className="absolute right-[24%] bottom-[24%] text-accent/90 transition-transform duration-500 delay-100 ease-out group-hover/profile:-translate-y-[2px] group-hover/profile:scale-110 group-focus-within/profile:-translate-y-[2px] group-focus-within/profile:scale-110"
               >
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
                   <path d="M12 2.5l1.9 4.8 4.8 1.9-4.8 1.9-1.9 4.8-1.9-4.8-4.8-1.9 4.8-1.9L12 2.5z" />

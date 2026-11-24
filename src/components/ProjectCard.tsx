@@ -263,7 +263,7 @@ export default function ProjectCard({
             isFeatured ? "project-media--featured" : "project-media--grid"
           }`}
         >
-          {project.coverVideo && !reduceMotion ? (
+          {project.coverVideo ? (
             <video
               ref={imageRef as React.RefObject<HTMLVideoElement>}
               src={project.coverVideo}

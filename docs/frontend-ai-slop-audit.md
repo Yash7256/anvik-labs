@@ -22,6 +22,12 @@ The findings below record an earlier state. The current implementation differs i
 - Additional motion now covers post-hydration route fades, works filter reflow, contact status feedback, sticky scroll-progress hairlines, the Aman timeline, and offscreen/hidden pausing for the testimonial marquee.
 - Typecheck, lint, and build pass after the motion changes. Headless Chrome screenshots at 1440px and 390px render all affected routes; a human visual comparison is still recommended.
 
+## Update — 25 November 2026
+
+- WebGL, Lenis smooth scrolling, and service video media now load only after a deliberate user interaction. Programmatic scrolling and timed audits no longer fetch the WebGL bundle or the service MP4 files.
+- Service video posters are compressed WebP files, and reduced-motion layouts use stable markup toggled by CSS so prerendered HTML hydrates cleanly.
+- Typecheck, lint, and build pass. Headless checks at 1440px and 390px confirm no horizontal overflow, no console errors, intact hero/work spacing, and no initial WebGL, Lenis, or MP4 requests.
+
 ## Findings and resolutions
 
 | # | Finding | Severity | Resolution |

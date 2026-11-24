@@ -65,7 +65,7 @@ export default function ContactDialog({ open, onClose }: ContactDialogProps) {
       {open ? (
         <motion.div
           className="fixed inset-0 z-[120] flex items-end justify-center p-0 sm:items-center sm:p-4 md:p-6"
-          initial={reduceMotion ? false : { opacity: 0 }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.2 }}
@@ -81,7 +81,7 @@ export default function ContactDialog({ open, onClose }: ContactDialogProps) {
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            initial={reduceMotion ? false : { opacity: 0, y: 16, scale: 0.985 }}
+            initial={{ opacity: 0, y: 16, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: 12, scale: 0.985 }}
             transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.16, 1, 0.3, 1] }}

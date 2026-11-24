@@ -94,7 +94,8 @@ public/
 - The three used typefaces are self-hosted in `public/fonts` with their OFL licences, so no third-party font stylesheet blocks rendering.
 - Project mockups ship 320/380/480/640/768/800/1024/1440 WebP variants; grid video posters use the 380px variant so they match their displayed size.
 - The WebGL scene, Lenis smooth scrolling, and service videos load only after a deliberate user interaction. Programmatic scrolling and timed audits do not trigger them, so their bundles and media stay out of the initial render path.
-- Service video posters are compressed WebP files in `public/assets`; reduced-motion visitors see the static poster instead of video.
+- Service video posters are compressed WebP files in `public/assets`; reduced-motion visitors see the static poster because playback stays disabled.
+- Motion preferences change animations and visibility through stable markup and CSS variants, so prerendered HTML hydrates cleanly for both motion and reduced-motion visitors.
 - The current design system is documented in [`design.md`](./design.md).
 - The frontend audit and its remaining risks are in [`docs/frontend-ai-slop-audit.md`](./docs/frontend-ai-slop-audit.md).
 

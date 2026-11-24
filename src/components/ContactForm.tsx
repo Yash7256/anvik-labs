@@ -129,7 +129,7 @@ export default function ContactForm({
           <motion.div
             key="success"
             role="status"
-            initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
             transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.16, 1, 0.3, 1] }}
@@ -154,7 +154,7 @@ export default function ContactForm({
           <motion.form
             key="form"
             onSubmit={handleSubmit}
-            initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
             transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.16, 1, 0.3, 1] }}
@@ -276,7 +276,7 @@ export default function ContactForm({
               {status === "error" && error ? (
                 <motion.p
                   role="alert"
-                  initial={reduceMotion ? false : { opacity: 0, y: -4 }}
+                  initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={reduceMotion ? undefined : { opacity: 0 }}
                   transition={{ duration: reduceMotion ? 0 : 0.18 }}
@@ -300,7 +300,7 @@ export default function ContactForm({
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     key={status === "submitting" ? "sending" : "send"}
-                    initial={reduceMotion ? false : { opacity: 0 }}
+                    initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={reduceMotion ? undefined : { opacity: 0 }}
                     transition={{ duration: reduceMotion ? 0 : 0.16 }}

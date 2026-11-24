@@ -123,9 +123,9 @@ function ServiceSculpture({ variant }: { variant: ServiceCardConfig["sculpture"]
 function ServiceVisual({ card, reduceMotion }: { card: ServiceCardConfig; reduceMotion: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const interacted = useUserInteraction();
-  const showVideo = Boolean(card.video) && !reduceMotion;
+  const videoReady = Boolean(card.video) && interacted && !reduceMotion;
 
-  useVideoPlayback(videoRef, showVideo && interacted);
+  useVideoPlayback(videoRef, videoReady);
 
   return (
     <div
@@ -149,12 +149,12 @@ function ServiceVisual({ card, reduceMotion }: { card: ServiceCardConfig; reduce
       />
 
       <div className="service-visual__art absolute inset-[6%_4%_10%_8%] sm:inset-[8%_6%_10%_12%] lg:inset-[8%_2%_10%_10%]">
-        {showVideo || card.image ? (
+        {card.video || card.image ? (
           <div className="absolute inset-0 overflow-hidden rounded-[14px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)] shadow-[0_24px_60px_-40px_rgba(0,0,0,0.45)]">
-            {showVideo ? (
+            {card.video ? (
               <video
                 ref={videoRef}
-                src={interacted ? card.video : undefined}
+                src={videoReady ? card.video : undefined}
                 poster={card.image}
                 aria-label={card.mediaAlt ?? ""}
                 width={card.imageWidth}
@@ -452,37 +452,24 @@ export default function Services() {
                     </p>
 
                     <div className="mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]" role="group" aria-label={`${card.name} capabilities`}>
-                      {reduceMotion ? (
-                        <ul className="flex flex-wrap gap-2">
-                          {card.pills.map((pill) => (
-                            <li
-                              key={pill}
-                              className="rounded-full border border-[var(--sc-pill-border)] bg-[var(--sc-pill-bg)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--sc-pill-text)]"
-                            >
-                              {pill}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <div className="flex w-max animate-service-pill-marquee hover:[animation-play-state:paused]">
-                          {[0, 1].map((copy) => (
-                            <ul
-                              key={copy}
-                              aria-hidden={copy === 1}
-                              className="flex shrink-0 gap-2 pr-2"
-                            >
-                              {card.pills.map((pill) => (
-                                <li
-                                  key={`${copy}-${pill}`}
-                                  className="shrink-0 rounded-full border border-[var(--sc-pill-border)] bg-[var(--sc-pill-bg)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--sc-pill-text)]"
-                                >
-                                  {pill}
-                                </li>
-                              ))}
-                            </ul>
-                          ))}
-                        </div>
-                      )}
+                      <div className="flex w-max animate-service-pill-marquee hover:[animation-play-state:paused]">
+                        {[0, 1].map((copy) => (
+                          <ul
+                            key={copy}
+                            aria-hidden={copy === 1}
+                            className="flex shrink-0 gap-2 pr-2"
+                          >
+                            {card.pills.map((pill) => (
+                              <li
+                                key={`${copy}-${pill}`}
+                                className="shrink-0 rounded-full border border-[var(--sc-pill-border)] bg-[var(--sc-pill-bg)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--sc-pill-text)]"
+                              >
+                                {pill}
+                              </li>
+                            ))}
+                          </ul>
+                        ))}
+                      </div>
                     </div>
                   </div>
 

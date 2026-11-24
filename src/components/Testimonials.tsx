@@ -200,34 +200,6 @@ export default function Testimonials() {
     applyPlayback();
   }
 
-  if (reduceMotion) {
-    return (
-      <section
-        ref={rootRef}
-        id="testimonials"
-        aria-labelledby="testimonials-heading"
-        className="py-20 md:py-28 lg:py-36"
-      >
-        <div className="pb-8 md:pb-10">
-          <h2
-            ref={headingRef}
-            id="testimonials-heading"
-            className="font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"
-          >
-            <span aria-hidden="true">What people say.</span>
-            <span className="sr-only">Client testimonials</span>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
-          {testimonials.map((item) => (
-            <TestimonialCard key={item.id} item={item} />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section
       ref={rootRef}
@@ -246,8 +218,14 @@ export default function Testimonials() {
         </h2>
       </div>
 
+      <div className="hidden grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 md:gap-6 motion-reduce:grid">
+        {testimonials.map((item) => (
+          <TestimonialCard key={`grid-${item.id}`} item={item} />
+        ))}
+      </div>
+
       <div
-        className="relative -mx-4 overflow-hidden sm:-mx-[4vw] lg:-mx-[5vw] xl:-mx-[6vw]"
+        className="relative -mx-4 overflow-hidden sm:-mx-[4vw] lg:-mx-[5vw] xl:-mx-[6vw] motion-reduce:hidden"
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         onFocusCapture={handlePointerEnter}

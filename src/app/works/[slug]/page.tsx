@@ -476,7 +476,7 @@ export default function WorkPage() {
         <Reveal delay={0.05}>
           <figure className="mx-auto max-w-6xl">
             <div data-case-cover-frame="" className="relative aspect-[16/9] overflow-hidden rounded-[6px] border border-border bg-light-surface">
-              {project.coverVideo && !reduceMotion ? (
+              {project.coverVideo ? (
                 <video
                   ref={coverVideoRef}
                   data-case-cover-media=""
@@ -486,7 +486,7 @@ export default function WorkPage() {
                   muted
                   loop
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   className="h-full w-full object-cover"
                 />
               ) : (

@@ -86,7 +86,7 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
     <motion.article
       ref={cardRef}
       layout={!reduceMotion}
-      initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 28 }}
       animate={{ opacity: 1, y: 0 }}
       exit={reduceMotion ? undefined : { opacity: 0, y: -20 }}
       transition={{ duration: reduceMotion ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
@@ -107,7 +107,7 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-center lg:gap-8">
           <div className="relative overflow-hidden rounded-[18px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)]">
             <div className="aspect-[16/10] overflow-hidden">
-              {project.coverVideo && !reduceMotion ? (
+              {project.coverVideo ? (
                 <video
                   ref={imageRef as React.RefObject<HTMLVideoElement>}
                   src={project.coverVideo}

@@ -167,7 +167,7 @@ export default function Navbar() {
       <header className="site-header fixed inset-x-0 top-0 z-50 border-b border-border bg-background">
         <div className="site-header__inner px-4 sm:px-[4vw] lg:px-[5vw] xl:px-[6vw]">
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: reduceMotion ? 0 : 0.6,
@@ -254,7 +254,7 @@ export default function Navbar() {
                   role="dialog"
                   aria-modal="true"
                   aria-label="Navigation menu"
-                  initial={reduceMotion ? false : { opacity: 0 }}
+                  initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={reduceMotion ? undefined : { opacity: 0 }}
                   transition={{
@@ -296,7 +296,7 @@ export default function Navbar() {
                     {navLinks.map((item, index) => (
                       <motion.div
                         key={item.label}
-                        initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                        initial={{ opacity: 0, y: 6 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{
                           duration: reduceMotion ? 0 : 0.22,
