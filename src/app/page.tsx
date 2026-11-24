@@ -19,10 +19,14 @@ export const meta: MetaFunction = () =>
     path: "/",
   });
 
+const homeWebPageId = `${site.url}/#webpage`;
+const homeWorkListId = `${site.url}/#selected-work`;
+const homeFaqId = `${site.url}/#faq`;
+
 const homeWebPageJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "@id": `${site.url}/#webpage`,
+  "@id": homeWebPageId,
   url: `${site.url}/`,
   name: "Anvik Labs — Product Design & Development Studio in India",
   description: site.description,
@@ -30,6 +34,7 @@ const homeWebPageJsonLd = {
   inLanguage: "en-IN",
   isPartOf: { "@id": websiteId },
   about: { "@id": organizationId },
+  mainEntity: [{ "@id": homeWorkListId }, { "@id": homeFaqId }],
   primaryImageOfPage: {
     "@type": "ImageObject",
     url: `${site.url}${site.ogImage}`,
@@ -41,7 +46,7 @@ const homeWebPageJsonLd = {
 const homeWorkListJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "@id": `${site.url}/#selected-work`,
+  "@id": homeWorkListId,
   name: "Selected digital product work by Anvik Labs",
   itemListElement: projects.slice(0, 4).map((project, index) => ({
     "@type": "ListItem",
@@ -54,7 +59,7 @@ const homeWorkListJsonLd = {
 const homeFaqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": `${site.url}/#faq`,
+  "@id": homeFaqId,
   mainEntity: homeFaqData.map((faq) => ({
     "@type": "Question",
     name: faq.q,

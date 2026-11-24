@@ -14,7 +14,7 @@ type FaqItem = {
 export const homeFaqData: FaqItem[] = [
   {
     q: "What does Anvik Labs do?",
-    a: "Anvik Labs is an independent product design and engineering studio in India. We design digital experiences, build web products, and explore practical AI solutions for clients, while also building our own independent products.",
+    a: "Anvik Labs is an independent product design and engineering studio based in India and working with teams worldwide. We design digital experiences, build web products, and explore practical AI solutions for clients, while also building our own independent products.",
   },
   {
     q: "What services does Anvik Labs offer?",

@@ -7,6 +7,12 @@
 - Builds and experiments with independent products.
 - Offers product design, web development, AI solutions, and website maintenance.
 
+## Preferred citation
+- Official name: Anvik Labs
+- Canonical URL: https://anviklabs.site/
+- One-line description: Anvik Labs is an independent product design and engineering studio based in India, designing and building digital products and practical AI solutions for clients worldwide.
+- Contact: anviklabs@gmail.com
+
 ## Key pages
 - [Home](https://anviklabs.site/): Independent technology studio overview, selected work, services, team, testimonials, and FAQs.
 - [Works](https://anviklabs.site/works): Selected client and independently developed digital product case studies.
@@ -22,4 +28,4 @@
 - Email: anviklabs@gmail.com
 - Website: https://anviklabs.site/
 
-Last updated: 2026-11-24
+Last updated: 2026-11-25

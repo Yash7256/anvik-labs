@@ -42,6 +42,10 @@ const organizationJsonLd = {
   knowsAbout: services.map((service) => service.name),
   areaServed: site.areaServed,
   email: site.email,
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "IN",
+  },
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",

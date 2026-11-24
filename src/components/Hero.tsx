@@ -370,7 +370,7 @@ export default function Hero() {
             id="hero-heading"
             className="text-center font-display text-[clamp(1.75rem,8.2vw,8.1rem)] leading-[0.95] tracking-[-0.045em] text-foreground [word-spacing:0.12em]"
           >
-            <span className="sr-only">Anvik Labs is an independent technology studio designing and engineering digital products.</span>
+            <span className="sr-only">Anvik Labs is an independent product design and engineering studio based in India, designing and building digital products for clients worldwide.</span>
             <span data-hero-line className="block whitespace-nowrap" aria-hidden="true">
               Curious By Design.
             </span>
@@ -385,7 +385,7 @@ export default function Hero() {
             ref={copyRef}
             className="max-w-[520px] text-center text-[16px] leading-[1.6] text-foreground md:text-[17px]"
           >
-            An independent technology studio making the internet a little more interesting. We design, build, experiment, and occasionally get carried away with ideas. Based in India, building for everywhere.
+            Anvik Labs is an independent product design and engineering studio based in India, working with teams worldwide. We design digital experiences, build web products, explore practical AI, and occasionally get carried away with ideas.
           </p>
 
           <button
