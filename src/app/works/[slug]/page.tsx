@@ -34,7 +34,7 @@ const WORK_TYPE_LABEL = { design: "Design", development: "Development", both: "D
 
 type MarqueeImage = { file: string; width: number; height: number; alt: string };
 
-const MARQUEE_IMAGES: MarqueeImage[] = [
+const SEDATIVE_MARQUEE_IMAGES: MarqueeImage[] = [
   { file: "2.png", width: 1518, height: 1036, alt: "Sedative Physio course discovery screen" },
   { file: "3.png", width: 1448, height: 1086, alt: "Sedative Physio course overview screen" },
   { file: "4.png", width: 2400, height: 1792, alt: "Sedative Physio course details screen" },
@@ -45,7 +45,29 @@ const MARQUEE_IMAGES: MarqueeImage[] = [
   { file: "11.png", width: 2880, height: 2602, alt: "Sedative Physio learning resources screen" },
 ];
 
-function MarqueeRow({ images, direction }: { images: readonly MarqueeImage[]; direction: "left" | "right" }) {
+const CYBERSEC_MARQUEE_IMAGES: MarqueeImage[] = [
+  { file: "1.png", width: 1519, height: 1036, alt: "CyberSec Toolkit interface screenshot 1" },
+  { file: "2.png", width: 1520, height: 1035, alt: "CyberSec Toolkit interface screenshot 2" },
+  { file: "3.png", width: 1518, height: 1036, alt: "CyberSec Toolkit interface screenshot 3" },
+  { file: "4.png", width: 1519, height: 1035, alt: "CyberSec Toolkit interface screenshot 4" },
+  { file: "5.png", width: 4500, height: 3000, alt: "CyberSec Toolkit interface screenshot 5" },
+  { file: "6.png", width: 5760, height: 3600, alt: "CyberSec Toolkit interface screenshot 6" },
+  { file: "7.png", width: 4500, height: 3000, alt: "CyberSec Toolkit interface screenshot 7" },
+];
+
+const CYBERSEC_GRID_IMAGES = CYBERSEC_MARQUEE_IMAGES.slice(0, 4);
+
+function MarqueeRow({
+  images,
+  direction,
+  basePath,
+  label,
+}: {
+  images: readonly MarqueeImage[];
+  direction: "left" | "right";
+  basePath: string;
+  label: string;
+}) {
   const reduceMotion = useReducedMotion();
   const [hydrated, setHydrated] = useState(false);
   const marqueeRef = useRef<HTMLDivElement>(null);
@@ -89,8 +111,8 @@ function MarqueeRow({ images, direction }: { images: readonly MarqueeImage[]; di
   const renderImages = (duplicate: boolean) => sequence.map((image, index) => (
     <img
       key={`${direction}-${duplicate ? "copy" : "original"}-${index}-${image.file}`}
-      src={imageVariant(`/sedativephysio/${image.file}`, 480)}
-      srcSet={imageSrcSet(`/sedativephysio/${image.file}`, SCREEN_WIDTHS)}
+      src={imageVariant(`/${basePath}/${image.file}`, 480)}
+      srcSet={imageSrcSet(`/${basePath}/${image.file}`, SCREEN_WIDTHS)}
       sizes="(max-width: 640px) 150px, 300px"
       alt={duplicate || index >= images.length ? "" : image.alt}
       width={image.width}
@@ -106,7 +128,7 @@ function MarqueeRow({ images, direction }: { images: readonly MarqueeImage[]; di
       ref={marqueeRef}
       tabIndex={0}
       role="group"
-      aria-label={`Sedative Physio ${direction === "left" ? "first" : "second"} interface row`}
+      aria-label={`${label} ${direction === "left" ? "first" : "second"} interface row`}
       className={`project-marquee${isStatic ? " project-marquee--static" : ""}`}
     >
       <div className={`project-marquee__track ${direction === "left" ? "project-marquee__track--left" : "project-marquee__track--right"}`}>
@@ -378,6 +400,7 @@ export default function WorkPage() {
   const reduceMotion = useReducedMotion();
   const project = getProject(slug);
   const isSedative = project?.id === "sedative-physio";
+  const isCyberSec = project?.id === "cybersec-toolkit";
   const rootRef = useRef<HTMLElement>(null);
   const coverVideoRef = useRef<HTMLVideoElement>(null);
 
@@ -646,6 +669,34 @@ export default function WorkPage() {
           </section>
         )}
 
+        {isCyberSec && (
+          <section className="py-8 md:py-12" aria-label="CyberSec Toolkit visuals">
+            <Reveal>
+              <div className="grid items-start gap-4 md:grid-cols-4 md:gap-6">
+                {CYBERSEC_GRID_IMAGES.map((image, index) => (
+                  <figure
+                    key={image.file}
+                    className={`overflow-hidden rounded-[6px] border border-border bg-light-surface${index % 2 === 1 ? " md:mt-8 lg:mt-12" : ""}`}
+                  >
+                    <img
+                      data-case-parallax=""
+                      src={imageVariant(`/cybersec-toolkit/${image.file}`, 768)}
+                      srcSet={imageSrcSet(`/cybersec-toolkit/${image.file}`, SCREEN_WIDTHS)}
+                      sizes="(min-width: 768px) 25vw, 100vw"
+                      alt={image.alt}
+                      width={image.width}
+                      height={image.height}
+                      loading="lazy"
+                      decoding="async"
+                      className="block h-auto w-full"
+                    />
+                  </figure>
+                ))}
+              </div>
+            </Reveal>
+          </section>
+        )}
+
         {project.designThinking && (
           <section className="py-14 md:py-20" aria-labelledby="design-thinking-heading">
             <Reveal>
@@ -692,13 +743,23 @@ export default function WorkPage() {
         ))}
         {isSedative && (
           <section className="-mx-8 py-12 sm:-mx-[8vw] md:-mx-[9vw] lg:-mx-[10vw] xl:-mx-[11vw] md:py-16" aria-label="Sedative Physio interface showcase">
-            <MarqueeRow images={MARQUEE_IMAGES.slice(0, 4)} direction="left" />
+            <MarqueeRow basePath="sedativephysio" label="Sedative Physio" images={SEDATIVE_MARQUEE_IMAGES.slice(0, 4)} direction="left" />
             <div className="mt-3 md:mt-4">
-              <MarqueeRow images={MARQUEE_IMAGES.slice(4)} direction="right" />
+              <MarqueeRow basePath="sedativephysio" label="Sedative Physio" images={SEDATIVE_MARQUEE_IMAGES.slice(4)} direction="right" />
             </div>
           </section>
         )}
-        {showDevelopment && <DecisionSection id="development-decisions" label="Development decisions" items={project.developmentDecisions} variant="technical" />}
+        {isCyberSec && (
+          <section className="-mx-8 py-12 sm:-mx-[8vw] md:-mx-[9vw] lg:-mx-[10vw] xl:-mx-[11vw] md:py-16" aria-label="CyberSec Toolkit interface showcase">
+            <MarqueeRow basePath="cybersec-toolkit" label="CyberSec Toolkit" images={CYBERSEC_MARQUEE_IMAGES.slice(0, 4)} direction="left" />
+            <div className="mt-3 md:mt-4">
+              <MarqueeRow basePath="cybersec-toolkit" label="CyberSec Toolkit" images={CYBERSEC_MARQUEE_IMAGES.slice(4)} direction="right" />
+            </div>
+          </section>
+        )}
+        {showDevelopment && project.developmentDecisions?.length ? (
+          <DecisionSection id="development-decisions" label="Development decisions" items={project.developmentDecisions} variant="technical" />
+        ) : null}
 
         {project.outcomes?.length ? (
           <OutcomesSection items={project.outcomes} intro={project.outcomesIntro} label={project.outcomesLabel} />

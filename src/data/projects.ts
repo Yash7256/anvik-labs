@@ -102,7 +102,7 @@ export type Project = {
   outcomes?: ProjectOutcome[];
   impact?: ProjectImpact;
   designDecisions: ProjectDecision[];
-  developmentDecisions: ProjectDecision[];
+  developmentDecisions?: ProjectDecision[];
 };
 
 export const projects = projectData as Project[];

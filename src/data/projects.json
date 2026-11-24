@@ -114,32 +114,6 @@
         ]
       }
     ],
-    "developmentDecisions": [
-      {
-        "title": "Pure asyncio scan engine",
-        "description": "The scanner is built on asyncio instead of wrapping nmap. This removes an external dependency, keeps scans streamable, and gives full control over concurrency and output."
-      },
-      {
-        "title": "Adaptive speed, bounded impact",
-        "description": "AIMD concurrency and a token-bucket rate limiter tune scan speed to the target. Stealth, normal, and aggressive presets let users trade speed against noise."
-      },
-      {
-        "title": "Composable scan pipeline",
-        "description": "Port discovery, banner grabbing, CVE lookup, MITRE ATT&CK mapping, and AI analysis are separate stages, so each one can improve without reshaping the rest."
-      },
-      {
-        "title": "Live progress over SSE",
-        "description": "Scans stream results as they happen, and a worker heartbeat with a stale-scan reaper recovers interrupted jobs, so users always know what is running and what is ready to review."
-      },
-      {
-        "title": "AI that degrades gracefully",
-        "description": "Analysis runs through Groq, falls back to Gemini, then to rule-based logic. Reports still generate when a provider is down or no key is set."
-      },
-      {
-        "title": "Safe by default",
-        "description": "Private IP ranges are blocked, DNS rebinding protection is built in, scan endpoints require JWT, and the API is rate-limited, so the tool is hard to misuse."
-      }
-    ],
     "outcomesIntro": "CyberSec Toolkit is now an actively deployed cybersecurity platform, bringing multiple security investigation capabilities into one workspace. Less tab-hopping. More connected security intelligence.",
     "outcomesLabel": "Final outcome",
     "outcomes": [

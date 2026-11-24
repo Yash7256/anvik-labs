@@ -29,6 +29,7 @@ The findings below record an earlier state. The current implementation differs i
 - Typecheck, lint, and build pass. Headless checks at 1440px and 390px confirm no horizontal overflow, no console errors, intact hero/work spacing, and no initial WebGL, Lenis, or MP4 requests.
 - The CyberSec Toolkit case study now carries its own research, solution, UX/visual approach, final outcome, and clearly labelled estimated impact copy. Non-Sedative case studies no longer inherit Sedative Physio interface imagery.
 - Headless checks confirm the CyberSec Toolkit route has one `h1`, no horizontal overflow, no console errors, and no Sedative image references at desktop, mobile, or reduced-motion widths.
+- CyberSec Toolkit no longer shows Development decisions. Its interface screenshots now use the same compressed WebP grid and offscreen-paused marquee treatment as Sedative Physio, without the Aman/Harshita cutouts.
 
 ## Findings and resolutions
 
