@@ -354,7 +354,7 @@ export default function Hero() {
 
       <div
         ref={contentRef}
-        className="hero-content relative flex flex-1 flex-col justify-between px-4 pb-[6svh] pt-[11svh] sm:px-[4vw] md:pb-[7svh] md:pt-[12svh] lg:px-[5vw] xl:px-[6vw]"
+        className="hero-content relative flex flex-1 flex-col justify-between px-4 pb-[4svh] pt-[11svh] sm:px-[4vw] md:pb-[5svh] md:pt-[12svh] lg:px-[5vw] xl:px-[6vw]"
       >
         <div className="hero-heading-wrap flex flex-col items-center">
           <p

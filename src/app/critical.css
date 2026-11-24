@@ -8,7 +8,7 @@
 *,*::before,*::after{box-sizing:border-box;border-color:var(--color-border);border-style:solid;border-width:0}
 html{background:var(--color-background);scroll-padding-top:calc(var(--header-height) + 16px)}
 body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--color-background);color:var(--color-foreground);font-family:var(--font-sans);font-size:16px;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-h1,h2,h3,p{margin:0}
+@layer base{h1,h2,h3,p{margin:0}}
 h1,h2,h3{font-family:var(--font-display);text-wrap:balance}
 button,input,select,textarea{font:inherit;letter-spacing:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
@@ -44,9 +44,9 @@ p{text-wrap:pretty}
 @media(min-width:640px){#hero{margin-inline:-4vw}}
 @media(min-width:1024px){#hero{margin-inline:-5vw}}
 @media(min-width:1280px){#hero{margin-inline:-6vw}}
-.hero-content{position:relative;display:flex;flex:1 1 0%;flex-direction:column;justify-content:space-between;padding:11svh 1rem 6svh}
+.hero-content{position:relative;display:flex;flex:1 1 0%;flex-direction:column;justify-content:space-between;padding:11svh 1rem 4svh}
 @media(min-width:640px){.hero-content{padding-inline:4vw}}
-@media(min-width:768px){.hero-content{padding-top:12svh;padding-bottom:7svh}}
+@media(min-width:768px){.hero-content{padding-top:12svh;padding-bottom:5svh}}
 @media(min-width:1024px){.hero-content{padding-inline:5vw}}
 @media(min-width:1280px){.hero-content{padding-inline:6vw}}
 .hero-heading-wrap,.hero-bottom{display:flex;flex-direction:column;align-items:center;margin-inline:auto}
