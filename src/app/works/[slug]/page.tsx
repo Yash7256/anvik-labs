@@ -56,17 +56,28 @@ const CYBERSEC_MARQUEE_IMAGES: MarqueeImage[] = [
 ];
 
 const CYBERSEC_GRID_IMAGES = CYBERSEC_MARQUEE_IMAGES.slice(0, 4);
+const CYBERSEC_ASSET_VERSION = "2";
+
+function cyberSrc(file: string, width: number) {
+  return `${imageVariant(`/cybersec-toolkit/${file}`, width)}?v=${CYBERSEC_ASSET_VERSION}`;
+}
+
+function cyberSrcSet(file: string) {
+  return SCREEN_WIDTHS.map((width) => `${cyberSrc(file, width)} ${width}w`).join(", ");
+}
 
 function MarqueeRow({
   images,
   direction,
   basePath,
   label,
+  assetVersion,
 }: {
   images: readonly MarqueeImage[];
   direction: "left" | "right";
   basePath: string;
   label: string;
+  assetVersion?: string;
 }) {
   const reduceMotion = useReducedMotion();
   const [hydrated, setHydrated] = useState(false);
@@ -108,20 +119,25 @@ function MarqueeRow({
     };
   }, [reduceMotion]);
 
-  const renderImages = (duplicate: boolean) => sequence.map((image, index) => (
-    <img
-      key={`${direction}-${duplicate ? "copy" : "original"}-${index}-${image.file}`}
-      src={imageVariant(`/${basePath}/${image.file}`, 480)}
-      srcSet={imageSrcSet(`/${basePath}/${image.file}`, SCREEN_WIDTHS)}
-      sizes="(max-width: 640px) 150px, 300px"
-      alt={duplicate || index >= images.length ? "" : image.alt}
-      width={image.width}
-      height={image.height}
-      loading="lazy"
-      decoding="async"
-      className="block h-[clamp(110px,14vw,220px)] w-auto max-w-none rounded-[6px] border border-border/60 object-cover"
-    />
-  ));
+  const renderImages = (duplicate: boolean) => sequence.map((image, index) => {
+    const base = `/${basePath}/${image.file}`;
+    const src = imageVariant(base, 480);
+    const srcSet = imageSrcSet(base, SCREEN_WIDTHS);
+    return (
+      <img
+        key={`${direction}-${duplicate ? "copy" : "original"}-${index}-${image.file}`}
+        src={assetVersion ? `${src}?v=${assetVersion}` : src}
+        srcSet={assetVersion ? SCREEN_WIDTHS.map((width) => `${imageVariant(base, width)}?v=${assetVersion} ${width}w`).join(", ") : srcSet}
+        sizes="(max-width: 640px) 150px, 300px"
+        alt={duplicate || index >= images.length ? "" : image.alt}
+        width={image.width}
+        height={image.height}
+        loading="lazy"
+        decoding="async"
+        className="block h-[clamp(110px,14vw,220px)] w-auto max-w-none rounded-[6px] border border-border/60 object-cover"
+      />
+    );
+  });
 
   return (
     <div
@@ -680,8 +696,8 @@ export default function WorkPage() {
                   >
                     <img
                       data-case-parallax=""
-                      src={imageVariant(`/cybersec-toolkit/${image.file}`, 768)}
-                      srcSet={imageSrcSet(`/cybersec-toolkit/${image.file}`, SCREEN_WIDTHS)}
+                      src={cyberSrc(image.file, 768)}
+                      srcSet={cyberSrcSet(image.file)}
                       sizes="(min-width: 768px) 25vw, 100vw"
                       alt={image.alt}
                       width={image.width}
@@ -751,9 +767,9 @@ export default function WorkPage() {
         )}
         {isCyberSec && (
           <section className="-mx-8 py-12 sm:-mx-[8vw] md:-mx-[9vw] lg:-mx-[10vw] xl:-mx-[11vw] md:py-16" aria-label="CyberSec Toolkit interface showcase">
-            <MarqueeRow basePath="cybersec-toolkit" label="CyberSec Toolkit" images={CYBERSEC_MARQUEE_IMAGES.slice(0, 4)} direction="left" />
+            <MarqueeRow basePath="cybersec-toolkit" label="CyberSec Toolkit" assetVersion={CYBERSEC_ASSET_VERSION} images={CYBERSEC_MARQUEE_IMAGES.slice(0, 4)} direction="left" />
             <div className="mt-3 md:mt-4">
-              <MarqueeRow basePath="cybersec-toolkit" label="CyberSec Toolkit" images={CYBERSEC_MARQUEE_IMAGES.slice(4)} direction="right" />
+              <MarqueeRow basePath="cybersec-toolkit" label="CyberSec Toolkit" assetVersion={CYBERSEC_ASSET_VERSION} images={CYBERSEC_MARQUEE_IMAGES.slice(4)} direction="right" />
             </div>
           </section>
         )}
