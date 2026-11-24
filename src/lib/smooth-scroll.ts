@@ -1,3 +1,6 @@
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { onUserInteraction, SCROLL_EVENTS } from "./user-interaction";
+
 type LenisInstance = import("lenis").default;
 
 let lenis: LenisInstance | null = null;
@@ -5,7 +8,6 @@ let tick: ((time: number) => void) | null = null;
 let initialization: Promise<void> | null = null;
 let stopListening: (() => void) | null = null;
 
-const activationEvents = ["wheel", "touchstart", "keydown"] as const;
 const activationKeys = new Set([
   " ",
   "ArrowDown",
@@ -26,11 +28,8 @@ function ensureSmoothScroll() {
   }
   if (prefersReducedMotion()) return Promise.resolve();
 
-  initialization = Promise.all([
-    import("lenis"),
-    import("@/lib/gsap"),
-  ])
-    .then(([{ default: Lenis }, { gsap, ScrollTrigger }]) => {
+  initialization = import("lenis")
+    .then(({ default: Lenis }) => {
       if (prefersReducedMotion()) return;
 
       lenis = new Lenis({
@@ -68,16 +67,7 @@ export function listenForSmoothScroll() {
   if (typeof window === "undefined") return () => {};
   if (stopListening) return stopListening;
 
-  activationEvents.forEach((event) => {
-    window.addEventListener(event, handleActivation, { passive: true });
-  });
-
-  stopListening = () => {
-    activationEvents.forEach((event) => {
-      window.removeEventListener(event, handleActivation);
-    });
-    stopListening = null;
-  };
+  stopListening = onUserInteraction(handleActivation, SCROLL_EVENTS);
 
   return stopListening;
 }
@@ -88,9 +78,7 @@ export function destroySmoothScroll() {
   const currentTick = tick;
   if (currentTick) {
     tick = null;
-    void import("@/lib/gsap").then(({ gsap }) => {
-      gsap.ticker.remove(currentTick);
-    });
+    gsap.ticker.remove(currentTick);
   }
 
   lenis?.destroy();

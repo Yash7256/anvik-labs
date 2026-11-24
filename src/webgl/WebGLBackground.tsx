@@ -1,19 +1,10 @@
 "use client";
 
 import { lazy, Suspense, useEffect, useState } from "react";
+import { onUserInteraction } from "@/lib/user-interaction";
 import { supportsWebGL } from "./support";
 
 const InteractiveCanvas = lazy(() => import("./InteractiveCanvas"));
-
-const activationEvents = [
-  "pointermove",
-  "pointerdown",
-  "wheel",
-  "touchstart",
-  "keydown",
-] as const;
-
-const autoActivateDelay = 6000;
 
 function Fallback() {
   return <div className="webgl-fallback" aria-hidden="true" />;
@@ -31,29 +22,17 @@ export default function WebGLBackground() {
     }
 
     let cancelled = false;
-    let timer: number | undefined;
+    let unsubscribe = () => {};
 
-    const cleanup = () => {
-      activationEvents.forEach((event) => {
-        window.removeEventListener(event, activate);
-      });
-      window.clearTimeout(timer);
-    };
-
-    const activate = () => {
+    unsubscribe = onUserInteraction(() => {
       if (cancelled) return;
-      cleanup();
+      unsubscribe();
       setMounted(true);
-    };
-
-    activationEvents.forEach((event) => {
-      window.addEventListener(event, activate, { passive: true });
     });
-    timer = window.setTimeout(activate, autoActivateDelay);
 
     return () => {
       cancelled = true;
-      cleanup();
+      unsubscribe();
     };
   }, []);
 

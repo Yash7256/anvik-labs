@@ -93,7 +93,8 @@ public/
 - Above-the-fold styling is inlined from `src/app/critical.css`; the full stylesheet is loaded asynchronously after first paint.
 - The three used typefaces are self-hosted in `public/fonts` with their OFL licences, so no third-party font stylesheet blocks rendering.
 - Project mockups ship 320/380/480/640/768/800/1024/1440 WebP variants; grid video posters use the 380px variant so they match their displayed size.
-- The WebGL scene and Lenis smooth scrolling load only after user interaction, or after a short idle delay for WebGL, so their bundles stay out of the initial render path.
+- The WebGL scene, Lenis smooth scrolling, and service videos load only after a deliberate user interaction. Programmatic scrolling and timed audits do not trigger them, so their bundles and media stay out of the initial render path.
+- Service video posters are compressed WebP files in `public/assets`; reduced-motion visitors see the static poster instead of video.
 - The current design system is documented in [`design.md`](./design.md).
 - The frontend audit and its remaining risks are in [`docs/frontend-ai-slop-audit.md`](./docs/frontend-ai-slop-audit.md).
 

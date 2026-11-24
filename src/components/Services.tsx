@@ -9,6 +9,7 @@ import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION, useFinePointer } from "@/lib/motion";
+import { useUserInteraction } from "@/lib/use-user-interaction";
 import { useVideoPlayback } from "@/lib/useVideoPlayback";
 import { services as serviceData } from "@/data/services";
 
@@ -38,9 +39,10 @@ const serviceCards: ServiceCardConfig[] = [
     meta: "PRODUCT SYSTEMS",
     sculpture: "web",
     video: "/assets/development.mp4",
+    image: "/assets/webdev-service.webp",
     mediaAlt: "Web development visual",
-    imageWidth: 736,
-    imageHeight: 1308,
+    imageWidth: 640,
+    imageHeight: 1137,
     pills: ["Frontend", "Backend", "Web Apps", "Dashboards"],
   },
   {
@@ -52,9 +54,10 @@ const serviceCards: ServiceCardConfig[] = [
     meta: "INTERFACE CRAFT",
     sculpture: "design",
     video: "/assets/uiuxdesign.mp4",
+    image: "/assets/uiux-service.webp",
     mediaAlt: "Product design visual",
-    imageWidth: 1152,
-    imageHeight: 2048,
+    imageWidth: 720,
+    imageHeight: 1280,
     pills: ["Product Design", "Design Systems", "Prototypes"],
   },
   {
@@ -66,9 +69,10 @@ const serviceCards: ServiceCardConfig[] = [
     meta: "LIVE SUPPORT",
     sculpture: "care",
     video: "/assets/maintenance.mp4",
+    image: "/assets/maintenance-service.webp",
     mediaAlt: "Website maintenance visual",
-    imageWidth: 926,
-    imageHeight: 1698,
+    imageWidth: 720,
+    imageHeight: 1320,
     pills: ["Maintenance", "Performance", "Security", "Support"],
   },
 ];
@@ -118,7 +122,10 @@ function ServiceSculpture({ variant }: { variant: ServiceCardConfig["sculpture"]
 
 function ServiceVisual({ card, reduceMotion }: { card: ServiceCardConfig; reduceMotion: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  useVideoPlayback(videoRef, Boolean(card.video) && !reduceMotion);
+  const interacted = useUserInteraction();
+  const showVideo = Boolean(card.video) && !reduceMotion;
+
+  useVideoPlayback(videoRef, showVideo && interacted);
 
   return (
     <div
@@ -142,20 +149,20 @@ function ServiceVisual({ card, reduceMotion }: { card: ServiceCardConfig; reduce
       />
 
       <div className="service-visual__art absolute inset-[6%_4%_10%_8%] sm:inset-[8%_6%_10%_12%] lg:inset-[8%_2%_10%_10%]">
-        {card.video || card.image ? (
+        {showVideo || card.image ? (
           <div className="absolute inset-0 overflow-hidden rounded-[14px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)] shadow-[0_24px_60px_-40px_rgba(0,0,0,0.45)]">
-            {card.video ? (
+            {showVideo ? (
               <video
                 ref={videoRef}
-                src={card.video}
+                src={interacted ? card.video : undefined}
                 poster={card.image}
                 aria-label={card.mediaAlt ?? ""}
                 width={card.imageWidth}
                 height={card.imageHeight}
                 muted
-                loop={!reduceMotion}
+                loop
                 playsInline
-                preload="metadata"
+                preload="none"
                 className="h-full w-full object-cover opacity-90 saturate-[0.85] contrast-[1.02]"
               />
             ) : (
