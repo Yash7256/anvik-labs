@@ -188,13 +188,16 @@ function ResearchApproachCopy({ content }: { content: string }) {
   const blocks = parseNumberedContent(content);
   const sections = groupNumberedSections(blocks);
   const insight = blocks.find((block) => block.kind === "insight");
+  const gridClassName = sections.length === 3
+    ? "md:grid-cols-3 md:gap-x-6 lg:gap-x-8"
+    : "md:grid-cols-[0.85fr_1.15fr] md:gap-x-8";
 
   return (
-    <div className="mt-4 grid gap-6 md:grid-cols-[0.85fr_1.15fr] md:gap-x-8">
+    <div className={`mt-4 grid gap-6 ${gridClassName}`}>
       {sections.map((section, index) => (
         <div
           key={section.number}
-          className={index === 1 ? "border-t border-border/30 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0" : ""}
+          className={index > 0 ? "border-t border-border/30 pt-6 md:border-l md:border-t-0 md:pl-6 md:pt-0 lg:pl-8" : ""}
         >
           <h4 className="flex items-baseline gap-2">
             <span className="font-mono text-[12px] uppercase tracking-[0.12em] text-foreground">{section.number}</span>
