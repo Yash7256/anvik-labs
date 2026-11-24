@@ -15,7 +15,8 @@ type ServiceCardConfig = {
   meta: string;
   sculpture: "web" | "design" | "ai" | "care";
   image?: string;
-  imageAlt?: string;
+  video?: string;
+  mediaAlt?: string;
   imageWidth?: number;
   imageHeight?: number;
   pills: string[];
@@ -30,8 +31,8 @@ const serviceCards: ServiceCardConfig[] = [
     category: "BUILD / SHIP",
     meta: "PRODUCT SYSTEMS",
     sculpture: "web",
-    image: "/assets/webdev.jpg",
-    imageAlt: "Web development visual",
+    video: "/assets/development.mp4",
+    mediaAlt: "Web development visual",
     imageWidth: 736,
     imageHeight: 1308,
     pills: ["Frontend", "Backend", "Web Apps", "Dashboards"],
@@ -44,8 +45,8 @@ const serviceCards: ServiceCardConfig[] = [
     category: "DESIGN / SYSTEMS",
     meta: "INTERFACE CRAFT",
     sculpture: "design",
-    image: "/assets/uiux.png",
-    imageAlt: "Product design visual",
+    video: "/assets/uiuxdesign.mp4",
+    mediaAlt: "Product design visual",
     imageWidth: 1152,
     imageHeight: 2048,
     pills: ["Product Design", "Design Systems", "Prototypes"],
@@ -58,8 +59,8 @@ const serviceCards: ServiceCardConfig[] = [
     category: "CARE / PERFORMANCE",
     meta: "LIVE SUPPORT",
     sculpture: "care",
-    image: "/assets/wbemaintenance.webp",
-    imageAlt: "Website maintenance visual",
+    video: "/assets/maintenance.mp4",
+    mediaAlt: "Website maintenance visual",
     imageWidth: 926,
     imageHeight: 1698,
     pills: ["Maintenance", "Performance", "Security", "Support"],
@@ -132,17 +133,32 @@ function ServiceVisual({ card }: { card: ServiceCardConfig }) {
       />
 
       <div className="service-visual__art absolute inset-[6%_4%_10%_8%] sm:inset-[8%_6%_10%_12%] lg:inset-[8%_2%_10%_10%]">
-        {card.image ? (
+        {card.video || card.image ? (
           <div className="absolute inset-0 overflow-hidden rounded-[14px] border border-[var(--sc-preview-border)] bg-[var(--sc-preview-img-bg)] shadow-[0_24px_60px_-40px_rgba(0,0,0,0.45)]">
-            <img
-              src={card.image}
-              alt={card.imageAlt ?? ""}
-              width={card.imageWidth}
-              height={card.imageHeight}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover opacity-90 saturate-[0.85] contrast-[1.02]"
-            />
+            {card.video ? (
+              <video
+                src={card.video}
+                aria-label={card.mediaAlt ?? ""}
+                width={card.imageWidth}
+                height={card.imageHeight}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover opacity-90 saturate-[0.85] contrast-[1.02]"
+              />
+            ) : (
+              <img
+                src={card.image}
+                alt={card.mediaAlt ?? ""}
+                width={card.imageWidth}
+                height={card.imageHeight}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover opacity-90 saturate-[0.85] contrast-[1.02]"
+              />
+            )}
             <div
               aria-hidden="true"
               className="absolute inset-0"
