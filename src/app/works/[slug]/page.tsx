@@ -357,7 +357,7 @@ function EmbedSection({ embeds, note }: { embeds: ProjectEmbed[]; note?: string 
     <section id="component-embeds" aria-labelledby="component-embeds-heading" className="py-16 md:py-24">
       <Reveal>
         <div className="grid gap-10 md:grid-cols-[34%_1fr] md:gap-12">
-          <div>
+          <div className="md:sticky md:top-[calc(var(--header-height)+32px)] md:self-start">
             <h2 id="component-embeds-heading" data-case-heading="" className="mt-4 max-w-[14ch] font-sans text-[clamp(2.4rem,5vw,5rem)] font-medium leading-[0.9] tracking-[-0.05em]">Component embeds</h2>
           </div>
           <div>
