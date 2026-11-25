@@ -400,9 +400,6 @@ export default function MeetTheHumans() {
           <span aria-hidden="true">Meet the humans.</span>
           <span className="sr-only">About the Anvik Labs team</span>
         </h2>
-        <p className="mt-6 max-w-[42ch] text-[14px] leading-[1.7] text-muted md:text-[15px]">
-          A small independent studio where design and engineering work closely together.
-        </p>
       </div>
 
       <div className="mx-auto grid w-full max-w-[1180px] grid-cols-1 gap-10 md:gap-12 lg:grid-cols-2 lg:gap-10 xl:gap-14">

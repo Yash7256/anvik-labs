@@ -33,14 +33,14 @@ const serviceCards: ServiceCardConfig[] = [
   {
     index: "01",
     slug: serviceData[0].slug,
-    name: "Web Development",
+    name: "Development",
     description: serviceData[0].heroSubline,
     category: "BUILD / SHIP",
     meta: "PRODUCT SYSTEMS",
     sculpture: "web",
     video: "/assets/development.mp4",
     image: "/assets/webdev-service.webp",
-    mediaAlt: "Web development visual",
+    mediaAlt: "Development visual",
     imageWidth: 640,
     imageHeight: 1137,
     pills: ["Frontend", "Backend", "Web Apps", "Dashboards"],
@@ -380,7 +380,7 @@ export default function Services() {
             <span className="sr-only">Product design and engineering services</span>
           </h2>
           <p className="mt-6 max-w-[32ch] text-[14px] leading-[1.7] text-muted md:text-[15px]">
-            We design it, build it, break it, fix it, and stick around to keep making it better. From product design and web development to practical AI solutions and website maintenance, we're in it for the long run.
+            We design it, build it, break it, fix it, and stick around to keep making it better. From product design and development to practical AI solutions and website maintenance, we're in it for the long run.
           </p>
 
         </div>
