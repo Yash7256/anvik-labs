@@ -375,7 +375,7 @@ export default function MeetTheHumans() {
         scrollTrigger: {
           trigger: headingRef.current,
           start: "top 85%",
-          end: "+=55%",
+          end: "top 60%",
           scrub: 1,
         },
       });

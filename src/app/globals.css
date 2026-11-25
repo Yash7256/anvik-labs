@@ -1265,6 +1265,13 @@ select option {
   --sc-pill-bg: rgba(255, 255, 255, 0.05);
   --sc-pill-border: rgba(255, 255, 255, 0.12);
   --sc-pill-text: rgba(245, 245, 245, 0.66);
+  top: 0;
+}
+
+@media (min-width: 1024px) {
+  .service-card {
+    top: calc(var(--header-height) + 1rem + var(--service-card-offset, 0rem));
+  }
 }
 
 [data-theme="dark"] .service-card {

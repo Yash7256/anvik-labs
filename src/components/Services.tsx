@@ -2,6 +2,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { Link } from "react-router";
@@ -394,11 +395,13 @@ export default function Services() {
               onPointerMove={handleCardPointerMove}
               onPointerLeave={handleCardPointerLeave}
               className="service-card group/card relative mb-6 overflow-hidden rounded-[20px] border border-[var(--sc-border)] bg-[var(--sc-bg)] text-[var(--sc-text)] shadow-[var(--sc-shadow)] backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-500 hover:border-[var(--sc-border-hover)] hover:bg-[var(--sc-bg-hover)] hover:shadow-[var(--sc-shadow-hover)] last:mb-0 lg:sticky lg:mb-0"
-              style={{
-                top: `calc(var(--header-height) + 1rem + ${index} * 8rem)`,
-                zIndex: index + 1,
-                marginBottom: index === serviceCards.length - 1 ? 0 : undefined,
-              }}
+              style={
+                {
+                  "--service-card-offset": `${index * 8}rem`,
+                  zIndex: index + 1,
+                  marginBottom: index === serviceCards.length - 1 ? 0 : undefined,
+                } as CSSProperties
+              }
             >
               <div
                 aria-hidden="true"
