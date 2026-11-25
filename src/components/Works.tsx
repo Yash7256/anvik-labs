@@ -166,13 +166,6 @@ export default function Works() {
               const updateRestTops = () => {
                 let nextTop = baseTop();
                 items.forEach((item, index) => {
-                  if (index === items.length - 1) {
-                    item.style.position = "relative";
-                    item.style.top = "auto";
-                    restTops[index] = null;
-                    return;
-                  }
-
                   item.style.position = "sticky";
                   item.style.top = `${nextTop}px`;
                   restTops[index] = nextTop;
@@ -190,10 +183,7 @@ export default function Works() {
 
               const tweens = items.slice(0, -1).map((item, index) => {
                 const next = items[index + 1];
-                const endTop = () =>
-                  index + 1 === items.length - 1
-                    ? restTops[index] ?? baseTop()
-                    : restTops[index + 1] ?? baseTop();
+                const endTop = () => restTops[index + 1] ?? baseTop();
 
                 return gsap.fromTo(
                   item,

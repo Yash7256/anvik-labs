@@ -390,13 +390,6 @@ export default function Services() {
         const updateTops = () => {
           let nextTop = baseTop();
           cards.forEach((card, index) => {
-            if (index === cards.length - 1) {
-              card.style.position = "relative";
-              card.style.top = "auto";
-              restTops[index] = null;
-              return;
-            }
-
             card.style.position = "sticky";
             card.style.top = `${nextTop}px`;
             restTops[index] = nextTop;
@@ -413,10 +406,7 @@ export default function Services() {
 
         const stackTweens = cards.slice(0, -1).map((card, index) => {
           const next = cards[index + 1];
-          const endTop = () =>
-            index + 1 === cards.length - 1
-              ? restTops[index] ?? baseTop()
-              : restTops[index + 1] ?? baseTop();
+          const endTop = () => restTops[index + 1] ?? baseTop();
 
           return gsap.fromTo(
             card,
