@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
 import { getProject, type Project } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
@@ -17,15 +17,12 @@ export default function Works() {
   const rootRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const stackRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
 
   useGSAP(
     () => {
       if (reduceMotion) return;
-
-      let stackMedia: ReturnType<typeof gsap.matchMedia> | null = null;
 
       const heading = headingRef.current;
       const body = bodyRef.current;
@@ -113,12 +110,7 @@ export default function Works() {
         gsap
           .timeline({
             defaults: { ease: MOTION.ease },
-            scrollTrigger: {
-              trigger: grid.querySelector<HTMLElement>("[data-stack-item]") ?? grid,
-              start: "top 86%",
-              end: "+=70%",
-              scrub: 1,
-            },
+            scrollTrigger: { trigger: grid, start: "top 86%", end: "+=70%", scrub: 1 },
           })
           .fromTo(
             cards,
@@ -131,96 +123,7 @@ export default function Works() {
           .to(titleParts, { yPercent: 0, opacity: 1, duration: 0.62, stagger: 0.045 }, 0.3);
       }
 
-      const stack = stackRef.current;
-      if (stack) {
-        const items = gsap.utils.toArray<HTMLElement>(
-          stack.querySelectorAll("[data-stack-item]"),
-        );
-
-        if (items.length > 1) {
-          stackMedia = gsap.matchMedia();
-          stackMedia.add(
-            "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
-            () => {
-              const baseTop = () => {
-                const header = parseFloat(
-                  getComputedStyle(document.documentElement).getPropertyValue(
-                    "--header-height",
-                  ),
-                );
-                return (Number.isFinite(header) ? header : 64) + 12;
-              };
-              const titleBottom = (item: HTMLElement) => {
-                const title = item.querySelector("h3");
-                if (!title) return item.offsetHeight;
-                let offset = 0;
-                let node: HTMLElement | null = title;
-                while (node && node !== item) {
-                  offset += node.offsetTop;
-                  node = node.offsetParent as HTMLElement | null;
-                }
-                return Math.min(item.offsetHeight, offset + title.offsetHeight + 8);
-              };
-              const restTops: Array<number | null> = items.map(() => null);
-
-              const updateRestTops = () => {
-                let nextTop = baseTop();
-                items.forEach((item, index) => {
-                  item.style.position = "sticky";
-                  item.style.top = `${nextTop}px`;
-                  restTops[index] = nextTop;
-                  nextTop += titleBottom(item);
-                });
-              };
-
-              updateRestTops();
-
-              const handleResize = () => {
-                updateRestTops();
-                ScrollTrigger.refresh();
-              };
-              window.addEventListener("resize", handleResize);
-
-              const tweens = items.slice(0, -1).map((item, index) => {
-                const next = items[index + 1];
-                const endTop = () => restTops[index + 1] ?? baseTop();
-
-                return gsap.fromTo(
-                  item,
-                  { scale: 1, opacity: 1, filter: "brightness(1)" },
-                  {
-                    scale: 0.94,
-                    opacity: 0.82,
-                    filter: "brightness(0.88)",
-                    ease: "none",
-                    scrollTrigger: {
-                      trigger: stack,
-                      start: () => `top+=${next.offsetTop} bottom`,
-                      end: () => `top+=${next.offsetTop} ${Math.round(endTop())}px`,
-                      scrub: true,
-                      invalidateOnRefresh: true,
-                    },
-                  },
-                );
-              });
-
-              return () => {
-                window.removeEventListener("resize", handleResize);
-                tweens.forEach((tween) => tween.scrollTrigger?.kill());
-                items.forEach((item) => {
-                  item.style.removeProperty("position");
-                  item.style.removeProperty("top");
-                });
-              };
-            },
-          );
-        }
-      }
-
-      return () => {
-        allSplits.forEach((split) => split.revert());
-        stackMedia?.revert();
-      };
+      return () => allSplits.forEach((split) => split.revert());
     },
     { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
   );
@@ -230,7 +133,7 @@ export default function Works() {
       ref={rootRef}
       id="works"
       aria-labelledby="works-heading"
-      className="theme-transition relative isolate overflow-clip bg-background py-20 md:py-28 lg:py-36"
+      className="theme-transition relative isolate overflow-hidden bg-background py-20 md:py-28 lg:py-36"
     >
       <div aria-hidden="true" className="works-fade" />
 
@@ -252,33 +155,20 @@ export default function Works() {
           </p>
         </div>
 
-        <div ref={stackRef} data-works-stack className="relative mt-12 w-full md:mt-16">
-          {featuredProject ? (
-            <div
-              data-stack-item
-              data-stack-index="0"
-              className="mx-auto w-full max-w-[1040px] md:w-[88%] lg:w-[78%]"
-            >
-              <ProjectCard project={featuredProject} variant="featured" priority />
-            </div>
-          ) : null}
-
-          <div
-            ref={gridRef}
-            data-project-grid
-            className="mx-auto mt-6 grid w-full max-w-[1040px] grid-cols-1 gap-5 md:mt-8 md:grid-cols-2 md:gap-5"
-          >
-            {gridProjects.map((project, index) => (
-              <div
-                key={project.id}
-                data-stack-item
-                data-stack-index={index + 1}
-                className="w-full"
-              >
-                <ProjectCard project={project} />
-              </div>
-            ))}
+        {featuredProject ? (
+          <div className="mx-auto mt-12 w-full max-w-[1040px] md:mt-16 md:w-[88%] lg:w-[78%]">
+            <ProjectCard project={featuredProject} variant="featured" priority />
           </div>
+        ) : null}
+
+        <div
+          ref={gridRef}
+          data-project-grid
+          className="mx-auto mt-6 grid w-full max-w-[1040px] grid-cols-1 gap-5 md:mt-8 md:grid-cols-2 md:gap-5"
+        >
+          {gridProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
         </div>
       </div>
     </section>
