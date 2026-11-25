@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
-import { gsap } from "@/lib/gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { createMaskedText, MOTION, useFinePointer } from "@/lib/motion";
 import { useUserInteraction } from "@/lib/use-user-interaction";
 import { useVideoPlayback } from "@/lib/useVideoPlayback";
@@ -335,7 +335,7 @@ export default function Services() {
         });
       });
 
-      mm.add("(max-width: 1023px)", () => {
+      mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
         cards.forEach((card) => {
           const visual = card.querySelector("[data-service-visual]");
           const body = card.querySelector("[data-service-body]");
@@ -350,6 +350,90 @@ export default function Services() {
           if (visual) tl.to(visual, { clipPath: "inset(0% 0% 0% 0%)", scale: 1, duration: 0.7, clearProps: "clipPath,transform" }, 0.05);
           if (body) tl.to(body, { opacity: 1, y: 0, duration: 0.45, clearProps: "opacity,transform" }, 0.12);
         });
+      });
+
+      mm.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        cards.forEach((card) => {
+          const visual = card.querySelector("[data-service-visual]");
+          const body = card.querySelector("[data-service-body]");
+          gsap.set(card, { opacity: 0 });
+          if (visual) gsap.set(visual, { clipPath: "inset(6% 0% 6% 0%)", scale: 1.02 });
+          if (body) gsap.set(body, { opacity: 0, y: 10 });
+          const tl = gsap.timeline({
+            defaults: { ease: MOTION.ease },
+            scrollTrigger: { trigger: card, start: "top 88%", end: "top 58%", scrub: 1 },
+          });
+          tl.to(card, { opacity: 1, duration: 0.8, clearProps: "opacity" }, 0);
+          if (visual) tl.to(visual, { clipPath: "inset(0% 0% 0% 0%)", scale: 1, duration: 0.7, clearProps: "clipPath,transform" }, 0.05);
+          if (body) tl.to(body, { opacity: 1, y: 0, duration: 0.45, clearProps: "opacity,transform" }, 0.12);
+        });
+
+        const baseTop = () => {
+          const header = parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue("--header-height"),
+          );
+          return (Number.isFinite(header) ? header : 64) + 16;
+        };
+        const gap = () => parseFloat(getComputedStyle(cards[0]).marginBottom) || 24;
+        const restTops: Array<number | null> = cards.map(() => null);
+
+        const updateTops = () => {
+          let nextTop = baseTop();
+          cards.forEach((card, index) => {
+            if (index === cards.length - 1) {
+              card.style.position = "relative";
+              card.style.top = "auto";
+              restTops[index] = null;
+              return;
+            }
+
+            card.style.position = "sticky";
+            card.style.top = `${nextTop}px`;
+            restTops[index] = nextTop;
+            nextTop += card.offsetHeight + gap();
+          });
+        };
+        updateTops();
+
+        const handleResize = () => {
+          updateTops();
+          ScrollTrigger.refresh();
+        };
+        window.addEventListener("resize", handleResize);
+
+        const stackTweens = cards.slice(0, -1).map((card, index) => {
+          const next = cards[index + 1];
+          const endTop = () =>
+            index + 1 === cards.length - 1
+              ? restTops[index] ?? baseTop()
+              : restTops[index + 1] ?? baseTop();
+
+          return gsap.fromTo(
+            card,
+            { scale: 1, filter: "brightness(1)" },
+            {
+              scale: 0.94,
+              filter: "brightness(0.88)",
+              ease: "none",
+              scrollTrigger: {
+                trigger: stack,
+                start: () => `top+=${next.offsetTop} bottom`,
+                end: () => `top+=${next.offsetTop} ${Math.round(endTop())}px`,
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
+            },
+          );
+        });
+
+        return () => {
+          window.removeEventListener("resize", handleResize);
+          stackTweens.forEach((tween) => tween.scrollTrigger?.kill());
+          cards.forEach((card) => {
+            card.style.removeProperty("position");
+            card.style.removeProperty("top");
+          });
+        };
       });
 
       return () => {

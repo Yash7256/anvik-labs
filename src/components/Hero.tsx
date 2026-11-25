@@ -119,14 +119,35 @@ export default function Hero() {
           },
         })
         .to(contentRef.current, { yPercent: -5, duration: 1 }, 0)
-        .to(eyebrowRef.current, { y: -14, autoAlpha: 0.45, duration: 0.35 }, 0.2)
-        .to(eyebrowRef.current, { autoAlpha: 0, duration: 0.35 }, 0.65)
-        .to(copyRef.current, { y: -24, autoAlpha: 0.35, duration: 0.4 }, 0.35)
-        .to(copyRef.current, { autoAlpha: 0, duration: 0.3 }, 0.75)
+        .fromTo(
+          eyebrowRef.current,
+          { y: 0, autoAlpha: 1, immediateRender: false },
+          { y: -14, autoAlpha: 0.45, duration: 0.35 },
+          0.2,
+        )
+        .fromTo(
+          eyebrowRef.current,
+          { autoAlpha: 0.45, immediateRender: false },
+          { autoAlpha: 0, duration: 0.35 },
+          0.65,
+        )
+        .fromTo(
+          copyRef.current,
+          { y: 0, autoAlpha: 1, immediateRender: false },
+          { y: -24, autoAlpha: 0.35, duration: 0.4 },
+          0.35,
+        )
+        .fromTo(
+          copyRef.current,
+          { autoAlpha: 0.35, immediateRender: false },
+          { autoAlpha: 0, duration: 0.3 },
+          0.75,
+        )
         .to(cueDotRef.current, { y: 44, duration: 0.28, ease: "none" }, 0)
         .to(cueFillRef.current, { scaleY: 1, duration: 0.28, ease: "none" }, 0)
-        .to(
+        .fromTo(
           cueButtonRef.current,
+          { y: 0, autoAlpha: 1, immediateRender: false },
           { y: 18, autoAlpha: 0, duration: 0.24, ease: "power1.in" },
           0.12,
         )
