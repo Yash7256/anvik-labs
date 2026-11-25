@@ -19,7 +19,7 @@ The findings below record an earlier state. The current implementation differs i
 - The standalone Featured Product section and `src/components/FeaturedProduct.tsx` were removed. Designers Room remains only as a hero project card.
 - Service rows no longer show numeric indices.
 - The contact form posts to FormSubmit, not a `mailto:` draft. The older mailto notes below are superseded by `README.md`.
-- Additional motion now covers post-hydration route fades, works filter reflow, contact status feedback, sticky scroll-progress hairlines, the Aman timeline, and offscreen/hidden pausing for the testimonial marquee.
+- Additional motion now covers post-hydration route fades, works filter reflow, contact status feedback, sticky scroll-progress hairlines, and offscreen/hidden pausing for the testimonial marquee.
 - Typecheck, lint, and build pass after the motion changes. Headless Chrome screenshots at 1440px and 390px render all affected routes; a human visual comparison is still recommended.
 
 ## Update — 25 November 2026

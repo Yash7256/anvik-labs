@@ -14,7 +14,6 @@ export default {
     "/journal",
     ...journalPosts.filter((p) => p.published).map((p) => `/journal/${p.slug}`),
     ...projects.map((project) => `/works/${project.id}`),
-    "/aman-raj",
     "/contact",
     "/services/web-development",
     "/services/product-design",

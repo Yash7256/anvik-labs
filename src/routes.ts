@@ -4,7 +4,6 @@ export default [
   index("app/page.tsx"),
   route("works", "app/works/page.tsx"),
   route("works/:slug", "app/works/[slug]/page.tsx"),
-  route("aman-raj", "app/aman-raj/page.tsx"),
   route("journal", "app/journal/page.tsx"),
   route("journal/:slug", "app/journal/[slug]/page.tsx"),
   route("contact", "app/contact/page.tsx"),

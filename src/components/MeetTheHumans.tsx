@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import {
   motion,
@@ -89,7 +88,6 @@ type Person = {
   delay: number;
   objectPosition: string;
   imageClassName?: string;
-  link?: string;
   socials: SocialLink[];
   accentSide: "left" | "right";
 };
@@ -123,7 +121,6 @@ const people: Person[] = [
     height: 1600,
     delay: 0.12,
     objectPosition: "50% 100%",
-    link: "/aman-raj",
     socials: socials.aman as SocialLink[],
     accentSide: "right",
   },
@@ -294,19 +291,7 @@ function PersonCard({
           id={`${person.id}-name`}
           className="mt-2 font-sans text-[clamp(2rem,3.4vw,3rem)] font-medium leading-[0.95] tracking-[-0.04em] text-foreground"
         >
-          {person.link ? (
-            <Link
-              to={person.link}
-              className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-accent-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-            >
-              {person.name}
-              <span aria-hidden="true" className="text-[0.7em] text-muted">
-                ↗
-              </span>
-            </Link>
-          ) : (
-            person.name
-          )}
+          {person.name}
         </h3>
 
         <div

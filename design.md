@@ -70,7 +70,7 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 
 ### Calls to action
 
-- All primary CTAs — navbar, hero, footer, service pages, contact form, and Aman Raj hero — share `primaryCtaClass` from `src/lib/cta.ts`, matching the navbar's dark pill. Mobile uses a compact 13px/40px variant; the larger 15px/44px size starts at `md`.
+- All primary CTAs — navbar, hero, footer, service pages, and contact form — share `primaryCtaClass` from `src/lib/cta.ts`, matching the navbar's dark pill. Mobile uses a compact 13px/40px variant; the larger 15px/44px size starts at `md`.
 - Secondary links stay as underlined or mono text links. Orange remains a hover and focus accent, not a primary CTA fill.
 
 ### Hero
