@@ -5,11 +5,13 @@ import { Link } from "react-router";
 import { useGSAP } from "@gsap/react";
 import { useReducedMotion } from "framer-motion";
 
-import { primaryCtaClass } from "@/lib/cta";
 import { gsap } from "@/lib/gsap";
 import { createMaskedText, MOTION } from "@/lib/motion";
 import { scrollToTop } from "@/lib/smooth-scroll";
 import { site } from "@/lib/site";
+
+const footerCtaClass =
+  "inline-flex min-h-10 items-center justify-center rounded-full bg-accent px-5 py-2 font-sans text-[13px] font-medium tracking-tight transition-[transform,background-color] duration-200 ease-out hover:bg-accent-strong active:translate-y-px md:min-h-11 md:px-6 md:py-3 md:text-[15px]";
 
 const footerLinks = [
   { label: "Home", href: "/" },
@@ -76,7 +78,8 @@ export default function Footer() {
             <Link
               to="/contact"
               data-cursor="hello"
-              className={`mt-8 ${primaryCtaClass}`}
+              className={`mt-8 ${footerCtaClass}`}
+              style={{ color: "#000000" }}
             >
               Start a conversation
             </Link>
