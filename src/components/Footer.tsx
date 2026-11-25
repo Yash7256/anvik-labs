@@ -72,7 +72,7 @@ export default function Footer() {
               <span className="block">Where ideas become</span>
               <span className="block text-accent">real products.</span>
             </p>
-            <p className="mt-6 max-w-[42ch] text-[14px] leading-relaxed text-muted md:text-[15px]">
+            <p className="mt-6 max-w-[44ch] font-sans text-[12px] leading-[1.65] text-muted md:text-[13px]">
               We design and engineer digital products for clients, and build our own.
             </p>
             <Link

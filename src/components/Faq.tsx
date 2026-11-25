@@ -101,7 +101,7 @@ export default function Faq({
         >
           Questions.
         </h2>
-        <p className="max-w-md font-sans text-[14px] leading-relaxed text-muted md:text-[15px]">
+        <p className="max-w-[44ch] font-sans text-[12px] leading-[1.65] text-muted md:text-[13px]">
           The practical details, before we begin. If something is missing, ask us
           directly.
         </p>

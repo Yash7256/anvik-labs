@@ -149,7 +149,7 @@ export default function Works() {
           </h2>
           <p
             ref={bodyRef}
-            className="mx-auto mt-8 max-w-[46ch] text-[14px] leading-[1.65] text-muted md:mt-10 md:text-[15px]"
+            className="mx-auto mt-8 max-w-[44ch] font-sans text-[12px] leading-[1.65] text-muted md:mt-10 md:text-[13px]"
           >
             From wild ideas to working things, a mix of client work and our own little experiments, brought to life with care.
           </p>

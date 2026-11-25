@@ -379,7 +379,7 @@ export default function Services() {
             <span aria-hidden="true">SERVICES</span>
             <span className="sr-only">Product design and engineering services</span>
           </h2>
-          <p className="mt-6 max-w-[44ch] text-[12px] leading-[1.65] text-muted md:text-[13px]">
+          <p className="mt-6 max-w-[44ch] font-sans text-[12px] leading-[1.65] text-muted md:text-[13px]">
             We design it, build it, break it, fix it, and stick around to keep making it better. From product design and development to practical AI solutions and website maintenance, we're in it for the long run.
           </p>
 
