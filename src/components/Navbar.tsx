@@ -315,15 +315,17 @@ export default function Navbar() {
                     ))}
                   </nav>
 
-                  <div className="mt-auto flex flex-col items-start gap-6 pb-4 pt-8">
-                    <ThemeToggle />
-                    <TalkCta
-                      onClick={() => {
-                        setOpen(false);
-                        window.dispatchEvent(new Event("contact:open"));
-                      }}
-                    />
-                    <div className="flex flex-col gap-1 text-[13px]">
+                  <div className="mt-auto pb-4 pt-8">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-6">
+                      <TalkCta
+                        onClick={() => {
+                          setOpen(false);
+                          window.dispatchEvent(new Event("contact:open"));
+                        }}
+                      />
+                      <ThemeToggle />
+                    </div>
+                    <div className="mt-6 flex flex-col gap-1 text-[13px]">
                       <span className="font-sans font-medium text-foreground">
                         {site.studioTagline}
                       </span>
