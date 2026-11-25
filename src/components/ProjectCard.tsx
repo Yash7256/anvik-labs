@@ -298,29 +298,32 @@ export default function ProjectCard({
           <span aria-hidden="true" className="project-hover-shade" />
 
           {isFeatured ? (
-            <>
-              <span aria-hidden="true" className="project-featured-gradient" />
-              <div className="absolute inset-x-0 bottom-0 z-[2] flex flex-col gap-4 p-5 sm:p-7 md:flex-row md:items-end md:justify-between md:p-9 lg:p-11">
-                <h3
-                  ref={titleRef}
-                  className="font-display text-[clamp(1.4rem,3.8vw,3.25rem)] font-light leading-[0.95] tracking-[-0.045em] text-white"
-                >
-                  {project.name}
-                </h3>
-                <span
-                  ref={pillRef}
-                  className="project-pill shrink-0 self-start md:self-auto"
-                >
-                  {project.genre}
-                </span>
-              </div>
-            </>
+            <span
+              aria-hidden="true"
+              className="project-featured-gradient hidden md:block"
+            />
           ) : null}
-
-
         </div>
 
-        {!isFeatured ? (
+        {isFeatured ? (
+          <div className="project-featured-caption absolute inset-x-0 bottom-0 z-[2] flex flex-col gap-4 p-5 sm:p-7 md:flex-row md:items-end md:justify-between md:p-9 lg:p-11">
+            <h3
+              ref={titleRef}
+              className="project-featured-title font-display text-[clamp(1.4rem,3.8vw,3.25rem)] font-light leading-[0.95] tracking-[-0.045em] text-white"
+            >
+              {project.name}
+            </h3>
+            <span
+              ref={pillRef}
+              className="project-pill shrink-0 self-start md:self-auto"
+            >
+              {project.genre}
+            </span>
+            <span className="project-arrow project-featured-arrow hidden" aria-hidden="true">
+              <ArrowIcon />
+            </span>
+          </div>
+        ) : (
           <div className="mt-4 flex items-start justify-between gap-4 px-0.5 md:mt-5">
             <div className="min-w-0">
               <h3 className="font-display text-[17px] tracking-[-0.035em] text-foreground md:text-[20px]">
@@ -334,7 +337,7 @@ export default function ProjectCard({
               <ArrowIcon />
             </span>
           </div>
-        ) : null}
+        )}
       </Link>
     </article>
   );
