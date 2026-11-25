@@ -374,7 +374,17 @@ export default function Services() {
           );
           return (Number.isFinite(header) ? header : 64) + 16;
         };
-        const gap = () => parseFloat(getComputedStyle(cards[0]).marginBottom) || 24;
+        const titleBottom = (card: HTMLElement) => {
+          const title = card.querySelector("h3");
+          if (!title) return card.offsetHeight;
+          let offset = 0;
+          let node: HTMLElement | null = title;
+          while (node && node !== card) {
+            offset += node.offsetTop;
+            node = node.offsetParent as HTMLElement | null;
+          }
+          return Math.min(card.offsetHeight, offset + title.offsetHeight + 8);
+        };
         const restTops: Array<number | null> = cards.map(() => null);
 
         const updateTops = () => {
@@ -390,7 +400,7 @@ export default function Services() {
             card.style.position = "sticky";
             card.style.top = `${nextTop}px`;
             restTops[index] = nextTop;
-            nextTop += card.offsetHeight + gap();
+            nextTop += titleBottom(card);
           });
         };
         updateTops();

@@ -150,7 +150,17 @@ export default function Works() {
                 );
                 return (Number.isFinite(header) ? header : 64) + 12;
               };
-              const gap = () => parseFloat(getComputedStyle(stack).rowGap) || 20;
+              const titleBottom = (item: HTMLElement) => {
+                const title = item.querySelector("h3");
+                if (!title) return item.offsetHeight;
+                let offset = 0;
+                let node: HTMLElement | null = title;
+                while (node && node !== item) {
+                  offset += node.offsetTop;
+                  node = node.offsetParent as HTMLElement | null;
+                }
+                return Math.min(item.offsetHeight, offset + title.offsetHeight + 8);
+              };
               const restTops: Array<number | null> = items.map(() => null);
 
               const updateRestTops = () => {
@@ -166,7 +176,7 @@ export default function Works() {
                   item.style.position = "sticky";
                   item.style.top = `${nextTop}px`;
                   restTops[index] = nextTop;
-                  nextTop += item.offsetHeight + gap();
+                  nextTop += titleBottom(item);
                 });
               };
 
