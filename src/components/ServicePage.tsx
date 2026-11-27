@@ -43,7 +43,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
 
         <header className="px-4 py-8 sm:px-[4vw] sm:py-10 md:hidden">
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Service [{String(index + 1).padStart(2, "0")}]</p>
-          <h1 className="mt-3 break-words font-sans text-[clamp(2.25rem,10vw,5rem)] font-medium leading-[0.92] tracking-[-0.05em] text-foreground">{service.name}.</h1>
+          <h1 className="-ml-6 mt-3 break-words font-sans text-[clamp(2.25rem,10vw,5rem)] font-medium leading-[0.92] tracking-[-0.05em] text-foreground">{service.name}.</h1>
           <p className="mt-4 text-[14px] leading-relaxed text-muted">{service.heroSubline}</p>
           <div className="mt-6 flex justify-center sm:justify-start">
             <Link to="/contact" className={primaryCtaClass}>Start a project →</Link>
@@ -59,7 +59,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
                 <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.18em] text-muted">{service.serviceType}</p>
               </div>
               <div>
-                <div aria-hidden="true" className="font-sans text-[clamp(2.5rem,5vw,5.5rem)] font-medium leading-[0.88] tracking-[-0.055em] text-foreground">{service.name}.</div>
+                <div aria-hidden="true" className="-ml-6 font-sans text-[clamp(2.5rem,5vw,5.5rem)] font-medium leading-[0.88] tracking-[-0.055em] text-foreground">{service.name}.</div>
                 <p className="mt-6 max-w-[32ch] text-[14px] leading-relaxed text-muted lg:text-[15px]">{service.heroSubline}</p>
                 <Link to="/contact" className={`mt-8 ${primaryCtaClass}`}>Start a project</Link>
               </div>
