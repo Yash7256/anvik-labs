@@ -29,12 +29,11 @@ export const services: Service[] = [
     lead: "We design and build websites, web apps, mobile apps, and AI-powered tools for startups, businesses, and individuals. Whether you need a new website, a custom application, or an AI chatbot, we can help you build it.",
     leadVariant: "long",
     intro:
-      "Every project starts with a conversation. We share a plan, timeline and price range in writing before work begins. If a simple site is enough, we will say so.",
+      "Before we start, we discuss what you need, how it should work, and what it will take to build. You'll receive a written project scope, timeline, and cost estimate upfront. Whether it's a business website, web application, or AI-powered product, we'll help you choose an approach that fits your requirements and budget.",
     glance: [
-      ["Best for", "Startups, small businesses, individuals"],
-      ["Based in", "India, working with clients worldwide"],
-      ["Team", "Small, you talk to the people building it"],
-      ["Built with", "React, Next.js, Node.js, TypeScript"],
+      ["Best for", "Startups, small businesses, and individuals"],
+      ["Team", "A small, hands-on team. You work directly with the developers building your project."],
+      ["Technology", "React, Next.js, Node.js, TypeScript, and modern AI technologies."],
     ],
     included: [
       "Business websites, portfolios and landing pages",
