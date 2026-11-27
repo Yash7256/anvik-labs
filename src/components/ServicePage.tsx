@@ -84,13 +84,15 @@ export default function ServicePage({ service, index }: { service: Service; inde
               <NumberedGrid items={service.included} />
             </section>
 
-            <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16">
-              <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Tools we use</p>
-              <Chips items={service.stack} />
-            </section>
+            {service.stack.length > 0 && (
+              <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16">
+                <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Tools we use</p>
+                <Chips items={service.stack} />
+              </section>
+            )}
 
             <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16">
-              <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Process</p>
+              <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Our Process</p>
               <div className={`grid gap-6 sm:grid-cols-2 ${stepGrid}`}>
                 {service.process.map(({ step, label, desc }) => (
                   <div key={step} className="pt-4 sm:pt-5">
@@ -109,7 +111,12 @@ export default function ServicePage({ service, index }: { service: Service; inde
 
             <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16"><ProofStrip /></section>
 
-            <Faq items={service.faqs} metaLabel="FAQs" metaTitle="Before we begin" />
+            <Faq
+              items={service.faqs}
+              metaLabel="FAQs"
+              metaTitle="Before we begin"
+              initialVisibleCount={service.initialFaqCount}
+            />
             <RelatedServices current={service} />
           </div>
         </div>

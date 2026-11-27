@@ -3,10 +3,10 @@ import type { Project } from "@/data/projects";
 
 export const site = {
   name: "Anvik Labs",
-  title: "Product Design & Development Studio in India | Anvik Labs",
+  title: "Anvik Labs | Website, Web App & AI Development Studio",
   studioTagline: "Independent technology studio",
   description:
-    "Anvik Labs is an independent product design and engineering studio in India building digital experiences, web products, and practical AI solutions.",
+    "Anvik Labs builds custom websites, web applications, mobile apps, AI chatbots, and LLM-powered solutions for startups, small businesses, and individuals.",
   url: "https://anviklabs.site",
   email: "anviklabs@gmail.com",
   areaServed: "Worldwide",

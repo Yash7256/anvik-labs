@@ -14,6 +14,7 @@ export type Service = {
   stack: { area: string; tools: string }[];
   whyUs: { title: string; desc: string }[];
   faqs: { q: string; a: string }[];
+  initialFaqCount?: number;
 };
 
 export const services: Service[] = [
@@ -37,38 +38,41 @@ export const services: Service[] = [
     ],
     included: [
       "Business websites, portfolios and landing pages",
-      "Web apps, dashboards and customer portals",
-      "Internal tools and admin panels",
-      "Backend APIs, login systems and databases",
-      "Third-party integrations (payments, email, maps and more)",
-      "Fixes, new features and migrations for existing projects",
+      "Web applications, dashboards and customer portals",
+      "AI chatbots, LLM integrations and AI-powered applications",
+      "Custom internal tools, admin panels and workflow automation",
+      "Backend APIs, authentication, databases and third-party integrations",
+      "Bug fixes, new features, performance improvements and migrations",
     ],
     process: [
-      { step: "01", label: "Discuss", desc: "You explain the idea. We ask about users, budget and deadline." },
-      { step: "02", label: "Plan", desc: "We share scope, timeline and cost in writing before work starts." },
-      { step: "03", label: "Build", desc: "We build in small stages and show you progress along the way." },
-      { step: "04", label: "Launch", desc: "We deploy, test and walk you through how everything works." },
-      { step: "05", label: "Support", desc: "Bug fixes after launch, and ongoing maintenance if you want it." },
+      { step: "01", label: "Discuss", desc: "Tell us what you're looking to build. We'll discuss your requirements, users, budget, and expected timeline." },
+      { step: "02", label: "Plan", desc: "We'll define the project scope, choose the right technologies, and share a written timeline and cost estimate before work begins." },
+      { step: "03", label: "Build", desc: "We develop your website, application, or AI solution in stages, keeping you updated and involved throughout." },
+      { step: "04", label: "Launch", desc: "We test everything, deploy your project, and walk you through its features and functionality." },
+      { step: "05", label: "Support", desc: "Need changes after launch? We handle bug fixes, updates, improvements, and ongoing maintenance." },
     ],
-    stack: [
-      ["Frontend", "React, Next.js, TypeScript, Tailwind CSS"],
-      ["Backend", "Node.js, REST APIs"],
-      ["Databases", "PostgreSQL, MongoDB"],
-      ["Hosting", "Vercel, AWS, Firebase, Railway"],
-    ].map(([area, tools]) => ({ area, tools })),
+    stack: [],
     whyUs: [
-      { title: "Design and development together", desc: "Our UI/UX designer and developer work on the same project." },
-      { title: "We build our own products", desc: "We run CyberSec Toolkit, so we know what keeping a live product running involves." },
-      { title: "Plain communication", desc: "No jargon. Clear plans and honest timelines." },
-      { title: "Small team", desc: "Fewer handoffs. You know who is working on your project." },
+      { title: "Design and development under one roof", desc: "Designers and developers work together from the start, keeping the design and final product aligned." },
+      { title: "We build and maintain our own products", desc: "We develop products like CyberSec Toolkit, giving us first-hand experience with building, deploying, and maintaining real-world software." },
+      { title: "Clear communication", desc: "You'll know what's being built, how long it will take, and what it will cost. No unnecessary jargon or vague promises." },
+      { title: "A small, hands-on team", desc: "You work directly with the people handling your project, with fewer handoffs and more accountability." },
     ],
     faqs: [
-      { q: "How long does a project take?", a: "It depends on the scope. A small website can take a few weeks. Larger apps take longer. We give an estimate after the first discussion." },
-      { q: "How much does it cost?", a: "It depends on pages, features and integrations. We share a written quote before starting." },
-      { q: "Do you work with clients outside India?", a: "Yes. We work with clients anywhere and keep in touch by video call, chat and email." },
-      { q: "Can you improve my existing website?", a: "Yes. We can fix issues, add features or rebuild parts of it." },
-      { q: "Will I own the code?", a: "Yes. Ownership terms are agreed before the project starts." },
+      { q: "What services does Anvik Labs offer?", a: "Anvik Labs provides website development, web application development, mobile app development, backend development, and AI development. We also build AI chatbots, integrate large language models (LLMs), automate workflows, and connect third-party services." },
+      { q: "Who do you work with?", a: "We work with startups, small businesses, entrepreneurs, and individuals looking to build a website, application, or custom software product." },
+      { q: "How much does it cost to build a website or web application?", a: "The cost depends on the project's scope, features, integrations, and complexity. We discuss your requirements and provide a project scope and cost estimate before development begins." },
+      { q: "How long does it take to develop a website or application?", a: "A simple business website may take a few weeks, while complex web applications and AI-powered products can take several months. We provide an estimated timeline based on your requirements." },
+      { q: "Can you build custom AI chatbots and integrate LLMs?", a: "Yes. We develop AI chatbots, integrate LLMs such as OpenAI and other language models, build retrieval-augmented generation (RAG) systems, and connect AI capabilities to existing applications." },
+      { q: "Do you develop custom web applications?", a: "Yes. We build custom web applications, SaaS platforms, dashboards, customer portals, admin panels, and backend systems based on your business requirements." },
+      { q: "Can you work on an existing website or application?", a: "Yes. We can improve existing projects, fix bugs, add new features, improve performance, modernize outdated technology, and migrate applications to newer platforms." },
+      { q: "What technologies do you use?", a: "Our technology stack includes React, Next.js, Node.js, TypeScript, Python, FastAPI, PostgreSQL, and modern AI frameworks and APIs. We choose technologies based on the project's requirements." },
+      { q: "Will I be involved during development?", a: "Yes. We share progress throughout development, discuss important decisions, and give you opportunities to review the work before the final launch." },
+      { q: "Do you provide support after launch?", a: "Yes. We help with bug fixes, updates, improvements, and ongoing website and application maintenance after launch." },
+      { q: "Can you build an MVP for my startup?", a: "Yes. We help startups turn early ideas into working MVPs by identifying essential features and building a product that can be tested with real users." },
+      { q: "How do I start a project with Anvik Labs?", a: "Start by contacting us with your idea and requirements. We'll discuss the project, suggest an approach, and share the estimated scope, timeline, and cost before starting." },
     ],
+    initialFaqCount: 3,
   },
   {
     slug: "product-design",

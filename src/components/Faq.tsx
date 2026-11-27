@@ -34,12 +34,20 @@ export default function Faq({
   items = homeFaqData,
   metaLabel = "FAQ / 007",
   metaTitle = "Common questions about Anvik Labs",
+  initialVisibleCount,
 }: {
   items?: FaqItem[];
   metaLabel?: string;
   metaTitle?: string;
+  initialVisibleCount?: number;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [showAll, setShowAll] = useState(false);
+  const visibleCount = initialVisibleCount
+    ? showAll
+      ? items.length
+      : Math.min(initialVisibleCount, items.length)
+    : items.length;
   const reduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -107,14 +115,14 @@ export default function Faq({
         </p>
       </div>
 
-      <div className="mt-6">
+      <div id="faq-list" className="mt-6">
         {items.map((item, index) => {
           const isOpen = openIndex === index;
           const panelId = `faq-panel-${index}`;
           const buttonId = `faq-button-${index}`;
 
           return (
-            <div key={item.q} className="py-5 md:py-6">
+            <div key={item.q} hidden={index >= visibleCount} className="py-5 md:py-6">
               <button
                 id={buttonId}
                 type="button"
@@ -163,6 +171,24 @@ export default function Faq({
           );
         })}
       </div>
+
+      {initialVisibleCount !== undefined && items.length > initialVisibleCount && (
+        <div className="mt-8 flex">
+          <button
+            type="button"
+            onClick={() => setShowAll((current) => !current)}
+            aria-expanded={showAll}
+            aria-controls="faq-list"
+            aria-label={showAll ? "Show fewer questions" : `Show all ${items.length} questions`}
+            className="border-b border-border pb-1 font-mono text-[12px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-accent hover:text-foreground focus-visible:border-accent focus-visible:text-foreground focus-visible:outline-none"
+          >
+            {showAll ? "Show less" : "Show more"}
+            <span aria-hidden="true" className="ml-2 inline-block">
+              {showAll ? "−" : "+"}
+            </span>
+          </button>
+        </div>
+      )}
     </section>
   );
 }
