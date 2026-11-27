@@ -19,7 +19,7 @@
 - [Journal](https://anviklabs.site/journal): Notes and insights on design, engineering, and digital craft.
 - [Production Readiness Architecture Audit](https://anviklabs.site/journal/production-readiness-architecture-audit): Checklist and lessons on auditing caching, pagination, security, observability, and reliability.
 - [Product Design](https://anviklabs.site/services/product-design): UI/UX design, product flows, design systems, and prototypes.
-- [Web Development](https://anviklabs.site/services/web-development): Fast, accessible websites and web apps built with modern frontend engineering.
+- [Development](https://anviklabs.site/services/development): Websites, web apps and dashboards for startups and small businesses.
 - [AI Solutions](https://anviklabs.site/services/ai-solutions): Practical AI integrations, LLM workflows, and chat experiences.
 - [Website Maintenance](https://anviklabs.site/services/website-maintenance): Ongoing updates, performance, fixes, and support.
 - [Contact](https://anviklabs.site/contact): Start a project conversation with Anvik Labs.

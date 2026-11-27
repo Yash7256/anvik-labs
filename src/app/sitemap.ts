@@ -10,7 +10,7 @@ const staticPaths = [
   { path: "/", changefreq: "weekly", priority: "1.0", lastmod: generatedLastmod },
   { path: "/works", changefreq: "monthly", priority: "0.9", lastmod: generatedLastmod },
   { path: "/journal", changefreq: "weekly", priority: "0.8", lastmod: generatedLastmod },
-  { path: "/services/web-development", changefreq: "monthly", priority: "0.8", lastmod: generatedLastmod },
+  { path: "/services/development", changefreq: "monthly", priority: "0.8", lastmod: generatedLastmod },
   { path: "/services/product-design", changefreq: "monthly", priority: "0.8", lastmod: generatedLastmod },
   { path: "/services/ai-solutions", changefreq: "monthly", priority: "0.8", lastmod: generatedLastmod },
   { path: "/services/website-maintenance", changefreq: "monthly", priority: "0.8", lastmod: generatedLastmod },

@@ -17,9 +17,9 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    slug: "web-development",
-    name: "Web Development",
-    serviceType: "Web development",
+    slug: "development",
+    name: "Development",
+    serviceType: "Development",
     title: "Web Development for Startups | Anvik Labs",
     description:
       "Anvik Labs is a small India-based team building business websites, web apps and dashboards with React, Next.js and Node.js for clients worldwide.",

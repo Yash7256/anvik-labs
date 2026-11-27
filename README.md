@@ -47,11 +47,13 @@ Run all three before considering a change complete.
 | `/works` | Selected work index |
 | `/works/:slug` | Project case study |
 | `/contact` | Inquiry details and contact form |
-| `/services/web-development` | Web development service |
+| `/services/development` | Development service |
 | `/services/product-design` | UI/UX and product design service |
 | `/services/ai-solutions` | AI solutions service |
 | `/services/website-maintenance` | Website maintenance service |
 | `/sitemap.xml` | Generated sitemap (static routes plus work case studies) |
+
+The legacy `/services/web-development` URL redirects to `/services/development`.
 
 Routes are declared in `src/routes.ts`. SEO metadata is centralised in `src/lib/site.ts`
 (`createMeta()`, `createWorkDescription()`, and organisation config). `public/robots.txt`

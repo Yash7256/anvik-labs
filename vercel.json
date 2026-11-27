@@ -43,6 +43,16 @@
       "statusCode": 301
     },
     {
+      "source": "/services/web-development",
+      "destination": "/services/development",
+      "statusCode": 301
+    },
+    {
+      "source": "/services/web-development/",
+      "destination": "/services/development",
+      "statusCode": 301
+    },
+    {
       "source": "/work",
       "destination": "/works",
       "statusCode": 301
