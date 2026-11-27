@@ -47,11 +47,11 @@ export default function ThemeToggle() {
     <div
       role="group"
       aria-label="Colour theme"
-      className="relative grid h-10 w-[146px] grid-cols-2 rounded-full border border-border bg-foreground/[0.04] p-[3px]"
+      className="relative grid h-9 w-[118px] grid-cols-2 rounded-full border border-border bg-foreground/[0.035] p-[2px]"
     >
       <span
         aria-hidden="true"
-        className={`absolute bottom-[3px] left-[3px] top-[3px] w-[calc(50%-3px)] rounded-full bg-foreground shadow-[0_2px_8px_-4px_rgba(23,23,23,0.45)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`absolute bottom-[2px] left-[2px] top-[2px] w-[calc(50%-2px)] rounded-full bg-foreground shadow-[0_1px_4px_-2px_rgba(23,23,23,0.35)] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           theme === "dark" ? "translate-x-full" : "translate-x-0"
         }`}
       />
@@ -61,7 +61,7 @@ export default function ThemeToggle() {
           type="button"
           aria-pressed={theme === option}
           onClick={() => applyTheme(option)}
-          className={`relative z-10 inline-flex min-h-0 items-center justify-center rounded-full font-sans text-[13px] font-semibold capitalize tracking-[-0.01em] transition-colors duration-300 ${
+          className={`relative z-10 inline-flex min-h-0 items-center justify-center rounded-full font-sans text-[12px] font-semibold capitalize tracking-[-0.01em] transition-colors duration-300 ${
             theme === option ? "text-background" : "text-muted hover:text-foreground"
           }`}
         >

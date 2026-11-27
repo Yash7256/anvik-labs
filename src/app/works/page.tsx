@@ -159,7 +159,6 @@ function WorkCard({ project, index }: { project: Project; index: number }) {
             <div className="mt-8 flex items-center gap-4">
               <span className="inline-flex items-center gap-2 rounded-full border border-[var(--sc-pill-border)] bg-[var(--sc-pill-bg)] px-4 py-2 font-sans text-[13px] font-medium text-[var(--sc-text)] transition-colors duration-300 group-hover/card:border-[var(--sc-border-hover)]">
                 View case study
-                <span aria-hidden="true" className="transition-transform duration-300 group-hover/card:translate-x-1">→</span>
               </span>
               <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--sc-text-faint)]">
                 {String(index + 1).padStart(2, "0")}

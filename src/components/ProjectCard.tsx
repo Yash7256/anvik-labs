@@ -22,23 +22,6 @@ type ProjectCardProps = {
   className?: string;
 };
 
-function ArrowIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-4 w-4"
-    >
-      <path d="M5 15 15 5M7 5h8v8" />
-    </svg>
-  );
-}
-
 export default function ProjectCard({
   project,
   variant = "grid",
@@ -319,9 +302,6 @@ export default function ProjectCard({
             >
               {project.genre}
             </span>
-            <span className="project-arrow project-featured-arrow hidden" aria-hidden="true">
-              <ArrowIcon />
-            </span>
           </div>
         ) : (
           <div className="mt-4 flex items-start justify-between gap-4 px-0.5 md:mt-5">
@@ -333,9 +313,6 @@ export default function ProjectCard({
                 {project.genre}
               </p>
             </div>
-            <span className="project-arrow" aria-hidden="true">
-              <ArrowIcon />
-            </span>
           </div>
         )}
       </Link>

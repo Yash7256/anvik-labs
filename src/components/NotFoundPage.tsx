@@ -25,7 +25,7 @@ export default function NotFoundPage({
           to="/"
           className={`${mono} transition-opacity duration-200 hover:opacity-50`}
         >
-          [ &larr; BACK HOME ]
+          [ BACK HOME ]
         </Link>
       </main>
       <Footer />

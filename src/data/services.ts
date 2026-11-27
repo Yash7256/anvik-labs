@@ -1,3 +1,9 @@
+export type IncludedTile = {
+  title: string;
+  desc: string;
+  icon: "browser" | "panels" | "network" | "modules" | "nodes" | "expand";
+};
+
 export type Service = {
   slug: string;
   name: string;
@@ -10,11 +16,13 @@ export type Service = {
   intro: string;
   glance: [string, string][];
   included: string[];
+  includedTiles?: IncludedTile[];
   process: { step: string; label: string; desc: string }[];
   stack: { area: string; tools: string }[];
   whyUs: { title: string; desc: string }[];
   faqs: { q: string; a: string }[];
   initialFaqCount?: number;
+  plainSections?: boolean;
 };
 
 export const services: Service[] = [
@@ -44,6 +52,38 @@ export const services: Service[] = [
       "Backend APIs, authentication, databases and third-party integrations",
       "Bug fixes, new features, performance improvements and migrations",
     ],
+    includedTiles: [
+      {
+        title: "Website Development",
+        desc: "Business websites, portfolios and landing pages.",
+        icon: "browser",
+      },
+      {
+        title: "Web Applications",
+        desc: "Web applications, dashboards and customer portals.",
+        icon: "panels",
+      },
+      {
+        title: "AI Integration",
+        desc: "AI chatbots, LLM integrations and AI-powered applications.",
+        icon: "network",
+      },
+      {
+        title: "Internal Tools",
+        desc: "Custom internal tools, admin panels and workflow automation.",
+        icon: "modules",
+      },
+      {
+        title: "Backend Engineering",
+        desc: "Backend APIs, authentication, databases and third-party integrations.",
+        icon: "nodes",
+      },
+      {
+        title: "Maintenance & Scaling",
+        desc: "Bug fixes, new features, performance improvements and migrations.",
+        icon: "expand",
+      },
+    ],
     process: [
       { step: "01", label: "Discuss", desc: "Tell us what you're looking to build. We'll discuss your requirements, users, budget, and expected timeline." },
       { step: "02", label: "Plan", desc: "We'll define the project scope, choose the right technologies, and share a written timeline and cost estimate before work begins." },
@@ -53,10 +93,10 @@ export const services: Service[] = [
     ],
     stack: [],
     whyUs: [
-      { title: "Design and development under one roof", desc: "Designers and developers work together from the start, keeping the design and final product aligned." },
-      { title: "We build and maintain our own products", desc: "We develop products like CyberSec Toolkit, giving us first-hand experience with building, deploying, and maintaining real-world software." },
-      { title: "Clear communication", desc: "You'll know what's being built, how long it will take, and what it will cost. No unnecessary jargon or vague promises." },
-      { title: "A small, hands-on team", desc: "You work directly with the people handling your project, with fewer handoffs and more accountability." },
+      { title: "Design and Development Under One Roof", desc: "Designers and developers work together from the start, keeping the design and final product aligned." },
+      { title: "Products Built and Maintained In-House", desc: "We develop products like CyberSec Toolkit, giving us first-hand experience with building, deploying, and maintaining real-world software." },
+      { title: "Clear Communication", desc: "You'll know what's being built, how long it will take, and what it will cost. No unnecessary jargon or vague promises." },
+      { title: "A Small, Hands-On Team", desc: "You work directly with the people handling your project, with fewer handoffs and more accountability." },
     ],
     faqs: [
       { q: "What services does Anvik Labs offer?", a: "Anvik Labs provides website development, web application development, mobile app development, backend development, and AI development. We also build AI chatbots, integrate large language models (LLMs), automate workflows, and connect third-party services." },
@@ -73,6 +113,7 @@ export const services: Service[] = [
       { q: "How do I start a project with Anvik Labs?", a: "Start by contacting us with your idea and requirements. We'll discuss the project, suggest an approach, and share the estimated scope, timeline, and cost before starting." },
     ],
     initialFaqCount: 3,
+    plainSections: true,
   },
   {
     slug: "product-design",

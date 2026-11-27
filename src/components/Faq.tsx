@@ -35,19 +35,16 @@ export default function Faq({
   metaLabel = "FAQ / 007",
   metaTitle = "Common questions about Anvik Labs",
   initialVisibleCount,
+  plain = false,
 }: {
   items?: FaqItem[];
   metaLabel?: string;
   metaTitle?: string;
   initialVisibleCount?: number;
+  plain?: boolean;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [showAll, setShowAll] = useState(false);
-  const visibleCount = initialVisibleCount
-    ? showAll
-      ? items.length
-      : Math.min(initialVisibleCount, items.length)
-    : items.length;
   const reduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -93,62 +90,65 @@ export default function Faq({
       ref={rootRef}
       id="faq"
       aria-labelledby="faq-heading"
-      className="py-20 md:py-28 lg:py-36"
+      className={`faq-section${plain ? " faq-section--premium" : ""} py-20 md:py-28 lg:py-36`}
     >
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-3 pb-4 font-mono text-[12px] uppercase tracking-[0.12em] text-muted md:mb-12">
-        <span className="text-muted">{metaLabel}</span>
+      <div className="faq-meta">
+        <span>{metaLabel}</span>
         <span>{metaTitle}</span>
       </div>
 
-      <div className="flex flex-col items-start justify-between gap-6 pb-10 lg:flex-row lg:items-end">
+      <div className="faq-header">
         <h2
           ref={headingRef}
           id="faq-heading"
           aria-label="Common questions about Anvik Labs"
-          className="font-display text-[clamp(2.5rem,6vw,5rem)] font-extralight leading-[0.9] tracking-[-0.055em] text-foreground"
+          className={plain
+            ? "faq-heading font-display text-[clamp(30px,3.75vw,50px)] font-medium leading-[0.95] tracking-[-0.045em]"
+            : "faq-heading font-display text-[clamp(2.5rem,6vw,5rem)] font-extralight leading-[0.9] tracking-[-0.055em]"}
         >
           Questions.
         </h2>
-        <p className="max-w-[44ch] font-sans text-[12px] leading-[1.65] text-muted md:text-[13px]">
+        <p className="faq-intro max-w-[44ch] font-sans text-[14px] leading-[1.65] md:text-[15px]">
           The practical details, before we begin. If something is missing, ask us
           directly.
         </p>
       </div>
 
-      <div id="faq-list" className="mt-6">
+      <div id="faq-list" className="faq-list mt-8 md:mt-10">
         {items.map((item, index) => {
           const isOpen = openIndex === index;
           const panelId = `faq-panel-${index}`;
           const buttonId = `faq-button-${index}`;
+          const isVisible = !initialVisibleCount || showAll || index < initialVisibleCount;
+          const isRevealed = showAll && initialVisibleCount !== undefined && index >= initialVisibleCount;
 
           return (
-            <div key={item.q} hidden={index >= visibleCount} className="py-5 md:py-6">
+            <div
+              key={item.q}
+              hidden={!isVisible}
+              className={`faq-row${isOpen ? " faq-row--open" : ""}${isRevealed ? " faq-row--reveal" : ""}`}
+              style={isRevealed
+                ? { animationDelay: `${Math.min(index - (initialVisibleCount ?? 0), 6) * 35}ms` }
+                : undefined}
+            >
               <button
                 id={buttonId}
                 type="button"
                 onClick={() => toggle(index)}
-                className="group flex w-full items-center justify-between gap-4 text-left"
+                className="faq-question group flex w-full items-start justify-between gap-6 text-left"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
               >
-                <div className="flex items-center gap-4 md:gap-8">
-                  <span className="w-8 font-mono text-[12px] text-muted">
-                    [0{index + 1}]
-                  </span>
-                  <span className="font-sans text-[17px] font-medium text-foreground transition-colors group-hover:text-accent md:text-[20px]">
-                    {item.q}
-                  </span>
-                </div>
-
-                <span
-                  aria-hidden="true"
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[2px] border border-border font-mono text-[14px] transition-transform duration-200 ${
-                    isOpen
-                      ? "rotate-45 border-accent bg-accent text-on-accent"
-                      : "text-muted"
-                  }`}
+                <span className={`faq-question__text font-sans font-medium ${plain
+                  ? "text-[16px] md:text-[18px]"
+                  : "text-[17px] md:text-[20px]"}`}
                 >
-                  +
+                  {item.q}
+                </span>
+
+                <span aria-hidden="true" className="faq-indicator">
+                  <span className="faq-indicator__line faq-indicator__line--horizontal" />
+                  <span className="faq-indicator__line faq-indicator__line--vertical" />
                 </span>
               </button>
 
@@ -160,10 +160,10 @@ export default function Faq({
                 initial={false}
                 animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
                 transition={reduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="overflow-hidden"
+                className="faq-panel overflow-hidden"
                 style={{ pointerEvents: isOpen ? "auto" : "none" }}
               >
-                <p className="max-w-3xl pb-2 pl-12 pr-4 pt-3 font-sans text-[14px] leading-relaxed text-muted md:pl-16 md:text-[15px]">
+                <p className="faq-answer font-sans text-[14px] leading-[1.7] md:text-[15px]">
                   {item.a}
                 </p>
               </motion.div>
@@ -173,19 +173,28 @@ export default function Faq({
       </div>
 
       {initialVisibleCount !== undefined && items.length > initialVisibleCount && (
-        <div className="mt-8 flex">
+        <div className="faq-more-wrap mt-8 md:mt-10">
           <button
             type="button"
             onClick={() => setShowAll((current) => !current)}
             aria-expanded={showAll}
             aria-controls="faq-list"
             aria-label={showAll ? "Show fewer questions" : `Show all ${items.length} questions`}
-            className="border-b border-border pb-1 font-mono text-[12px] uppercase tracking-[0.14em] text-muted transition-colors hover:border-accent hover:text-foreground focus-visible:border-accent focus-visible:text-foreground focus-visible:outline-none"
+            className={`faq-more inline-flex items-center gap-3 font-mono text-[12px] uppercase tracking-[0.14em]${showAll ? " faq-more--open" : ""}`}
           >
-            {showAll ? "Show less" : "Show more"}
-            <span aria-hidden="true" className="ml-2 inline-block">
-              {showAll ? "−" : "+"}
-            </span>
+            <span>{showAll ? "Show less" : "Show more"}</span>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="faq-more__icon h-3.5 w-3.5"
+            >
+              <path d="M8 2v12M3 7l5 5 5-5" />
+            </svg>
           </button>
         </div>
       )}

@@ -375,7 +375,7 @@ function EmbedSection({ embeds, note }: { embeds: ProjectEmbed[]; note?: string 
                     />
                     <figcaption className={`${mono} flex flex-wrap items-baseline justify-between gap-3 border-t border-border px-4 py-3 text-muted`}>
                       <a href={embed.url} target="_blank" rel="noreferrer" className="transition-colors hover:text-foreground focus-visible:text-foreground">
-                        {embed.title} [ &rarr; ]
+                        {embed.title}
                       </a>
                       {embed.description && <span>{embed.description}</span>}
                     </figcaption>
@@ -557,7 +557,7 @@ export default function WorkPage() {
 
   if (!project) {
     return (
-      <><Navbar /><main id="main-content" className="flex flex-1 flex-col items-start justify-center gap-6 px-4 pt-24 sm:px-[4vw] md:px-[5vw] md:pt-28"><h1 className="font-sans text-[clamp(2rem,7vw,6rem)] font-medium uppercase leading-[0.9] tracking-[-0.05em]">Work not found</h1><Link to="/works" className={`${mono} transition-opacity duration-200 hover:opacity-50`}>[ &larr; ALL WORKS ]</Link></main><Footer /></>
+      <><Navbar /><main id="main-content" className="flex flex-1 flex-col items-start justify-center gap-6 px-4 pt-24 sm:px-[4vw] md:px-[5vw] md:pt-28"><h1 className="font-sans text-[clamp(2rem,7vw,6rem)] font-medium uppercase leading-[0.9] tracking-[-0.05em]">Work not found</h1><Link to="/works" className={`${mono} transition-opacity duration-200 hover:opacity-50`}>[ ALL WORKS ]</Link></main><Footer /></>
     );
   }
 
@@ -577,7 +577,7 @@ export default function WorkPage() {
 
       <article ref={rootRef}>
         <header className="pb-10 pt-8 md:pb-14 md:pt-10">
-          <div className={`${mono} flex items-center justify-between gap-4`}><Link to="/works" className="transition-opacity duration-200 hover:opacity-50">[ &larr; ALL WORKS ]</Link></div>
+          <div className={`${mono} flex items-center justify-between gap-4`}><Link to="/works" className="transition-opacity duration-200 hover:opacity-50">[ ALL WORKS ]</Link></div>
           <div className="mt-6 grid gap-5 sm:mt-8 md:mt-12 md:grid-cols-[1fr_0.55fr] md:items-end md:gap-10">
             <h1 className="max-w-[9ch] font-sans text-[clamp(3rem,8.5vw,7.5rem)] font-medium uppercase leading-[0.86] tracking-[-0.055em] break-words">{project.name}</h1>
             <p className="max-w-[40ch] text-[16px] leading-[1.45] text-foreground md:pb-2 md:text-[18px]">{project.description}</p>
@@ -851,7 +851,7 @@ export default function WorkPage() {
           </section>
         ) : null}
 
-        <section className="py-16 md:py-24"><Link to={`/works/${next.id}`} className="group block"><div className={`${mono} flex items-center justify-between gap-4 text-muted`}><span>NEXT PROJECT</span></div><div className="mt-6 flex items-end justify-between gap-6"><h2 className="max-w-[11ch] font-sans text-[clamp(2.5rem,6vw,6rem)] font-medium uppercase leading-[0.9] tracking-[-0.05em] transition-opacity duration-200 group-hover:opacity-50">{next.name}</h2><span className={`${mono} next-project__arrow shrink-0 pb-2`}>[ &rarr; ]</span></div></Link></section>
+        <section className="py-16 md:py-24"><Link to={`/works/${next.id}`} className="group block"><div className={`${mono} flex items-center justify-between gap-4 text-muted`}><span>NEXT PROJECT</span></div><div className="mt-6 flex items-end justify-between gap-6"><h2 className="max-w-[11ch] font-sans text-[clamp(2.5rem,6vw,6rem)] font-medium uppercase leading-[0.9] tracking-[-0.05em] transition-opacity duration-200 group-hover:opacity-50">{next.name}</h2></div></Link></section>
       </article>
     </main><Footer /></>
   );

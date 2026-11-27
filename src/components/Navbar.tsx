@@ -16,23 +16,6 @@ const navLinks = [
   { label: "About", href: "/#about" },
 ];
 
-function DiagonalArrow({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M4 12 12 4M5.5 4H12v6.5" />
-    </svg>
-  );
-}
-
 function TalkCta({ onClick }: { onClick?: () => void }) {
   const ctaRef = useMagnetic<HTMLButtonElement>(0.18);
 
@@ -42,12 +25,9 @@ function TalkCta({ onClick }: { onClick?: () => void }) {
       type="button"
       onClick={onClick}
       data-cursor="talk"
-      className="nav-cta group inline-flex h-11 items-center gap-4 rounded-full pl-6 pr-1 font-sans text-[15px] font-semibold tracking-[-0.01em] md:h-12 md:pl-7"
+      className="nav-cta inline-flex h-11 items-center rounded-full px-6 font-sans text-[15px] font-semibold tracking-[-0.01em] md:h-12 md:px-7"
     >
       Let&apos;s Talk
-      <span className="nav-cta__arrow inline-flex h-9 w-9 items-center justify-center rounded-full">
-        <DiagonalArrow className="h-4 w-4" />
-      </span>
     </button>
   );
 }

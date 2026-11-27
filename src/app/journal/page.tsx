@@ -63,7 +63,7 @@ export default function JournalPage() {
                         {post.excerpt}
                       </p>
                       <span className="mt-8 inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.12em] text-foreground">
-                        Read article <span aria-hidden="true">↗</span>
+                        Read article
                       </span>
                     </>
                   );
@@ -133,7 +133,7 @@ export default function JournalPage() {
                     to="/contact"
                     className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.12em] text-foreground transition-colors hover:text-accent"
                   >
-                    Start a conversation <span aria-hidden="true">→</span>
+                    Start a conversation
                   </Link>
                 </div>
               </div>

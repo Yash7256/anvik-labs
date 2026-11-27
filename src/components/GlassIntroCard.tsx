@@ -85,7 +85,6 @@ export default function GlassIntroCard({
             </div>
             <p className="glass-card__action">
               <span>{actionLabel}</span>
-              <span aria-hidden="true" className="glass-card__action-arrow">↗</span>
             </p>
           </header>
 
