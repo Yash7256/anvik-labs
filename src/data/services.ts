@@ -6,6 +6,7 @@ export type Service = {
   description: string;
   heroSubline: string;
   lead: string;
+  leadVariant?: "default" | "long";
   intro: string;
   glance: [string, string][];
   included: string[];
@@ -25,7 +26,8 @@ export const services: Service[] = [
       "Anvik Labs is a small India-based team building business websites, web apps and dashboards with React, Next.js and Node.js for clients worldwide.",
     heroSubline:
       "Websites, web apps and dashboards for startups and small businesses.",
-    lead: "We design and build websites and web apps for startups, small businesses and individuals.",
+    lead: "We design and build websites, web apps, mobile apps, and AI-powered tools for startups, businesses, and individuals. Whether you need a new website, a custom application, or an AI chatbot, we can help you build it.",
+    leadVariant: "long",
     intro:
       "Every project starts with a conversation. We share a plan, timeline and price range in writing before work begins. If a simple site is enough, we will say so.",
     glance: [

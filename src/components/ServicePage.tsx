@@ -12,6 +12,10 @@ import { CardGrid2x2, Chips, GlanceCard, NumberedGrid, ProofStrip, RelatedServic
 
 export default function ServicePage({ service, index }: { service: Service; index: number }) {
   const stepGrid = service.process.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4";
+  const leadClass =
+    service.leadVariant === "long"
+      ? "max-w-[52ch] text-[clamp(1.25rem,1.9vw,1.5rem)] leading-[1.2] tracking-[-0.025em]"
+      : "max-w-[28ch] text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.05] tracking-[-0.03em]";
 
   return (
     <>
@@ -68,7 +72,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
               <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-12">
                 <div>
                   <p className="mb-5 font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Overview</p>
-                  <p className="max-w-[28ch] font-sans text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.05] tracking-[-0.03em] text-foreground">{service.lead}</p>
+                  <p className={`${leadClass} font-sans text-foreground`}>{service.lead}</p>
                   <p className="mt-6 max-w-[58ch] text-[14px] leading-relaxed text-muted sm:text-[15px]">{service.intro}</p>
                 </div>
                 <GlanceCard items={service.glance.filter(([label]) => label !== "Based in")} />
