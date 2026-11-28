@@ -50,7 +50,7 @@ export default function Faq({
   neutral?: boolean;
   showMeta?: boolean;
   showIntro?: boolean;
-  headingReveal?: "scroll" | "static";
+  headingReveal?: "scroll" | "quick" | "static";
   alignWithSections?: boolean;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -64,6 +64,7 @@ export default function Faq({
       if (reduceMotion || headingReveal === "static" || !headingRef.current) return;
       const split = createMaskedText(headingRef.current, "chars");
       const chars = split.chars.length ? split.chars : split.words;
+      const quick = headingReveal === "quick";
       gsap.set(chars, {
         yPercent: 112,
         rotationX: 6,
@@ -75,16 +76,22 @@ export default function Faq({
         yPercent: 0,
         rotationX: 0,
         opacity: 1,
-        duration: 1,
-        stagger: 0.045,
+        duration: quick ? 0.7 : 1,
+        stagger: quick ? 0.03 : 0.045,
         ease: MOTION.ease,
         force3D: true,
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 85%",
-          end: "+=55%",
-          scrub: 1,
-        },
+        scrollTrigger: quick
+          ? {
+              trigger: headingRef.current,
+              start: "top 95%",
+              once: true,
+            }
+          : {
+              trigger: headingRef.current,
+              start: "top 85%",
+              end: "+=55%",
+              scrub: 1,
+            },
       });
       return () => split.revert();
     },

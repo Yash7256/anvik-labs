@@ -399,8 +399,18 @@ export function ProofStrip() {
   );
 }
 
-export function RelatedServices({ current, plain = false }: { current: Service; plain?: boolean }) {
-  const related = servicesForRelated.filter((service) => service.slug !== current.slug);
+export function RelatedServices({
+  current,
+  plain = false,
+  excludeSlugs = [],
+}: {
+  current: Service;
+  plain?: boolean;
+  excludeSlugs?: string[];
+}) {
+  const related = servicesForRelated.filter(
+    (service) => service.slug !== current.slug && !excludeSlugs.includes(service.slug),
+  );
 
   return (
     <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16">

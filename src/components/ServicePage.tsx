@@ -202,10 +202,14 @@ export default function ServicePage({ service, index }: { service: Service; inde
               initialVisibleCount={service.initialFaqCount}
               plain={plain}
               neutral={usePremiumSections}
-              headingReveal={usePremiumSections ? "static" : "scroll"}
+              headingReveal={usePremiumSections ? "quick" : "scroll"}
               alignWithSections={usePremiumSections}
             />
-            <RelatedServices current={service} plain={plain} />
+            <RelatedServices
+              current={service}
+              plain={plain}
+              excludeSlugs={usePremiumSections ? ["ai-solutions"] : []}
+            />
           </div>
         </div>
       </main>
