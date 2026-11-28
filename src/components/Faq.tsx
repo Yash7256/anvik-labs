@@ -183,7 +183,7 @@ export default function Faq({
       </div>
 
       {initialVisibleCount !== undefined && items.length > initialVisibleCount && (
-        <div className="faq-more-wrap mt-8 md:mt-10">
+        <div className="faq-more-wrap mt-8 flex justify-center md:mt-10">
           <button
             type="button"
             onClick={() => setShowAll((current) => !current)}
