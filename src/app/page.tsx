@@ -80,7 +80,7 @@ export default function Home() {
         <Services />
         <MeetTheHumans />
         <Testimonials />
-        <Faq items={homeFaqData} metaLabel="FAQ / 007" metaTitle="Common questions about Anvik Labs" neutral />
+        <Faq items={homeFaqData} metaLabel="FAQ / 007" metaTitle="Common questions about Anvik Labs" neutral showMeta={false} showIntro={false} />
       </main>
       <Footer />
     </>

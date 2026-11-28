@@ -37,6 +37,8 @@ export default function Faq({
   initialVisibleCount,
   plain = false,
   neutral = false,
+  showMeta = true,
+  showIntro = true,
 }: {
   items?: FaqItem[];
   metaLabel?: string;
@@ -44,6 +46,8 @@ export default function Faq({
   initialVisibleCount?: number;
   plain?: boolean;
   neutral?: boolean;
+  showMeta?: boolean;
+  showIntro?: boolean;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [showAll, setShowAll] = useState(false);
@@ -94,12 +98,14 @@ export default function Faq({
       aria-labelledby="faq-heading"
       className={`faq-section${plain ? " faq-section--premium" : ""}${neutral ? " faq-section--neutral" : ""} py-20 md:py-28 lg:py-36`}
     >
-      <div className="faq-meta">
-        <span>{metaLabel}</span>
-        <span>{metaTitle}</span>
-      </div>
+      {showMeta && (
+        <div className="faq-meta">
+          <span>{metaLabel}</span>
+          <span>{metaTitle}</span>
+        </div>
+      )}
 
-      <div className="faq-header">
+      <div className={`faq-header${showIntro ? "" : " faq-header--compact"}`}>
         <h2
           ref={headingRef}
           id="faq-heading"
@@ -110,10 +116,12 @@ export default function Faq({
         >
           Questions.
         </h2>
-        <p className="faq-intro max-w-[44ch] font-sans text-[14px] leading-[1.65] md:text-[15px]">
-          The practical details, before we begin. If something is missing, ask us
-          directly.
-        </p>
+        {showIntro && (
+          <p className="faq-intro max-w-[44ch] font-sans text-[14px] leading-[1.65] md:text-[15px]">
+            The practical details, before we begin. If something is missing, ask us
+            directly.
+          </p>
+        )}
       </div>
 
       <div id="faq-list" className="faq-list mt-8 md:mt-10">
