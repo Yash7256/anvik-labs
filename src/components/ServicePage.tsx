@@ -196,6 +196,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
               showMeta={!usePremiumSections}
               initialVisibleCount={service.initialFaqCount}
               plain={plain}
+              neutral={usePremiumSections}
             />
             <RelatedServices current={service} plain={plain} />
           </div>
