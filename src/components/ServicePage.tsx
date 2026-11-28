@@ -7,13 +7,14 @@ import Reveal from "@/components/Reveal";
 import ScrollProgressLine from "@/components/ScrollProgressLine";
 import type { Service } from "@/data/services";
 import { primaryCtaClass } from "@/lib/cta";
-import { createBreadcrumbJsonLd, createFaqJsonLd, createServiceJsonLd } from "@/lib/schema";
+import { createBreadcrumbJsonLd, createFaqJsonLd, createServiceJsonLd, createServiceWebPageJsonLd } from "@/lib/schema";
 import { site } from "@/lib/site";
 import { CardGrid2x2, Chips, GlanceCard, IncludedTiles, NumberedGrid, ProcessTimeline, ProofStrip, RelatedServices, SectionHeading, WhyAnvikLabs } from "@/components/service/sections";
 
 export default function ServicePage({ service, index }: { service: Service; index: number }) {
   const plain = Boolean(service.plainSections);
   const usePremiumSections = plain && service.slug === "development";
+  const serviceUrl = `${site.url}/services/${service.slug}`;
   const stepGrid = service.process.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4";
   const leadClass = usePremiumSections
     ? "max-w-[52ch] text-[14px] leading-[1.55] tracking-[-0.01em]"
@@ -31,14 +32,19 @@ export default function ServicePage({ service, index }: { service: Service; inde
     <>
       <Navbar />
       <main id="main-content" data-premium-page={usePremiumSections ? "true" : undefined} className="flex flex-1 flex-col pt-[var(--header-height)]">
+        <h1 className="sr-only">{service.name}</h1>
+        <JsonLd data={createServiceWebPageJsonLd(service)} />
         <JsonLd data={createServiceJsonLd(service)} />
         <JsonLd data={createFaqJsonLd(service)} />
         <JsonLd
-          data={createBreadcrumbJsonLd([
-            { name: "Home", url: site.url },
-            { name: "Services", url: `${site.url}/#services` },
-            { name: service.name, url: `${site.url}/services/${service.slug}` },
-          ])}
+          data={createBreadcrumbJsonLd(
+            [
+              { name: "Home", url: site.url },
+              { name: "Services", url: `${site.url}/#services` },
+              { name: service.name, url: serviceUrl },
+            ],
+            `${serviceUrl}#breadcrumb`,
+          )}
         />
         <nav
           aria-label="Breadcrumb"
@@ -57,7 +63,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
           ) : (
             <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-muted">Service [{String(index + 1).padStart(2, "0")}]</p>
           )}
-          <h1 className="-ml-6 mt-3 break-words font-display text-[clamp(2.5rem,11vw,4rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-foreground">{service.name}.</h1>
+          <p aria-hidden="true" className="-ml-6 mt-3 break-words font-display text-[clamp(2.5rem,11vw,4rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-foreground">{service.name}.</p>
           <p className="mt-4 text-[14px] leading-relaxed text-foreground/70">{service.heroSubline}</p>
           <div className="mt-6 flex justify-center sm:justify-start">
             <Link to="/contact" className={`${primaryCtaClass} service-cta--quiet`}>

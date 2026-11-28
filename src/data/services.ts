@@ -30,9 +30,9 @@ export const services: Service[] = [
     slug: "development",
     name: "Development",
     serviceType: "Development",
-    title: "Web Development for Startups | Anvik Labs",
+    title: "Web Development Services for Startups | Anvik Labs",
     description:
-      "Anvik Labs is a small India-based team building business websites, web apps and dashboards with React, Next.js and Node.js for clients worldwide.",
+      "Custom website, web app, and dashboard development for startups and small businesses. India-based team working worldwide with React, Next.js, and Node.js.",
     heroSubline:
       "Websites, web apps and dashboards for startups and small businesses.",
     lead: "We design and build websites, web apps, mobile apps, and AI-powered tools for startups, businesses, and individuals. Whether you need a new website, a custom application, or an AI chatbot, we can help you build it.",
