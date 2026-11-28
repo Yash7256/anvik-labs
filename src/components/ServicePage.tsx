@@ -16,7 +16,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
   const usePremiumSections = plain && service.slug === "development";
   const stepGrid = service.process.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4";
   const leadClass = usePremiumSections
-    ? "max-w-[52ch] text-[20px] leading-[1.2] tracking-[-0.025em]"
+    ? "max-w-[52ch] text-[14px] leading-[1.55] tracking-[-0.01em]"
     : service.leadVariant === "long"
       ? "max-w-[52ch] text-[clamp(1.25rem,1.9vw,1.5rem)] leading-[1.2] tracking-[-0.025em]"
       : "max-w-[28ch] text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.05] tracking-[-0.03em]";
@@ -110,7 +110,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
                   <SectionHeading plain={plain} size="large" animated className={plain ? "mb-4" : "mb-5"}>Overview</SectionHeading>
                   <p className={`${leadClass} font-sans text-foreground`}>{service.lead}</p>
                   <p className={usePremiumSections
-                    ? "mt-5 max-w-[46ch] text-[12px] leading-[1.65] text-foreground/70"
+                    ? "mt-5 max-w-[46ch] text-[14px] leading-[1.55] text-foreground/70"
                     : plain
                       ? "mt-5 max-w-[46ch] text-[15px] leading-[1.65] text-foreground/70 sm:text-[16px] lg:text-[17px]"
                       : "mt-6 max-w-[58ch] text-[14px] leading-relaxed text-muted sm:text-[15px]"}
