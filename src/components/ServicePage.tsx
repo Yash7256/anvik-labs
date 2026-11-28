@@ -187,7 +187,9 @@ export default function ServicePage({ service, index }: { service: Service; inde
               )}
             </section>
 
-            <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16"><ProofStrip /></section>
+            {!usePremiumSections && (
+              <section className="px-4 py-8 sm:px-[4vw] sm:py-10 md:px-8 md:py-12 lg:px-12 lg:py-16"><ProofStrip /></section>
+            )}
 
             <Faq
               items={service.faqs}
