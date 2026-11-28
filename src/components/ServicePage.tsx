@@ -30,7 +30,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
   return (
     <>
       <Navbar />
-      <main id="main-content" className="flex flex-1 flex-col pt-[var(--header-height)]">
+      <main id="main-content" data-premium-page={usePremiumSections ? "true" : undefined} className="flex flex-1 flex-col pt-[var(--header-height)]">
         <JsonLd data={createServiceJsonLd(service)} />
         <JsonLd data={createFaqJsonLd(service)} />
         <JsonLd
@@ -60,7 +60,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
           <h1 className="-ml-6 mt-3 break-words font-display text-[clamp(2.5rem,11vw,4rem)] font-semibold leading-[0.95] tracking-[-0.05em] text-foreground">{service.name}.</h1>
           <p className="mt-4 text-[14px] leading-relaxed text-foreground/70">{service.heroSubline}</p>
           <div className="mt-6 flex justify-center sm:justify-start">
-            <Link to="/contact" className={primaryCtaClass}>
+            <Link to="/contact" className={`${primaryCtaClass} service-cta--quiet`}>
               Start a Project
             </Link>
           </div>
@@ -80,7 +80,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
                   <Reveal delay={0.04} className="mt-4">
                     <div aria-hidden="true" className="-ml-6 font-display text-[clamp(36px,4.55vw,65px)] font-semibold leading-[0.92] tracking-[-0.052em] text-foreground">{service.name}.</div>
                     <p className="-ml-6 mt-5 max-w-[32ch] text-[14px] leading-relaxed text-foreground/70 lg:text-[15px]">{service.heroSubline}</p>
-                    <Link to="/contact" className={`mt-7 ${primaryCtaClass}${usePremiumSections ? " -ml-6 service-sidebar-cta" : ""}`}>
+                    <Link to="/contact" className={`mt-7 ${primaryCtaClass}${usePremiumSections ? " -ml-6 service-sidebar-cta service-cta--quiet" : ""}`}>
                       Start a Project
                     </Link>
                   </Reveal>

@@ -38,13 +38,21 @@ export default function GlobalCursor() {
   const reduceMotion = useReducedMotion();
   const finePointer = useFinePointer();
   const location = useLocation();
+  const quietPage = location.pathname === "/services/development";
   const rootRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const root = rootRef.current;
     const label = labelRef.current;
-    if (!root || !label || !finePointer || reduceMotion) return;
+    if (!root || !label || !finePointer || reduceMotion || quietPage) {
+      if (root) {
+        root.style.opacity = "0";
+        root.classList.remove("is-active");
+        root.removeAttribute("data-state");
+      }
+      return;
+    }
 
     let visible = false;
     let frame = 0;
@@ -149,7 +157,7 @@ export default function GlobalCursor() {
       root.classList.remove("is-active");
       root.removeAttribute("data-state");
     };
-  }, [finePointer, reduceMotion, location.pathname]);
+  }, [finePointer, reduceMotion, location.pathname, quietPage]);
 
   return (
     <div ref={rootRef} aria-hidden="true" className="global-cursor">

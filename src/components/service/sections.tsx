@@ -42,9 +42,7 @@ export function SectionHeading({
 export function GlanceCard({ items, plain = false }: { items: Service["glance"]; plain?: boolean }) {
   if (plain) {
     return (
-      <div className="glance-glass relative isolate overflow-hidden rounded-[20px] bg-[var(--sc-bg)] p-5 text-[var(--sc-text)] shadow-[var(--sc-shadow)] backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-500 hover:bg-[var(--sc-bg-hover)] hover:shadow-[var(--sc-shadow-hover)] sm:p-6">
-        <div aria-hidden="true" className="service-card__fluid service-card__fluid--a absolute -right-12 -top-16 h-40 w-40 rounded-full opacity-70" />
-        <div aria-hidden="true" className="service-card__fluid service-card__fluid--c absolute -bottom-16 -left-10 h-36 w-36 rounded-full opacity-60" />
+      <div className="glance-glass relative isolate overflow-hidden rounded-[20px] bg-[var(--sc-bg)] p-5 text-[var(--sc-text)] shadow-[var(--sc-shadow)] backdrop-blur-xl transition-[border-color,background-color] duration-500 hover:bg-[var(--sc-bg-hover)] sm:p-6">
         <div className="relative z-10">
           <h2 className="mb-5 font-display text-[20px] font-semibold leading-[1.1] tracking-[-0.025em] text-[var(--sc-text)] sm:text-[22px]">
             At a glance
@@ -359,8 +357,7 @@ export function WhyAnvikLabs({ items }: { items: Service["whyUs"] }) {
 
       <div className="why-grid">
         {items.map(({ title, desc }, index) => (
-          <article key={title} className="why-feature group">
-            <span aria-hidden="true" className="why-feature__accent" />
+          <article key={title} className="why-feature">
             <div className="flex items-start justify-between gap-5">
               <span className="why-feature__index">{String(index + 1).padStart(2, "0")}</span>
               <WhyFeatureVisual index={index} />

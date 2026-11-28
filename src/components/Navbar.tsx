@@ -16,8 +16,8 @@ const navLinks = [
   { label: "About", href: "/#about" },
 ];
 
-function TalkCta({ onClick }: { onClick?: () => void }) {
-  const ctaRef = useMagnetic<HTMLButtonElement>(0.18);
+function TalkCta({ onClick, magnetic = true }: { onClick?: () => void; magnetic?: boolean }) {
+  const ctaRef = useMagnetic<HTMLButtonElement>(magnetic ? 0.18 : 0);
 
   return (
     <button
@@ -44,6 +44,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const reduceMotion = useReducedMotion();
   const location = useLocation();
+  const quietPage = location.pathname === "/services/development";
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLElement>(null);
@@ -208,7 +209,7 @@ export default function Navbar() {
                 className="nav-line pointer-events-none absolute bottom-1 left-0 h-px bg-accent"
                 style={{ width: 1, opacity: 0 }}
               />
-              <TalkCta onClick={() => window.dispatchEvent(new Event("contact:open"))} />
+              <TalkCta onClick={() => window.dispatchEvent(new Event("contact:open"))} magnetic={!quietPage} />
             </nav>
 
             <button
@@ -302,6 +303,7 @@ export default function Navbar() {
                           setOpen(false);
                           window.dispatchEvent(new Event("contact:open"));
                         }}
+                        magnetic={!quietPage}
                       />
                       <ThemeToggle />
                     </div>
