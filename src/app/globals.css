@@ -1288,6 +1288,16 @@ select option {
   color: var(--faq-text);
 }
 
+.faq-section--neutral {
+  --faq-accent: var(--color-foreground);
+  --faq-accent-text: var(--color-foreground);
+  --faq-control-active: rgba(23, 23, 23, 0.04);
+}
+
+[data-theme="dark"] .faq-section--neutral {
+  --faq-control-active: rgba(255, 255, 255, 0.04);
+}
+
 .faq-section--premium {
   --faq-heading: var(--premium-heading);
   --faq-text: var(--premium-heading);

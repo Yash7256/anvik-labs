@@ -36,12 +36,14 @@ export default function Faq({
   metaTitle = "Common questions about Anvik Labs",
   initialVisibleCount,
   plain = false,
+  neutral = false,
 }: {
   items?: FaqItem[];
   metaLabel?: string;
   metaTitle?: string;
   initialVisibleCount?: number;
   plain?: boolean;
+  neutral?: boolean;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [showAll, setShowAll] = useState(false);
@@ -90,7 +92,7 @@ export default function Faq({
       ref={rootRef}
       id="faq"
       aria-labelledby="faq-heading"
-      className={`faq-section${plain ? " faq-section--premium" : ""} py-20 md:py-28 lg:py-36`}
+      className={`faq-section${plain ? " faq-section--premium" : ""}${neutral ? " faq-section--neutral" : ""} py-20 md:py-28 lg:py-36`}
     >
       <div className="faq-meta">
         <span>{metaLabel}</span>
