@@ -39,6 +39,7 @@ export default function Faq({
   neutral = false,
   showMeta = true,
   showIntro = true,
+  headingReveal = "scroll",
 }: {
   items?: FaqItem[];
   metaLabel?: string;
@@ -48,6 +49,7 @@ export default function Faq({
   neutral?: boolean;
   showMeta?: boolean;
   showIntro?: boolean;
+  headingReveal?: "scroll" | "static";
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [showAll, setShowAll] = useState(false);
@@ -57,7 +59,7 @@ export default function Faq({
 
   useGSAP(
     () => {
-      if (reduceMotion || !headingRef.current) return;
+      if (reduceMotion || headingReveal === "static" || !headingRef.current) return;
       const split = createMaskedText(headingRef.current, "chars");
       const chars = split.chars.length ? split.chars : split.words;
       gsap.set(chars, {
@@ -84,7 +86,11 @@ export default function Faq({
       });
       return () => split.revert();
     },
-    { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
+    {
+      scope: rootRef,
+      dependencies: [reduceMotion, headingReveal],
+      revertOnUpdate: true,
+    },
   );
 
   const toggle = (index: number) => {

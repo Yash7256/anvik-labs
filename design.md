@@ -133,7 +133,7 @@ All three families load from Google Fonts in `src/root.tsx`. Tokens live in `src
 - The hero project strip opts out of Lenis with `data-lenis-prevent` so its native horizontal snap scrolling keeps working.
 - The mobile hero marquee loops one duplicated set of project names with a 12s linear CSS animation; reduced-motion users see the static set.
 - Route changes fade in only after hydration, so prerendered HTML stays visible without JavaScript. Works filtering, contact status changes, and scroll progress hairlines use short, reduced-motion-aware transitions.
-- The Development service page keeps hover motion restrained: no custom cursor, magnetic CTA glow/lift, animated glass blobs, icon nudges, or hover treatment on non-interactive Why cards. Included tiles keep one accent response, process steps reveal copy while the timeline fills, and FAQ hover/focus stays neutral with the homepage.
+- The Development service page keeps hover motion restrained: no custom cursor, magnetic CTA glow/lift, animated glass blobs, icon nudges, or hover treatment on non-interactive Why cards. Included tiles keep one accent response, process steps reveal copy while the timeline fills, and FAQ hover/focus stays neutral with the homepage. Its FAQ heading renders statically instead of scrub-revealing, and the sidebar scroll progress line is omitted.
 - Respect `prefers-reduced-motion`. Lenis honors it natively, Framer Motion is configured with `reducedMotion="user"`, GSAP blocks are skipped in reduced motion, testimonials become a static grid, and the global stylesheet shortens CSS transitions.
 
 ## Scroll performance

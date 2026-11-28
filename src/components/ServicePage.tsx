@@ -74,7 +74,9 @@ export default function ServicePage({ service, index }: { service: Service; inde
                 : "justify-between py-12"
             }`}
             >
-              <ScrollProgressLine targetId="service-content" className="right-0 top-0 h-full" />
+              {!usePremiumSections && (
+                <ScrollProgressLine targetId="service-content" className="right-0 top-0 h-full" />
+              )}
               {plain ? (
                 <>
                   <Reveal delay={0.04} className="mt-4">
@@ -199,6 +201,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
               initialVisibleCount={service.initialFaqCount}
               plain={plain}
               neutral={usePremiumSections}
+              headingReveal={usePremiumSections ? "static" : "scroll"}
             />
             <RelatedServices current={service} plain={plain} />
           </div>
