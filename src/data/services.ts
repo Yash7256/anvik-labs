@@ -23,6 +23,10 @@ export type Service = {
   faqs: { q: string; a: string }[];
   initialFaqCount?: number;
   plainSections?: boolean;
+  schemaServiceType?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  contextLinks?: { label: string; href: string }[];
 };
 
 export const services: Service[] = [
@@ -33,6 +37,9 @@ export const services: Service[] = [
     title: "Web Development Services for Startups | Anvik Labs",
     description:
       "Custom website, web app, and dashboard development for startups and small businesses. India-based team working worldwide with React, Next.js, and Node.js.",
+    schemaServiceType: "Web development services",
+    ogImage: "/og-development.png",
+    ogImageAlt: "Anvik Labs web development services — websites, web apps and dashboards",
     heroSubline:
       "Websites, web apps and dashboards for startups and small businesses.",
     lead: "We design and build websites, web apps, mobile apps, and AI-powered tools for startups, businesses, and individuals. Whether you need a new website, a custom application, or an AI chatbot, we can help you build it.",
@@ -114,6 +121,10 @@ export const services: Service[] = [
     ],
     initialFaqCount: 3,
     plainSections: true,
+    contextLinks: [
+      { label: "CyberSec Toolkit case study", href: "/works/cybersec-toolkit" },
+      { label: "Production readiness audit", href: "/journal/production-readiness-architecture-audit" },
+    ],
   },
   {
     slug: "product-design",

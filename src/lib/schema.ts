@@ -14,6 +14,13 @@ function serviceUrls(service: Service) {
   };
 }
 
+function serviceImageUrl(service: Service) {
+  const image = service.ogImage ?? site.ogImage;
+  return image.startsWith("http")
+    ? image
+    : `${site.url}${image.startsWith("/") ? image : `/${image}`}`;
+}
+
 export function createServiceJsonLd(service: Service) {
   const { url, webPageId, serviceId } = serviceUrls(service);
 
@@ -22,7 +29,7 @@ export function createServiceJsonLd(service: Service) {
     "@type": "Service",
     "@id": serviceId,
     name: service.name,
-    serviceType: service.serviceType,
+    serviceType: service.schemaServiceType ?? service.serviceType,
     description: service.description,
     url,
     areaServed: site.areaServed,
@@ -43,7 +50,7 @@ export function createServiceWebPageJsonLd(service: Service) {
     name: service.title,
     description: service.description,
     dateModified: buildDate,
-    inLanguage: "en-IN",
+    inLanguage: "en",
     isPartOf: { "@id": websiteId },
     about: { "@id": organizationId },
     mainEntity: { "@id": serviceId },
@@ -51,7 +58,7 @@ export function createServiceWebPageJsonLd(service: Service) {
     breadcrumb: { "@id": breadcrumbId },
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: `${site.url}${site.ogImage}`,
+      url: serviceImageUrl(service),
       width: Number(site.ogImageWidth),
       height: Number(site.ogImageHeight),
     },

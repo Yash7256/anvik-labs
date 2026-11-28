@@ -19,13 +19,22 @@
 - [Journal](https://anviklabs.site/journal): Notes and insights on design, engineering, and digital craft.
 - [Production Readiness Architecture Audit](https://anviklabs.site/journal/production-readiness-architecture-audit): Checklist and lessons on auditing caching, pagination, security, observability, and reliability.
 - [Product Design](https://anviklabs.site/services/product-design): UI/UX design, product flows, design systems, and prototypes.
-- [Development](https://anviklabs.site/services/development): Websites, web apps and dashboards for startups and small businesses.
+- [Development](https://anviklabs.site/services/development): Business websites, web applications, dashboards, internal tools, backend APIs and practical AI integrations for startups and small businesses.
 - [AI Solutions](https://anviklabs.site/services/ai-solutions): Practical AI integrations, LLM workflows, and chat experiences.
 - [Website Maintenance](https://anviklabs.site/services/website-maintenance): Ongoing updates, performance, fixes, and support.
 - [Contact](https://anviklabs.site/contact): Start a project conversation with Anvik Labs.
+
+## Development service
+- Canonical URL: https://anviklabs.site/services/development
+- Scope: business websites, portfolios, landing pages, web applications, dashboards, customer portals, internal tools, admin panels, backend APIs, authentication, databases and third-party integrations.
+- Process: discuss requirements, agree written scope/timeline/cost, build in stages, test and launch, then support and improve.
+- Stack: React, Next.js, Node.js, TypeScript, Python, FastAPI, PostgreSQL and modern AI frameworks and APIs, chosen per project.
+- Team: a small hands-on team based in India, working with clients worldwide. Clients work directly with the people building the project.
+- AI work: chatbots, LLM integrations, retrieval-augmented generation (RAG) systems and AI features connected to existing applications.
+- Support: bug fixes, updates, performance improvements, migrations and ongoing maintenance after launch.
 
 ## Contact
 - Email: anviklabs@gmail.com
 - Website: https://anviklabs.site/
 
-Last updated: 2026-11-25
+Last updated: 2026-11-28

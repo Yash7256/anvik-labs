@@ -125,6 +125,19 @@ export default function ServicePage({ service, index }: { service: Service; inde
                   >
                     {service.intro}
                   </p>
+                  {usePremiumSections && service.contextLinks?.length ? (
+                    <p className="mt-4 max-w-[52ch] text-[13px] leading-relaxed text-foreground/60">
+                      <span className="font-mono text-[12px] uppercase tracking-[0.12em] text-muted">Related reading</span>{" "}
+                      {service.contextLinks.map((link, linkIndex) => (
+                        <span key={link.href}>
+                          {linkIndex > 0 ? <span aria-hidden="true"> · </span> : null}
+                          <Link to={link.href} className="transition-colors hover:text-accent">
+                            {link.label}
+                          </Link>
+                        </span>
+                      ))}
+                    </p>
+                  ) : null}
                 </Reveal>
                 <Reveal delay={0.14} className="min-w-0">
                   <GlanceCard items={service.glance.filter(([label]) => label !== "Based in")} plain={plain} />

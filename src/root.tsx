@@ -42,7 +42,7 @@ const organizationJsonLd = {
   },
   image: `${site.url}${site.ogImage}`,
   description: site.description,
-  knowsAbout: services.map((service) => service.name),
+  knowsAbout: services.map((service) => service.schemaServiceType ?? service.name),
   areaServed: site.areaServed,
   email: site.email,
   address: {
@@ -62,7 +62,7 @@ const organizationJsonLd = {
     itemListElement: services.map((service) => ({
       "@type": "Service",
       name: service.name,
-      serviceType: service.serviceType,
+      serviceType: service.schemaServiceType ?? service.serviceType,
       description: service.description,
       url: `${site.url}/services/${service.slug}`,
       areaServed: site.areaServed,
@@ -78,7 +78,7 @@ const websiteJsonLd = {
   url: site.url,
   name: site.name,
   description: site.description,
-  inLanguage: "en-IN",
+  inLanguage: "en",
   publisher: { "@id": organizationId },
 };
 

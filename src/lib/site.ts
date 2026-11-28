@@ -106,7 +106,6 @@ export function createMeta(options: PageMetaOptions): MetaDescriptor[] {
     ...(options.keywords?.length ? [{ name: "keywords", content: options.keywords.join(", ") }] : []),
     { name: "robots", content: options.robots ?? "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
     { tagName: "link", rel: "canonical", href: canonicalUrl },
-    { tagName: "link", rel: "alternate", hreflang: "en-IN", href: canonicalUrl },
     { tagName: "link", rel: "alternate", hreflang: "en", href: canonicalUrl },
     { tagName: "link", rel: "alternate", hreflang: "x-default", href: canonicalUrl },
     { property: "og:site_name", content: site.name },
