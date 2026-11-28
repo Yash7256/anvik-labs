@@ -193,6 +193,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
               items={service.faqs}
               metaLabel="FAQs"
               metaTitle="Before we begin"
+              showMeta={!usePremiumSections}
               initialVisibleCount={service.initialFaqCount}
               plain={plain}
             />

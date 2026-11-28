@@ -178,10 +178,7 @@ export function IncludedTiles({ items }: { items: IncludedTile[] }) {
   return (
     <div>
       <div className="mb-8 sm:mb-10">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--premium-muted)]">
-          Capabilities / 01—06
-        </p>
-        <MaskedHeading className="mt-3 whitespace-nowrap font-display text-[clamp(30px,3.75vw,50px)] font-semibold leading-[1.1] tracking-[-0.025em] text-[var(--premium-heading)]">
+        <MaskedHeading className="whitespace-nowrap font-display text-[clamp(30px,3.75vw,50px)] font-semibold leading-[1.1] tracking-[-0.025em] text-[var(--premium-heading)]">
           What&apos;s Included
         </MaskedHeading>
       </div>
@@ -224,10 +221,7 @@ export function ProcessTimeline({ items }: { items: Service["process"] }) {
   return (
     <div>
       <div className="mb-10 sm:mb-12">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--premium-muted)]">
-          Method / 01—05
-        </p>
-        <MaskedHeading className="mt-3 font-display text-[clamp(30px,3.75vw,50px)] font-semibold leading-[1.1] tracking-[-0.025em] text-[var(--premium-heading)]">
+        <MaskedHeading className="font-display text-[clamp(30px,3.75vw,50px)] font-semibold leading-[1.1] tracking-[-0.025em] text-[var(--premium-heading)]">
           Our Process
         </MaskedHeading>
       </div>
@@ -358,10 +352,7 @@ export function WhyAnvikLabs({ items }: { items: Service["whyUs"] }) {
   return (
     <div>
       <div className="why-header">
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--premium-muted)]">
-          Studio / 01—04
-        </p>
-        <MaskedHeading className="mt-3 font-display text-[clamp(30px,3.75vw,50px)] font-semibold leading-[1.1] tracking-[-0.025em] text-[var(--premium-heading)]">
+        <MaskedHeading className="font-display text-[clamp(30px,3.75vw,50px)] font-semibold leading-[1.1] tracking-[-0.025em] text-[var(--premium-heading)]">
           Why Anvik Labs
         </MaskedHeading>
       </div>
