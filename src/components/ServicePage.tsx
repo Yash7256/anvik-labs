@@ -69,7 +69,9 @@ export default function ServicePage({ service, index }: { service: Service; inde
         <div className="flex flex-1 flex-col md:flex-row">
           <aside className="hidden shrink-0 md:flex md:w-[42%] lg:w-[40%] xl:w-[38%]">
             <div className={`sticky top-[var(--header-height)] flex h-[calc(100svh-var(--header-height))] w-full flex-col px-[5vw] lg:px-[4vw] xl:px-[5vw] relative ${
-              plain ? "pb-8 pt-6" : "justify-between py-12"
+              plain
+                ? `pb-8 ${usePremiumSections ? "pt-[clamp(96px,16vh,180px)]" : "pt-6"}`
+                : "justify-between py-12"
             }`}
             >
               <ScrollProgressLine targetId="service-content" className="right-0 top-0 h-full" />
