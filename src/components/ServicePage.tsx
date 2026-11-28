@@ -80,7 +80,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
                   <Reveal delay={0.04} className="mt-4">
                     <div aria-hidden="true" className="-ml-6 font-display text-[clamp(36px,4.55vw,65px)] font-semibold leading-[0.92] tracking-[-0.052em] text-foreground">{service.name}.</div>
                     <p className="-ml-6 mt-5 max-w-[32ch] text-[14px] leading-relaxed text-foreground/70 lg:text-[15px]">{service.heroSubline}</p>
-                    <Link to="/contact" className={`mt-7 ${primaryCtaClass}${usePremiumSections ? " service-sidebar-cta" : ""}`}>
+                    <Link to="/contact" className={`mt-7 ${primaryCtaClass}${usePremiumSections ? " -ml-6 service-sidebar-cta" : ""}`}>
                       Start a Project
                     </Link>
                   </Reveal>
