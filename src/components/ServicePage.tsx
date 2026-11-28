@@ -202,6 +202,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
               plain={plain}
               neutral={usePremiumSections}
               headingReveal={usePremiumSections ? "static" : "scroll"}
+              alignWithSections={usePremiumSections}
             />
             <RelatedServices current={service} plain={plain} />
           </div>

@@ -40,6 +40,7 @@ export default function Faq({
   showMeta = true,
   showIntro = true,
   headingReveal = "scroll",
+  alignWithSections = false,
 }: {
   items?: FaqItem[];
   metaLabel?: string;
@@ -50,6 +51,7 @@ export default function Faq({
   showMeta?: boolean;
   showIntro?: boolean;
   headingReveal?: "scroll" | "static";
+  alignWithSections?: boolean;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [showAll, setShowAll] = useState(false);
@@ -102,7 +104,7 @@ export default function Faq({
       ref={rootRef}
       id="faq"
       aria-labelledby="faq-heading"
-      className={`faq-section${plain ? " faq-section--premium" : ""}${neutral ? " faq-section--neutral" : ""} py-20 md:py-28 lg:py-36`}
+      className={`faq-section${plain ? " faq-section--premium" : ""}${neutral ? " faq-section--neutral" : ""}${alignWithSections ? " px-4 sm:px-[4vw] md:px-8 lg:px-12" : ""} py-20 md:py-28 lg:py-36`}
     >
       {showMeta && (
         <div className="faq-meta">
