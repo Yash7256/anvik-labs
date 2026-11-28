@@ -112,7 +112,7 @@ export default function Faq({
           aria-label="Common questions about Anvik Labs"
           className={plain
             ? "faq-heading font-display text-[clamp(30px,3.75vw,50px)] font-medium leading-[0.95] tracking-[-0.045em]"
-            : "faq-heading font-display text-[clamp(2.5rem,6vw,5rem)] font-extralight leading-[0.9] tracking-[-0.055em]"}
+            : "faq-heading font-display text-[clamp(3.5rem,11vw,10rem)] font-extralight leading-[0.82] tracking-[-0.055em] text-foreground"}
         >
           Questions.
         </h2>
