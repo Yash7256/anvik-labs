@@ -70,7 +70,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
           <aside className="hidden shrink-0 md:flex md:w-[42%] lg:w-[40%] xl:w-[38%]">
             <div className={`sticky top-[var(--header-height)] flex h-[calc(100svh-var(--header-height))] w-full flex-col px-[5vw] lg:px-[4vw] xl:px-[5vw] relative ${
               plain
-                ? `pb-8 ${usePremiumSections ? "pt-[clamp(96px,16vh,180px)]" : "pt-6"}`
+                ? `pb-8 ${usePremiumSections ? "pt-[clamp(128px,20vh,220px)]" : "pt-6"}`
                 : "justify-between py-12"
             }`}
             >
@@ -81,7 +81,7 @@ export default function ServicePage({ service, index }: { service: Service; inde
                   <Reveal delay={0.04} className="mt-4">
                     <div aria-hidden="true" className="-ml-6 font-display text-[clamp(36px,4.55vw,65px)] font-semibold leading-[0.92] tracking-[-0.052em] text-foreground">{service.name}.</div>
                     <p className="mt-5 max-w-[32ch] text-[14px] leading-relaxed text-foreground/70 lg:text-[15px]">{service.heroSubline}</p>
-                    <Link to="/contact" className={`mt-7 ${primaryCtaClass}`}>
+                    <Link to="/contact" className={`mt-7 ${primaryCtaClass}${usePremiumSections ? " service-sidebar-cta" : ""}`}>
                       Start a Project
                     </Link>
                   </Reveal>

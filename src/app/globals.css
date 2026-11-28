@@ -586,6 +586,15 @@ select option {
   box-shadow: 0 12px 28px -18px rgba(255, 90, 10, 0.7);
 }
 
+.service-sidebar-cta {
+  color: var(--color-background);
+}
+
+.service-sidebar-cta:hover,
+.service-sidebar-cta:focus-visible {
+  color: #000;
+}
+
 .scroll-cue {
   position: relative;
   color: var(--color-muted);
